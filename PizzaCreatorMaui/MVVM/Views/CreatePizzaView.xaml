@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PizzaCreatorMaui.MVVM.Views.CreatePizzaView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="CreatePizzaView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="70" />
+            <RowDefinition Height="450" />
+            <RowDefinition Height="50" />
+
+
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            HorizontalOptions="Center"
+            Text="Create your Pizza"
+            VerticalOptions="Center" />
+
+        <!--  Carousel  -->
+        <CarouselView
+            Grid.Row="1"
+            Margin="8"
+            IndicatorView="indicatorView">
+            <CarouselView.ItemsSource>
+                <!--  Skal komme fra enum istedet for  -->
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Small</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>Large</x:String>
+                </x:Array>
+            </CarouselView.ItemsSource>
+
+            <!--  Define how an item in the CarouselView should look  -->
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Frame
+                            Margin="20"
+                            BorderColor="BlanchedAlmond"
+                            CornerRadius="5"
+                            HasShadow="True"
+                            HeightRequest="80"
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand">
+                            <Label Text="{Binding .}" />
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!--
+            IndicatorView is used as argument inside carouselView -
+            to be able to find out at which element the user is within the caroussel
+        -->
+        <IndicatorView
+            x:Name="indicatorView"
+            Grid.Row="2"
+            Margin="20"
+            HorizontalOptions="Center"
+            IndicatorColor="Cyan"
+            IsVisible="True"
+            SelectedIndicatorColor="Black" />
+
+
+        <!--  Binding to a Property in the ViewModel. After i set the Binding Context in the .cs file of this class  -->
+        <CollectionView
+            Grid.Row="3"
+            ItemsSource="{Binding Toppings}"
+            SelectedItems="{Binding SelectedToppingsList}"
+            SelectionChangedCommand="{Binding PizzaToppingsChangedCommand}"
+            SelectionChangedCommandParameter="{Binding ToppingPrice, Source={Binding ToppingPrice}}"
+            SelectionMode="Multiple">
+            <CollectionView.Header>
+                <Frame Padding="2" BackgroundColor="{StaticResource Primary}">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="Select Toppings"
+                        TextColor="White" />
+                </Frame>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        Margin="15,10,15,0"
+                        ColumnDefinitions=".2*, .2*, .6*"
+                        RowDefinitions="*, *">
+                        <Frame
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            BorderColor="White"
+                            InputTransparent="True">
+                            <Frame.Background>
+                                <LinearGradientBrush EndPoint="1,0">
+                                    <GradientStop Offset="0" Color="#F8F9FA" />
+                                    <GradientStop Offset="1" Color="#DEE2E6" />
+                                </LinearGradientBrush>
+                            </Frame.Background>
+                        </Frame>
+                        <Image
+                            Grid.RowSpan="2"
+                            Grid.ColumnSpan="2"
+                            HeightRequest="100"
+                            Source="{Binding ToppingImage}" />
+
+                        <Ellipse
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="0"
+                            Fill="Blue"
+                            HeightRequest="70"
+                            WidthRequest="70" />
+                        <Label
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            Text="{Binding ToppingName}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            FontSize="Large"
+                            Text="{Binding ToppingPrice, StringFormat='{0:kr #,##0.00}'}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <!--<StackLayout>
+                        <Frame
+                            Margin="20"
+                            BorderColor="DarkGray"
+                            CornerRadius="5"
+                            HasShadow="True"
+                            HeightRequest="100"
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand">
+                            <Label Text="{Binding ToppingName}" />
+                        </Frame>
+                    </StackLayout>-->
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--  Vise samlet Pris test  -->
+        <Label
+            Grid.Row="4"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            Text="skal vise sum pris her"
+            VerticalOptions="Center" />
+    </Grid>
+</ContentPage>
