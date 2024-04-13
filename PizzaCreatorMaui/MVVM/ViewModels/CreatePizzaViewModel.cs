@@ -25,20 +25,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         /*
          * I should load the model data (Alwasy empty when the app initializes) -
          * instead of defining the list in the constrcutor.
-         * */
+         * */        
 
-        #region Fields
-        // I had to change to type to object instead of Topping.
-        // Ask Teacher why, or in fact ask how I can avoid doing this ? (I Dont like doing this, is this a normal aproach ?)
-        // private List<object> _selectedToppingsList =  new List<object>();
+        public decimal TotalPizzaPrice { get; set; } = 0m;
 
-        // I like this instead of making a list of object. But it don't work with .NET Maui CollectionView
-        // private List<Topping> _selectedToppingsList1;        
-
-        private int _totalToppingsPrice;
-        #endregion
-
-        public ObservableCollection<Topping> Toppings { get; set; } 
+        public ObservableCollection<Topping> Toppings { get; set; } = new ObservableCollection<Topping>();
 
         // Property used for handling the SelectedToppings from the CollectionView in the XAML file
         public List<object> SelectedToppingsList { get; set; } =
@@ -67,28 +58,15 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
          *      new Command<object>((obj) => ...) creates a new Command object, specifying that it expects -
          *      an argument of type object when executed. The (obj) => ... part is a lambda expression -
          *      defining the command's execution logic.
-         * */
-        public ICommand PizzaToppingsChangedCommandYT => new Command<object>((obj) =>
-        {
-            var selectedItem = obj as Topping;
-            decimal TotalPrice = selectedItem.ToppingPrice;
-            // can use it now  -----   selectedItem.
-        });
+         * */       
 
-        // From Udemy video course
         public ICommand PizzaToppingsChangedCommand =>
             new Command(() =>
             {               
                 var toppingsList =
                     SelectedToppingsList;
 
-                var totalPrice = ToppingPrice;
-
-                // Topping myTopping = (Topping)toppingsList.ElementAt(0);
-                // myTopping.ToppingPrice = _totalToppingsPrice;
-
-                // Måske virker det her ?
-                decimal totalPrice = Toppings.Sum(item => item.ToppingPrice);
+                               
 
             });
 
@@ -104,75 +82,6 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             // I should preselect the medium Size Pizza
         }
 
-        // Medtode til at beregne pris
-        //private void OnSelectionChanged()
-        //{
-        //    decimal totalPrice = 0;
-        //    foreach (var topping in Toppings)
-        //    {
-        //        topping += topping.
-        //    }
-        //}
-
-
-        //public CreatePizzaViewModel()
-        //{
-        //    this.Toppings = new ObservableCollection<Topping>
-        //    {
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //        new Topping
-        //        {
-        //            ToppingName = "Pineapple",
-        //            ToppingPrice = 8m,
-        //        },
-        //    };
-
-
-        //    }
+        
     }
 }

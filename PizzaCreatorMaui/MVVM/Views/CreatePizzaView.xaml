@@ -74,7 +74,6 @@
             ItemsSource="{Binding Toppings}"
             SelectedItems="{Binding SelectedToppingsList}"
             SelectionChangedCommand="{Binding PizzaToppingsChangedCommand}"
-            SelectionChangedCommandParameter="{Binding ToppingPrice, Source={Binding ToppingPrice}}"
             SelectionMode="Multiple">
             <CollectionView.Header>
                 <Frame Padding="2" BackgroundColor="{StaticResource Primary}">
@@ -152,7 +151,7 @@
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalOptions="Center"
-            Text="skal vise sum pris her"
+            Text="{Binding TotalPizzaPrice}"
             VerticalOptions="Center" />
     </Grid>
 </ContentPage>
