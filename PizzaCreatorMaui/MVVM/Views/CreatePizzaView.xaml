@@ -4,15 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="CreatePizzaView">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="80" />
             <RowDefinition Height="70" />
-            <RowDefinition Height="450" />
+            <RowDefinition Height="250" />
             <RowDefinition Height="50" />
-
-
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
         <Label
@@ -86,7 +87,7 @@
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid
+                    <Grid 
                         Margin="15,10,15,0"
                         ColumnDefinitions=".2*, .2*, .6*"
                         RowDefinitions="*, *">
@@ -113,8 +114,12 @@
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="0"
-                            Fill="Blue"
+                            Background="{Binding ImagePlaceHolder}"
+                            BindableLayout.ItemsSource="{Binding ImagePlaceHolder}"
+                            Fill="{Binding ImagePlaceholder}"
                             HeightRequest="70"
+                            Stroke="Black"
+                            StrokeThickness="3"
                             WidthRequest="70" />
                         <Label
                             Grid.Column="2"
@@ -153,5 +158,12 @@
             HorizontalOptions="Center"
             Text="{Binding TotalPizzaPrice}"
             VerticalOptions="Center" />
+
+        <!--  Testing passing along to CustomerView  -->
+        <Entry Grid.Row="5" Text="{Binding Name}" />
+        <Button
+            Grid.Row="6"
+            Clicked="NavigateToCustomerForm"
+            Text="Goto Address" />
     </Grid>
 </ContentPage>

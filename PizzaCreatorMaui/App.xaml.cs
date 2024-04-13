@@ -9,7 +9,9 @@ namespace PizzaCreatorMaui
             InitializeComponent();
 
             // MainPage = new AppShell();
-            MainPage = new CreatePizzaView();
+
+            // 
+            MainPage = new NavigationPage(new CreatePizzaView());
         }
     }
 }

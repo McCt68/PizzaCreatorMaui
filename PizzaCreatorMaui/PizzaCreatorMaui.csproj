@@ -67,10 +67,22 @@
 	  <MauiXaml Update="MVVM\Views\CreatePizzaView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\CustomerView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\PaymentView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Converters\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="MVVM\Views\CustomerView.xaml.cs">
+	    <DependentUpon>CustomerView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

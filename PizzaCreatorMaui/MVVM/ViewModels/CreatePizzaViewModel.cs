@@ -1,5 +1,6 @@
 ﻿using PizzaCreatorMaui.MVVM.Models;
 using PizzaCreatorMaui.Services;
+using PizzaCreatorMaui.Utilities;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
-{
+{   
     // Using Nuget Package PropertyChanged.Fody - Implement INotifyPropertyChanged behind the schenes -
     // Avoiding to much boiler plate code.
     // In each Property within this class the execution of OnPropertyChanged is -
@@ -25,9 +26,17 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         /*
          * I should load the model data (Alwasy empty when the app initializes) -
          * instead of defining the list in the constrcutor.
-         * */        
+         * */
 
-        public decimal TotalPizzaPrice { get; set; } = 0m;
+        // Used for testing passing an arguemtn along different ViewModels
+        // public string Name { get; set; } // TESTING ONLY
+
+        public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
+
+        // public ObservableCollection<decimal> TotalPizzaPriceList { get; set; } = new ObservableCollection<decimal>();
+        public decimal TotalPizzaPrice { get; set; } = new decimal();
+
+        public RandomColorMaker ImagePlaceholder { get; set; } = new RandomColorMaker();
 
         public ObservableCollection<Topping> Toppings { get; set; } = new ObservableCollection<Topping>();
 
@@ -42,9 +51,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
          * is much better suited to the MVVM architecture. The viewmodel can contain commands, -
          * which are methods that are executed in reaction to a specific activity in the view such as a Button click.
          * Data bindings are defined between these commands and the Button.
-         * */
-
-        // From youtube example -- https://www.youtube.com/watch?v=y6txSmc-o9E&ab_channel=deepusTheCoder
+         * */        
 
         /*
          * Property Declaration:
@@ -63,11 +70,28 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         public ICommand PizzaToppingsChangedCommand =>
             new Command(() =>
             {               
+                // Maybe I should define a method to do all this I can call in here
+                // I need to somehow remove the Topping from the IserSelectedToppings if the user unselect it
+                UserSelectedToppings.Clear();
+
                 var toppingsList =
-                    SelectedToppingsList;
+                    SelectedToppingsList;                
 
-                               
-
+                if (toppingsList.Count > 0)
+                {                    
+                    foreach (var topping in toppingsList)
+                    {
+                        UserSelectedToppings.Add((Topping)topping);                        
+                    }
+                    
+                    TotalPizzaPrice = UserSelectedToppings.Sum(x => x.ToppingPrice);
+                } 
+                else
+                { 
+                    TotalPizzaPrice = 0m; 
+                    UserSelectedToppings.Clear();
+                }
+                                                                          
             });
 
         #endregion
@@ -76,12 +100,13 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         public CreatePizzaViewModel()
         {
             ToppingImpl localToppings = new ToppingImpl();
-
             this.Toppings = localToppings.GetToppings();
 
-            // I should preselect the medium Size Pizza
-        }
+            ImagePlaceholder = new RandomColorMaker();
+            this.ImagePlaceholder.GetRandomColor();
 
-        
+            // I should preselect the medium Size Pizza
+        }       
+
     }
 }

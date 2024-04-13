@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PizzaCreatorMaui.MVVM.Views.CustomerView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="CustomerView">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            Text="Fill out billing information please"
+            VerticalOptions="Center" />
+
+        <Button
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Clicked="Button_Clicked"
+            Text="Go Back to Create Pizza" />
+
+        <Button
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Clicked="CompleteCustomerForm"
+            Text="Please Complete form" />
+
+        <!--<Label Text="Name"/>-->
+        <Entry
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Placeholder="Name"
+            Text="{Binding CurrentCustomer.CustomerName}" />
+
+        <!--<Label Text="Address" />-->
+        <Entry
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Placeholder="Address"
+            Text="{Binding CurrentCustomer.CustomerAddress}" />
+
+        <!--<Label Text="Phone" />-->
+        <Entry
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Placeholder="Phone"
+            Text="{Binding CurrentCustomer.CustomerPhone}" />
+
+
+        <!--  Parameter from CreatePizzaView  -->
+        <!--<Entry Text="{Binding Name}" />-->
+        <Label
+            Grid.Row="6"
+            Grid.ColumnSpan="2"
+            Margin="8"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            Text="Pizza Total Pris" />
+        <Label
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
+    </Grid>
+
+</ContentPage>
