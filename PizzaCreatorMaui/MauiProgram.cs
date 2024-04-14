@@ -15,6 +15,9 @@ namespace PizzaCreatorMaui
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // I can add/Initialize other stuff here, like for example .NET Maui toolkit
+            // I think I can add/Register Dependency injection here ?
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

@@ -9,15 +9,7 @@ public partial class CustomerView : ContentPage
 		InitializeComponent();
             BindingContext = new CustomerViewModel();
 
-	}
-
-    // Second Consctructor Can take an argument
-    //public CustomerView(string name)
-    //{
-    //    InitializeComponent();
-    //    // Set the txtName attribute to the value that was passed in when creating the CustomerView
-    //    txtName.Text = name;
-    //}
+	}    
 
     // Go back to Create Pizza
     private void Button_Clicked(object sender, EventArgs e)

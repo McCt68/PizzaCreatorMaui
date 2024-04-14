@@ -5,9 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="CreatePizzaView">
 
+    <!--  I think if I define the namespaces, then the ViewModel will automatecly understand which things i try to bind  -->
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="80" />
             <RowDefinition Height="70" />
             <RowDefinition Height="250" />
@@ -16,39 +18,41 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <Label
+        <!--<Label
             Grid.Row="0"
             HorizontalOptions="Center"
-            Text="Create your Pizza"
-            VerticalOptions="Center" />
+            Text="Select your Size, and Toppings"
+            VerticalOptions="Center" />-->
 
         <!--  Carousel  -->
         <CarouselView
-            Grid.Row="1"
+            Grid.Row="0"
+            Grid.RowSpan="2"
             Margin="8"
-            IndicatorView="indicatorView">
-            <CarouselView.ItemsSource>
-                <!--  Skal komme fra enum istedet for  -->
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Small</x:String>
-                    <x:String>Medium</x:String>
-                    <x:String>Large</x:String>
-                </x:Array>
-            </CarouselView.ItemsSource>
+            HeightRequest="150"
+            IndicatorView="indicatorView"
+            ItemsSource="{Binding PizzaSizes}">
 
-            <!--  Define how an item in the CarouselView should look  -->
+            <!--  Define how an item in the CarouselView should look. It is applied to each item in the carousel  -->
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
                         <Frame
-                            Margin="20"
-                            BorderColor="BlanchedAlmond"
-                            CornerRadius="5"
+                            Margin="4"
+                            BackgroundColor="Beige"
+                            BorderColor="DarkOrange"
+                            CornerRadius="50"
                             HasShadow="True"
-                            HeightRequest="80"
+                            HeightRequest="110"
                             HorizontalOptions="Center"
-                            VerticalOptions="CenterAndExpand">
-                            <Label Text="{Binding .}" />
+                            VerticalOptions="Center"
+                            WidthRequest="250">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Large"
+                                HorizontalOptions="Center"
+                                Text="{Binding Size}"
+                                VerticalOptions="Center" />
                         </Frame>
                     </StackLayout>
                 </DataTemplate>
@@ -62,21 +66,25 @@
         <IndicatorView
             x:Name="indicatorView"
             Grid.Row="2"
-            Margin="20"
+            Margin="8"
             HorizontalOptions="Center"
-            IndicatorColor="Cyan"
+            IndicatorColor="Black"
+            IndicatorSize="8"
             IsVisible="True"
-            SelectedIndicatorColor="Black" />
+            SelectedIndicatorColor="DarkOrange" />
 
 
         <!--  Binding to a Property in the ViewModel. After i set the Binding Context in the .cs file of this class  -->
         <CollectionView
             Grid.Row="3"
+            Margin="8"
             ItemsSource="{Binding Toppings}"
             SelectedItems="{Binding SelectedToppingsList}"
             SelectionChangedCommand="{Binding PizzaToppingsChangedCommand}"
             SelectionMode="Multiple">
-            <CollectionView.Header>
+
+            <!--  Not using this atm  -->
+            <!--<CollectionView.Header>
                 <Frame Padding="2" BackgroundColor="{StaticResource Primary}">
                     <Label
                         FontAttributes="Bold"
@@ -84,10 +92,12 @@
                         Text="Select Toppings"
                         TextColor="White" />
                 </Frame>
-            </CollectionView.Header>
+            </CollectionView.Header>-->
+
+            <!--  How each item in CollectionView should look  -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid 
+                    <Grid
                         Margin="15,10,15,0"
                         ColumnDefinitions=".2*, .2*, .6*"
                         RowDefinitions="*, *">
@@ -104,17 +114,26 @@
                                 </LinearGradientBrush>
                             </Frame.Background>
                         </Frame>
+                        <!--  I think I should bind the ellipse to the source here  -->
                         <Image
                             Grid.RowSpan="2"
+                            Grid.Column="0"
                             Grid.ColumnSpan="2"
                             HeightRequest="100"
+                            Source="{Binding Source={x:Reference RandomColoredCircle}}" />
+
+                        <!--
+                            this works as Image Source
                             Source="{Binding ToppingImage}" />
+                        -->
 
                         <Ellipse
+                            x:Name="RandomColoredCircle"
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="0"
-                            Background="{Binding ImagePlaceHolder}"
+                            Background="Blue"
+                            BackgroundColor="{Binding ImagePlaceHolder}"
                             BindableLayout.ItemsSource="{Binding ImagePlaceHolder}"
                             Fill="{Binding ImagePlaceholder}"
                             HeightRequest="70"

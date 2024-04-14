@@ -16,27 +16,30 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // Avoiding to much boiler plate code.
     // In each Property within this class the execution of OnPropertyChanged is -
     // automatically invoked when the setter is called.
-    // So when using the setter of a Property it will set both the -
-    // private var in the ViewModelFile, and also the Coresponding the Object in the XAML file.
+    // So when using the setter of a Property it will set the -
+    // private var in the ViewModelFile, and thereby also update the value of the Coresponding Object in the XAML file.
 
     [AddINotifyPropertyChangedInterface]
     internal class CreatePizzaViewModel
     {
         // TODO !
         /*
-         * I should load the model data (Alwasy empty when the app initializes) -
+         * I should load the model data (Always empty when the app initializes) -
          * instead of defining the list in the constrcutor.
          * */
 
         // Used for testing passing an arguemtn along different ViewModels
-        // public string Name { get; set; } // TESTING ONLY
+        // public string Name { get; set; } 
+
+        public ObservableCollection<PizzaSize> PizzaSizes { get; set; } = new ObservableCollection<PizzaSize>(); 
 
         public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
+        
+        public decimal TotalPizzaPrice { get; set; } = new(); // A new way of doing the same, it implicity knows its a decimal
 
-        // public ObservableCollection<decimal> TotalPizzaPriceList { get; set; } = new ObservableCollection<decimal>();
-        public decimal TotalPizzaPrice { get; set; } = new decimal();
+        public RandomColorMaker ImagePlaceholder { get; set; } = new RandomColorMaker(); // Not Working
 
-        public RandomColorMaker ImagePlaceholder { get; set; } = new RandomColorMaker();
+
 
         public ObservableCollection<Topping> Toppings { get; set; } = new ObservableCollection<Topping>();
 
@@ -90,23 +93,28 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 { 
                     TotalPizzaPrice = 0m; 
                     UserSelectedToppings.Clear();
-                }
-                                                                          
+                }                                                                          
             });
 
         #endregion
 
-        // Er dette en god måde at gøre det på ?
+        // Constructor. Er dette en god måde at gøre det på ?
         public CreatePizzaViewModel()
         {
+            this.PizzaSizes = new ObservableCollection<PizzaSize>()
+            {
+                new PizzaSize {Size = PizzaSize.Sizes.Small},
+                new PizzaSize {Size = PizzaSize.Sizes.Medium},
+                new PizzaSize {Size = PizzaSize.Sizes.Large}
+            };
+
             ToppingImpl localToppings = new ToppingImpl();
-            this.Toppings = localToppings.GetToppings();
+            this.Toppings = localToppings.GetToppings();            
 
             ImagePlaceholder = new RandomColorMaker();
-            this.ImagePlaceholder.GetRandomColor();
+            this.ImagePlaceholder.GetRandomColor(); // Maybe its not the correct type ?
 
             // I should preselect the medium Size Pizza
         }       
-
     }
 }

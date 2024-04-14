@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PizzaCreatorMaui.Utilities
 {
-    internal class RandomColorMaker
+    public class RandomColorMaker
     {
         public Color GetRandomColor()
         {

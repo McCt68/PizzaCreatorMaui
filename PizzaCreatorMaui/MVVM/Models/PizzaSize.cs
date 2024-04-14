@@ -8,11 +8,12 @@ namespace PizzaCreatorMaui.MVVM.Models
 {
     internal class PizzaSize
     {
-        enum SizeType
+        public enum Sizes
         {
             Small,
             Medium,
             Large,
         }
+        public Sizes Size { get; set; }
     }
 }
