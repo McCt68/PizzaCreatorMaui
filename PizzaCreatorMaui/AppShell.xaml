@@ -4,12 +4,20 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PizzaCreatorMaui"
+    xmlns:views="clr-namespace:PizzaCreatorMaui.MVVM.Views"
     Title="PizzaCreatorMaui"
+    NavigationPage.HasNavigationBar="False"    
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+         
+        ContentTemplate="{DataTemplate views:CreatePizzaView}"
+        Route="CreatePizzaView" />
+
+    <!--Original code before testing navigation-->
+    <!--<ShellContent
+    Title="Home"
+    ContentTemplate="{DataTemplate local:MainPage}"
+    Route="MainPage" />-->
 
 </Shell>

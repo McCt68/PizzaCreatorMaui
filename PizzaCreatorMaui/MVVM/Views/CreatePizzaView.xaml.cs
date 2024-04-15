@@ -9,8 +9,8 @@ public partial class CreatePizzaView : ContentPage
 		InitializeComponent();
 
 		BindingContext = new CreatePizzaViewModel();
-
 	}        
+
     private void NavigateToCustomerForm(object sender, EventArgs e)
     {
         var currentViewModel =

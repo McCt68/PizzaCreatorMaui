@@ -9,10 +9,13 @@ namespace PizzaCreatorMaui
         {
             InitializeComponent();
 
-            // MainPage = new AppShell();
+            // I am not totally sure how this works. I think I do but why is it Mainpage ?
+            MainPage = new AppShell();
 
-            // 
-            MainPage = new NavigationPage(new CreatePizzaView());
+            
+
+            // virker
+            // MainPage = new NavigationPage(new CreatePizzaView());
         }
     }
 }

@@ -3,7 +3,9 @@
     x:Class="PizzaCreatorMaui.MVVM.Views.CreatePizzaView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="CreatePizzaView">
+    NavigationPage.HasNavigationBar="False">
+    <!--  Title="CreatePizzaView">  -->
+    <!--  Title="Create Your Pizza">  -->
 
     <!--  I think if I define the namespaces, then the ViewModel will automatecly understand which things i try to bind  -->
 
@@ -12,7 +14,7 @@
             <RowDefinition Height="80" />
             <RowDefinition Height="80" />
             <RowDefinition Height="70" />
-            <RowDefinition Height="250" />
+            <RowDefinition Height="380" />
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
@@ -121,6 +123,14 @@
                             Grid.ColumnSpan="2"
                             HeightRequest="100"
                             Source="{Binding Source={x:Reference RandomColoredCircle}}" />
+                            <!--Source="{Binding ToppingImage}" />-->
+
+                        <!--<Image
+    Grid.RowSpan="2"
+    Grid.Column="0"
+    Grid.ColumnSpan="2"
+    HeightRequest="100"
+    Source="{Binding Source={x:Reference RandomColoredCircle}}" />-->
 
                         <!--
                             this works as Image Source
@@ -132,14 +142,31 @@
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="0"
-                            Background="Blue"
-                            BackgroundColor="{Binding ImagePlaceHolder}"
-                            BindableLayout.ItemsSource="{Binding ImagePlaceHolder}"
-                            Fill="{Binding ImagePlaceholder}"
+                            Fill="{Binding ToppingImage}"
                             HeightRequest="70"
                             Stroke="Black"
                             StrokeThickness="3"
                             WidthRequest="70" />
+
+                        <!--<Ellipse
+     x:Name="RandomColoredCircle"
+     Grid.Row="0"
+     Grid.RowSpan="2"
+     Grid.Column="0"
+     Background="Blue"
+     BackgroundColor="{Binding ImagePlaceHolder}"
+     BindableLayout.ItemsSource="{Binding ImagePlaceHolder}"
+     Fill="{Binding ImagePlaceholder}"
+     HeightRequest="70"
+     Stroke="Black"
+     StrokeThickness="3"
+     WidthRequest="70" />-->
+
+
+
+
+
+
                         <Label
                             Grid.Column="2"
                             FontAttributes="Bold"
@@ -175,7 +202,7 @@
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalOptions="Center"
-            Text="{Binding TotalPizzaPrice}"
+            Text="{Binding TotalPizzaPrice, StringFormat='{0:Total kr #,##0.00}'}"
             VerticalOptions="Center" />
 
         <!--  Testing passing along to CustomerView  -->

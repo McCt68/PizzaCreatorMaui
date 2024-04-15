@@ -34,11 +34,11 @@
             Clicked="Button_Clicked"
             Text="Go Back to Create Pizza" />
 
-        <Button
+        <!--<Button
             Grid.Row="2"
             Grid.ColumnSpan="2"
             Clicked="CompleteCustomerForm"
-            Text="Please Complete form" />
+            Text="Please Complete form" />-->
 
         <!--<Label Text="Name"/>-->
         <Entry

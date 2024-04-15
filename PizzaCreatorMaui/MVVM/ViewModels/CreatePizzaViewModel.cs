@@ -37,8 +37,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         
         public decimal TotalPizzaPrice { get; set; } = new(); // A new way of doing the same, it implicity knows its a decimal
 
-        public RandomColorMaker ImagePlaceholder { get; set; } = new RandomColorMaker(); // Not Working
+        // Bruges ikke ??
+        // public RandomColorMaker ImagePlaceholder { get; set; } = new RandomColorMaker(); // Not Working
 
+        
+
+        // public Color MyColorTest { get; set; } 
 
 
         public ObservableCollection<Topping> Toppings { get; set; } = new ObservableCollection<Topping>();
@@ -73,12 +77,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         public ICommand PizzaToppingsChangedCommand =>
             new Command(() =>
             {               
-                // Maybe I should define a method to do all this I can call in here
-                // I need to somehow remove the Topping from the IserSelectedToppings if the user unselect it
+                // Maybe I should define a method to do all this I can call in here                
                 UserSelectedToppings.Clear();
 
                 var toppingsList =
-                    SelectedToppingsList;                
+                    SelectedToppingsList;                   
+                
 
                 if (toppingsList.Count > 0)
                 {                    
@@ -98,7 +102,8 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         #endregion
 
-        // Constructor. Er dette en god måde at gøre det på ?
+        // Trying with simple DI to inject the ToppingImpl
+        // public CreatePizzaViewModel(IToppings localToppings)
         public CreatePizzaViewModel()
         {
             this.PizzaSizes = new ObservableCollection<PizzaSize>()
@@ -111,8 +116,10 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             ToppingImpl localToppings = new ToppingImpl();
             this.Toppings = localToppings.GetToppings();            
 
-            ImagePlaceholder = new RandomColorMaker();
-            this.ImagePlaceholder.GetRandomColor(); // Maybe its not the correct type ?
+            //ImagePlaceholder = new RandomColorMaker();
+            //this.ImagePlaceholder.GetRandomColor(); // Maybe its not the correct type ?
+
+            // this.MyColorTest = ImagePlaceholder.GetRandomColor();
 
             // I should preselect the medium Size Pizza
         }       
