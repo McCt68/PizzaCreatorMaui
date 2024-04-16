@@ -1,15 +1,12 @@
 ﻿using PizzaCreatorMaui.MVVM.Models;
-using PizzaCreatorMaui.MVVM.Views;
 using PropertyChanged;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
 {
+    // Teste passing parameters with shell - Skal lige forstå det her bedre ??
+    [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
+
     [AddINotifyPropertyChangedInterface]
     public class CustomerViewModel
     {
@@ -19,8 +16,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         #endregion
 
         #region Commands
-        public ICommand NavigateBack => 
+        // test bool animate i naviagateToAsync
+        public ICommand NavigateBack =>
             new Command(async () => await Shell.Current.GoToAsync(".."));
+
+            // new Command(async () => await Shell.Current.GoToAsync($".." ? TotalPizzaPrice ={TotalPizzaPrice}));
         #endregion
 
         public CustomerViewModel()

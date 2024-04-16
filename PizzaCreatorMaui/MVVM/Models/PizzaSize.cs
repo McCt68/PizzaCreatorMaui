@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PizzaCreatorMaui.MVVM.Models
 {
-    internal class PizzaSize
+    public class PizzaSize
     {
         public enum Sizes
         {

@@ -30,11 +30,12 @@
             Text="Fill out billing information please"
             VerticalOptions="Center" />
 
-        <Button
+        <!--// Må ikke bruges da den laver ny instance af viewmodel-->
+        <!--<Button
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Clicked="Button_Clicked"
-            Text="Go Back to Create Pizza" />       
+            Text="Go Back to Create Pizza" />-->       
 
         <!--<Label Text="Name"/>-->
         <Entry

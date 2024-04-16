@@ -194,10 +194,10 @@
             Text="Shell nav Clear All" />
 
         <!--  Navigation using .cs code behind file  -->
-        <Button
+        <!--<Button
             Grid.Row="5"
             Grid.Column="1"
             Clicked="NavigateToCustomerForm"
-            Text="Order Pizza" />
+            Text="Order Pizza" />-->
     </Grid>
 </ContentPage>

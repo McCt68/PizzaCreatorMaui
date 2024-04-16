@@ -16,15 +16,11 @@ namespace PizzaCreatorMaui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
-            // I can add/Initialize other stuff here, like for example .NET Maui toolkit
-            // I think I can add/Register Dependency injection here ?
-
-            // builder.Services.AddSingleton(CreatePizzaView);
-            // builder.Services.AddSingleton<CreatePizzaViewModel>(); // not sure if working
-
+                        
             // I Think this works as long as i only navigate within the shell scope
+            // Injecting ViewModels - When ever a class ask for a ViewModel
             builder.Services.AddSingleton<CustomerViewModel>();
+            builder.Services.AddSingleton<CreatePizzaViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

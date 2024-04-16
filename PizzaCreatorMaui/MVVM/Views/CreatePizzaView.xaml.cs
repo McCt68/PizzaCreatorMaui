@@ -10,34 +10,45 @@ namespace PizzaCreatorMaui.MVVM.Views;
  * */
 
 public partial class CreatePizzaView : ContentPage
-{
-    // used for DI
-    // private readonly CreatePizzaViewModel createPizzaViewModel;
-	// public CreatePizzaView(CreatePizzaViewModel createPizzaViewModel)
-	public CreatePizzaView()
-	{
-		InitializeComponent();
+{   
+
+    // DEN HER VIRKER UDEN DI
+    public CreatePizzaView()
+    {
+        InitializeComponent();
         // this.createPizzaViewModel = createPizzaViewModel;
 
-		// this.BindingContext = createPizzaViewModel;
-		this.BindingContext = new CreatePizzaViewModel(); 
-	}        
+        // this.BindingContext = createPizzaViewModel;
+        this.BindingContext = new CreatePizzaViewModel();
+    }
 
-    private void NavigateToCustomerForm(object sender, EventArgs e)
+    // TEST MED DI
+    public CreatePizzaView(CreatePizzaViewModel createPizzaViewModel)
     {
-        var currentViewModel =            
-            ((CreatePizzaViewModel)BindingContext).TotalPizzaPrice;
-        // Pass the value from the txtName Control along to the detination
-        Navigation.PushAsync(new CustomerView
-        {
-            BindingContext = new CustomerViewModel
-            {
-                // Name = currentViewModel
-                TotalPizzaPrice = currentViewModel
-            }
-        });       
+        InitializeComponent();
+        // this.createPizzaViewModel = createPizzaViewModel;
 
-        // TODO
-        // Pass the TotalPrice of the Pizza to the page where the customer fills out his information
-    }   
+        // this.BindingContext = createPizzaViewModel;
+        BindingContext = createPizzaViewModel;
+    }
+
+    // Måske skal jeg her også bruge DI Contructoren og angive et parameter for ViewMode
+    // Eller bedre gå væk fra at videregive data til næste view på den her måde
+    // Eller ved at bruge encapsiolation og have viewModellen som en readonly var i klassen
+
+    // BRUGES IKKE MERE. BRUGER SHELL NAV NU
+    //private void NavigateToCustomerForm(object sender, EventArgs e)
+    //{
+    //    var currentViewModel =
+    //        ((CreatePizzaViewModel)BindingContext).TotalPizzaPrice;
+    //    // Pass the value from the txtName Control along to the detination
+    //    Navigation.PushAsync(new CustomerView
+    //    {
+    //        BindingContext = new CustomerViewModel
+    //        {
+    //            // Name = currentViewModel
+    //            TotalPizzaPrice = currentViewModel
+    //        }
+    //    });
+    //}   
 }

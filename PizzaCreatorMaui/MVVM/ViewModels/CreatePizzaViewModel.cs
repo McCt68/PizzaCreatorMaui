@@ -21,7 +21,9 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // private var in the ViewModelFile, and thereby also update the value of the Coresponding Object in the XAML file.
 
     [AddINotifyPropertyChangedInterface]
-    internal class CreatePizzaViewModel
+    // Teste passing parameters with shell - Skal lige forstå det her bedre ??
+    [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
+    public class CreatePizzaViewModel
     {
         // TODO !
         /*
@@ -120,8 +122,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             
         }
 
-        // Testing naviagtion with shell        
+        // Testing naviagtion with shell
+        // Kan jeg turn off animation Tjek GototAsync overloads ?
         public ICommand NavigateToCustomer =>            
-            new Command(async() => await Shell.Current.GoToAsync(nameof(CustomerView)));
+            // new Command(async() => await Shell.Current.GoToAsync(nameof(CustomerView)));
+
+            new Command(async() => await Shell.Current.GoToAsync($"{nameof(CustomerView)}?TotalPizzaPrice={TotalPizzaPrice}"));
     }
 }

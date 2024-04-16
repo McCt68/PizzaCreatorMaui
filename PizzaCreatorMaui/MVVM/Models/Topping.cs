@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PizzaCreatorMaui.MVVM.Models
 {
-    internal class Topping
+    public class Topping
     {
         public int Id { get; set; }
         public string ToppingName { get; set; }
