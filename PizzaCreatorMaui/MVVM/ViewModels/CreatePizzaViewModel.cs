@@ -1,4 +1,5 @@
 ﻿using PizzaCreatorMaui.MVVM.Models;
+using PizzaCreatorMaui.MVVM.Views;
 using PizzaCreatorMaui.Services;
 using PizzaCreatorMaui.Utilities;
 using PropertyChanged;
@@ -103,7 +104,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         #endregion
 
         // Trying with simple DI to inject the ToppingImpl
-        // public CreatePizzaViewModel(IToppings localToppings)
+        //public CreatePizzaViewModel(IToppings localToppings)
         public CreatePizzaViewModel()
         {
             this.PizzaSizes = new ObservableCollection<PizzaSize>()
@@ -116,12 +117,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             ToppingImpl localToppings = new ToppingImpl();
             this.Toppings = localToppings.GetToppings();            
 
-            //ImagePlaceholder = new RandomColorMaker();
-            //this.ImagePlaceholder.GetRandomColor(); // Maybe its not the correct type ?
+            
+        }
 
-            // this.MyColorTest = ImagePlaceholder.GetRandomColor();
-
-            // I should preselect the medium Size Pizza
-        }       
+        // Testing naviagtion with shell        
+        public ICommand NavigateToCustomer =>            
+            new Command(async() => await Shell.Current.GoToAsync(nameof(CustomerView)));
     }
 }

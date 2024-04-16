@@ -4,12 +4,20 @@ namespace PizzaCreatorMaui.MVVM.Views;
 
 public partial class CustomerView : ContentPage
 {
+    // This works without DI
 	public CustomerView()
 	{
 		InitializeComponent();
             BindingContext = new CustomerViewModel();
 
-	}    
+	}
+
+    public CustomerView(CustomerViewModel customerViewModel)
+    {
+        InitializeComponent();
+        BindingContext = customerViewModel;
+
+    }
 
     // Go back to Create Pizza
     private void Button_Clicked(object sender, EventArgs e)

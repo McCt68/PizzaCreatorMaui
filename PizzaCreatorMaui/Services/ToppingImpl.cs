@@ -79,7 +79,6 @@ namespace PizzaCreatorMaui.Services
                     ToppingPrice = 12m,
                     ToppingImage = TestColor.GetRandomColor()
                 }
-
             };
         }
     }

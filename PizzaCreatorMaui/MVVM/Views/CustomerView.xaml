@@ -3,7 +3,8 @@
     x:Class="PizzaCreatorMaui.MVVM.Views.CustomerView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="CustomerView">
+    NavigationPage.HasNavigationBar="False">
+    <!--  Title="CustomerView">  -->
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -11,6 +12,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -32,13 +34,7 @@
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Clicked="Button_Clicked"
-            Text="Go Back to Create Pizza" />
-
-        <!--<Button
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            Clicked="CompleteCustomerForm"
-            Text="Please Complete form" />-->
+            Text="Go Back to Create Pizza" />       
 
         <!--<Label Text="Name"/>-->
         <Entry
@@ -88,6 +84,9 @@
             FontSize="Large"
             HorizontalOptions="Center"
             Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
+        
+        <!--nav back with shell-->
+        <Button Grid.Row="8" Text="Navigate back with shell" Command="{Binding NavigateBack}"/>
     </Grid>
 
 </ContentPage>

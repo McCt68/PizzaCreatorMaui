@@ -8,8 +8,7 @@ namespace PizzaCreatorMaui
         {
             InitializeComponent();
 
-            // Testing Naviagation
-            // Key:Value Pair
+            // Registering the posible routes to navigate to as key value pairs.            
             Routing.RegisterRoute(nameof(CreatePizzaView), typeof(CreatePizzaView));
             Routing.RegisterRoute(nameof(CustomerView), typeof(CustomerView));
             Routing.RegisterRoute(nameof(PaymentView), typeof(PaymentView));
