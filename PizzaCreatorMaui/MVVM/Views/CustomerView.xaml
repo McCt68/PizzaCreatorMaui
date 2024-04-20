@@ -26,20 +26,22 @@
         <Label
             Grid.Row="0"
             Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
             HorizontalOptions="Center"
             Text="Fill out billing information please"
             VerticalOptions="Center" />
 
-        <!--// Må ikke bruges da den laver ny instance af viewmodel-->
+        <!--  // Må ikke bruges da den laver ny instance af viewmodel  -->
         <!--<Button
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Clicked="Button_Clicked"
-            Text="Go Back to Create Pizza" />-->       
+            Text="Go Back to Create Pizza" />-->
 
         <!--<Label Text="Name"/>-->
         <Entry
-            Grid.Row="3"
+            Grid.Row="1"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
@@ -49,7 +51,7 @@
 
         <!--<Label Text="Address" />-->
         <Entry
-            Grid.Row="4"
+            Grid.Row="2"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
@@ -59,7 +61,7 @@
 
         <!--<Label Text="Phone" />-->
         <Entry
-            Grid.Row="5"
+            Grid.Row="3"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
@@ -67,11 +69,20 @@
             Placeholder="Phone"
             Text="{Binding CurrentCustomer.CustomerPhone}" />
 
+        <Entry
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalTextAlignment="Center"
+            Placeholder="Phone"
+            Text="{Binding CurrentCustomer.Email}" />
+
 
         <!--  Parameter from CreatePizzaView  -->
         <!--<Entry Text="{Binding Name}" />-->
         <Label
-            Grid.Row="6"
+            Grid.Row="5"
             Grid.ColumnSpan="2"
             Margin="8"
             FontAttributes="Bold"
@@ -79,15 +90,26 @@
             HorizontalOptions="Center"
             Text="Pizza Total Pris" />
         <Label
-            Grid.Row="7"
+            Grid.Row="6"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalOptions="Center"
             Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
-        
-        <!--nav back with shell-->
-        <Button Grid.Row="8" Text="Navigate back with shell" Command="{Binding NavigateBack}"/>
+
+        <!--  nav back with shell  -->
+        <Button
+            Grid.Row="7"
+            Margin="2"
+            Command="{Binding NavigateBack}"
+            Text="Back to Create Pizza" />
+
+        <!--  Sender email til kunde  -->
+        <Button
+            Grid.Row="7"
+            Grid.Column="1"
+            Margin="2"
+            Text="Place Order" />
     </Grid>
 
 </ContentPage>

@@ -34,19 +34,16 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         // Used for testing passing an arguemtn along different ViewModels
         // public string Name { get; set; } 
 
-        public ObservableCollection<PizzaSize> PizzaSizes { get; set; } = new ObservableCollection<PizzaSize>(); 
+        public ObservableCollection<PizzaSize> PizzaSizes { get; set; } = new ObservableCollection<PizzaSize>();
+
+        // Property used for handlign the PizzaSize Price
+        public decimal SizePrice { get; set; } = new();
 
         public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
         
-        public decimal TotalPizzaPrice { get; set; } = new(); // A new way of doing the same, it implicity knows its a decimal
-
-        // Bruges ikke ??
-        // public RandomColorMaker ImagePlaceholder { get; set; } = new RandomColorMaker(); // Not Working
-
-        
-
-        // public Color MyColorTest { get; set; } 
-
+        // This should be set to the price of the initial selected PizzaSize.Price
+        public decimal TotalPizzaPrice { get; set; } = new(); // New way of doing the same, it implicity knows its a decimal
+                                            
 
         public ObservableCollection<Topping> Toppings { get; set; } = new ObservableCollection<Topping>();
 
@@ -84,45 +81,77 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 UserSelectedToppings.Clear();
 
                 var toppingsList =
-                    SelectedToppingsList;                   
-                
+                    SelectedToppingsList;
 
+                // Instead I need to get the price of the currentlySelectedSize
+                SizePrice = PizzaSizes.FirstOrDefault().Price;
+                decimal prize = SizePrice = PizzaSizes.FirstOrDefault().Price;
+
+                // new logic - need to be better
+                //if(toppingsList.Count == 0)
+                //{
+                //    TotalPizzaPrice = prize;
+                //}
+                //else if (toppingsList.Count > 0)
+                //{
+                //    foreach (var topping in toppingsList)
+                //    {
+                //        UserSelectedToppings.Add((Topping)topping);
+                //    }
+
+                //    TotalPizzaPrice = UserSelectedToppings.Sum(x => x.ToppingPrice) + prize;
+                //    // TotalPizzaPrice = UserSelectedToppings.Sum(x => x.ToppingPrice) ;
+                //}
+                //else
+                //{
+                //    TotalPizzaPrice = 0m;
+                //    UserSelectedToppings.Clear();
+                //}
+
+
+                // old logic works
                 if (toppingsList.Count > 0)
-                {                    
+                {
                     foreach (var topping in toppingsList)
                     {
-                        UserSelectedToppings.Add((Topping)topping);                        
+                        UserSelectedToppings.Add((Topping)topping);
                     }
-                    
-                    TotalPizzaPrice = UserSelectedToppings.Sum(x => x.ToppingPrice);
-                } 
+
+                    TotalPizzaPrice = UserSelectedToppings.Sum(x => x.ToppingPrice) + prize;
+                    // TotalPizzaPrice = UserSelectedToppings.Sum(x => x.ToppingPrice) ;
+                }
                 else
-                { 
-                    TotalPizzaPrice = 0m; 
+                {
+                    TotalPizzaPrice = 0m;
                     UserSelectedToppings.Clear();
-                }                                                                          
+                }
             });
 
-        #endregion
+        #endregion        
 
         // Trying with simple DI to inject the ToppingImpl
         //public CreatePizzaViewModel(IToppings localToppings)
         public CreatePizzaViewModel()
         {
+            //this.PizzaSizes = new ObservableCollection<PizzaSize>()
+            //{                
+            //    new PizzaSize {Size = PizzaSize.Sizes.Small},
+            //    new PizzaSize {Size = PizzaSize.Sizes.Medium, Price =40m},
+            //    new PizzaSize {Size = PizzaSize.Sizes.Large, Price = 45m}
+            //};
+
             this.PizzaSizes = new ObservableCollection<PizzaSize>()
             {
-                new PizzaSize {Size = PizzaSize.Sizes.Small},
-                new PizzaSize {Size = PizzaSize.Sizes.Medium},
-                new PizzaSize {Size = PizzaSize.Sizes.Large}
+                new PizzaSize (PizzaSize.Sizes.Small, 35m),
+                new PizzaSize (PizzaSize.Sizes.Medium, 40m),
+                new PizzaSize (PizzaSize.Sizes.Large, 45m)                
             };
 
             ToppingImpl localToppings = new ToppingImpl();
-            this.Toppings = localToppings.GetToppings();            
-
-            
+            this.Toppings = localToppings.GetToppings();                                  
         }
 
-        // Testing naviagtion with shell
+        // Testing navigation with shell
         // Kan jeg turn off animation Tjek GototAsync overloads ?
         public ICommand NavigateToCustomer =>            
             // new Command(async() => await Shell.Current.GoToAsync(nameof(CustomerView)));

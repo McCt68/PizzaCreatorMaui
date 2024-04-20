@@ -8,12 +8,25 @@ namespace PizzaCreatorMaui.MVVM.Models
 {
     public class PizzaSize
     {
+        // This works
         public enum Sizes
         {
             Small,
             Medium,
             Large,
         }
-        public Sizes Size { get; set; }
+        // Virker
+        public Sizes Size { get; set; }        
+        public decimal Price { get; set; }      
+       
+
+        // Defualt constrcutor this works
+        public PizzaSize(PizzaSize.Sizes size, decimal price)
+        {
+            Size = size;
+            Price = price;
+        }
+
+
     }
 }

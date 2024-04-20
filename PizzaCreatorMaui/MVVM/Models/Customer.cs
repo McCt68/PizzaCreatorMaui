@@ -12,5 +12,6 @@ namespace PizzaCreatorMaui.MVVM.Models
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public string CustomerPhone { get; set; }
+        public string Email { get; set; }
     }
 }
