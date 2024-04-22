@@ -27,17 +27,22 @@
         </Grid.ColumnDefinitions>
 
         <!--  Carousel  -->
-        <CarouselView 
+        <CarouselView
             x:Name="CarouselTest"
             Grid.Row="0"
             Grid.RowSpan="1"
             Grid.ColumnSpan="2"
             Margin="4"
-            CurrentItem="{Binding PizzaSizes.Sizes.Medium}"            
+            CurrentItem="{Binding CurrentCarouselItem}"
+            CurrentItemChangedCommand="{Binding PizzaSizeChanged}"
             HorizontalOptions="Center"
             IndicatorView="indicatorView"
-            ItemsSource="{Binding PizzaSizes}"
+            ItemsSource="{Binding PizzaSizes}"            
             VerticalOptions="Center">
+
+            <!--TEST
+            Position="{Binding PizzaSizes}"-->
+
 
 
             <!--  Define how an item in the CarouselView should look. It is applied to each item in the carousel  -->
@@ -62,6 +67,7 @@
                                 VerticalOptions="Center" />
                         </Frame>
                         <Label
+                            x:Name="{Binding PizzaSizePrice}"
                             Grid.Row="1"
                             Padding="0"
                             FontAttributes="Bold"

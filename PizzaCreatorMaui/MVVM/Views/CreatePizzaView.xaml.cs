@@ -11,15 +11,17 @@ namespace PizzaCreatorMaui.MVVM.Views;
 
 public partial class CreatePizzaView : ContentPage
 {   
+    private CreatePizzaViewModel _createPizzaViewModel = new CreatePizzaViewModel();
 
-    // DEN HER VIRKER UDEN DI
+    // DEN HER VIRKER UDEN DI. Tror ikke jeg skal bruge den ??
     public CreatePizzaView()
     {
         InitializeComponent();
         // this.createPizzaViewModel = createPizzaViewModel;
 
         // this.BindingContext = createPizzaViewModel;
-        this.BindingContext = new CreatePizzaViewModel();
+        // this.BindingContext = new CreatePizzaViewModel();
+        BindingContext = _createPizzaViewModel;
     }
 
     // TEST MED DI
@@ -27,9 +29,16 @@ public partial class CreatePizzaView : ContentPage
     {
         InitializeComponent();
         // this.createPizzaViewModel = createPizzaViewModel;
-
+        _createPizzaViewModel = createPizzaViewModel;
         // this.BindingContext = createPizzaViewModel;
-        BindingContext = createPizzaViewModel;
+        BindingContext = _createPizzaViewModel;
+    }
+
+    // TEST OnAppering.
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _createPizzaViewModel.TotalPizzaPrice = _createPizzaViewModel.TotalPizzaPrice + _createPizzaViewModel.CurrentCarouselItem.Price;
     }
 
     // Måske skal jeg her også bruge DI Contructoren og angive et parameter for ViewMode

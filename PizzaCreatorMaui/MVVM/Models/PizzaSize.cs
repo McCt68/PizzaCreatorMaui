@@ -17,10 +17,14 @@ namespace PizzaCreatorMaui.MVVM.Models
         }
         // Virker
         public Sizes Size { get; set; }        
-        public decimal Price { get; set; }      
-       
+        public decimal Price { get; set; }
+
 
         // Defualt constrcutor this works
+        public PizzaSize()
+        {
+            
+        }
         public PizzaSize(PizzaSize.Sizes size, decimal price)
         {
             Size = size;
