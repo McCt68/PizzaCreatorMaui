@@ -64,6 +64,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\PizzaCoreBuisnessLogic\PizzaCoreBuisnessLogic.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="MVVM\Views\CreatePizzaView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

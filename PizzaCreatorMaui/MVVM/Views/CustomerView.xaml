@@ -3,6 +3,8 @@
     x:Class="PizzaCreatorMaui.MVVM.Views.CustomerView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:PizzaCreatorMaui.MVVM.ViewModels"
+    x:DataType="vm:CustomerViewModel"
     NavigationPage.HasNavigationBar="False">
     <!--  Title="CustomerView">  -->
 
@@ -21,6 +23,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+
         </Grid.RowDefinitions>
 
         <Label
@@ -40,14 +43,15 @@
             Text="Go Back to Create Pizza" />-->
 
         <!--<Label Text="Name"/>-->
-        <Entry
+        <Entry 
             Grid.Row="1"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalTextAlignment="Center"
             Placeholder="Name"
-            Text="{Binding CurrentCustomer.CustomerName}" />
+            Text="{Binding CurrentCustomer.CustomerName}"
+            VerticalTextAlignment="Center" />
 
         <!--<Label Text="Address" />-->
         <Entry
@@ -66,16 +70,19 @@
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalTextAlignment="Center"
+            Keyboard="Telephone"
             Placeholder="Phone"
             Text="{Binding CurrentCustomer.CustomerPhone}" />
 
+        <!--<Label Text="Email" />-->
         <Entry
             Grid.Row="4"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalTextAlignment="Center"
-            Placeholder="Phone"
+            Keyboard="Email"
+            Placeholder="Email"
             Text="{Binding CurrentCustomer.Email}" />
 
 
@@ -84,7 +91,7 @@
         <Label
             Grid.Row="5"
             Grid.ColumnSpan="2"
-            Margin="8"
+            Margin="4"
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalOptions="Center"
@@ -97,16 +104,31 @@
             HorizontalOptions="Center"
             Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
 
+        <!--  Reset all user inputs  -->
+        <Button 
+            Grid.Row="7"
+            Grid.Column="0"
+            Margin="2"
+            Command="{Binding ClearUserInfo}"
+            Text="Clear User Information" />
+
+        <!--  Test to show reset value  -->
+        <Label
+            Grid.Row="7"
+            Grid.Column="1"
+            Margin="2"
+            Text="{Binding CurrentCustomer.CustomerName}" />
+
         <!--  nav back with shell  -->
         <Button
-            Grid.Row="7"
+            Grid.Row="8"
             Margin="2"
             Command="{Binding NavigateBack}"
             Text="Back to Create Pizza" />
 
-        <!--  Sender email til kunde  -->
+        <!--  Sender Email til kunde  -->
         <Button
-            Grid.Row="7"
+            Grid.Row="8"
             Grid.Column="1"
             Margin="2"
             Text="Place Order" />

@@ -1,4 +1,6 @@
-﻿using PizzaCreatorMaui.MVVM.Models;
+﻿using PizzaCoreBuisnessLogic.Data;
+using PizzaCoreBuisnessLogic.UseCases;
+using PizzaCreatorMaui.MVVM.Models;
 using PizzaCreatorMaui.MVVM.Views;
 using PizzaCreatorMaui.Services;
 using PizzaCreatorMaui.Utilities;
@@ -22,6 +24,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
     [AddINotifyPropertyChangedInterface]
     // Teste passing parameters with shell - Skal lige forstå det her bedre ??
+    // [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
     public class CreatePizzaViewModel
     {
@@ -40,31 +43,31 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         public ObservableCollection<PizzaSize> PizzaSizes { get; set; } // = new ObservableCollection<PizzaSize>(); 
         public ICommand PizzaSizeChanged =>
             new Command(() =>
-            {
-                PizzaSizePrice = CurrentCarouselItem.Price;
-
-                //_pizzaSizePrice = CurrentCarouselItem.Price;
-                //TotalPizzaPrice = _pizzaSizePrice + TotalPizzaPrice;
+            {                
+                PizzaSizePrice = CurrentCarouselItem.Price;                
+                TotalPizzaPrice = PizzaSizePrice + TotalToppingsPrice;
             });
         #endregion
 
-
-
+        #region ToppingsPrice
         public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();       
-                                                    
+                       
+        
+        // MÅSKE SKAL DENNE IKKE VÆRE NEW; MEN SÆTTES I CONSTRUCTOR TIL AT LOADE FRA USECASE
         public ObservableCollection<Topping> Toppings { get; set; } = new ObservableCollection<Topping>();
+
 
         // Property used for handling the SelectedToppings from the CollectionView in the XAML file
         public List<object> SelectedToppingsList { get; set; } =
             new List<object>();
 
         // TRYING TO HAVE A VAR ONLY FOR TOPPINGS PRICE
+        public decimal TotalToppingsPrice { get; set; } = new();
 
-        // This should be set to the total of size + toppigns price
-        public decimal TotalPizzaPrice { get; set; } = new(); // New way of doing the same, it implicity knows its a decimal
+        #endregion        
 
 
-        #region Commands
+        #region CollectionView
         /*
          * The commanding interface provides an alternative approach to implementing commands that -
          * is much better suited to the MVVM architecture. The viewmodel can contain commands, -
@@ -88,12 +91,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         public ICommand PizzaToppingsChangedCommand =>
             new Command(() =>
-            {               
-                // Maybe I should define a method to do all this I can call in here                
+            {
+                // testing only toppings price
                 UserSelectedToppings.Clear();
 
                 var toppingsList =
-                    SelectedToppingsList;              
+                    SelectedToppingsList;
 
                 if (toppingsList.Count > 0)
                 {
@@ -102,17 +105,25 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                         UserSelectedToppings.Add((Topping)topping);
                     }
 
-                    TotalPizzaPrice = UserSelectedToppings.Sum(x => x.ToppingPrice) + CurrentCarouselItem.Price;                    
+                    TotalToppingsPrice = UserSelectedToppings.Sum(x => x.ToppingPrice); //  + CurrentCarouselItem.Price;
+                    TotalPizzaPrice = TotalToppingsPrice + PizzaSizePrice;
                 }
                 else
                 {
-                    TotalPizzaPrice = CurrentCarouselItem.Price;
+                    TotalToppingsPrice = 0m;
+                    //CurrentCarouselItem.Price;
                     // TotalPizzaPrice = 0m;
                     UserSelectedToppings.Clear();
-                }
-            });
 
-        #endregion        
+                    TotalPizzaPrice = PizzaSizePrice + TotalToppingsPrice;
+                }                                
+            });
+        #endregion
+
+
+
+        // This should be set to the total of size + toppings price
+        public decimal TotalPizzaPrice { get; set; } = new(); // New way of doing the same, it implicity knows its a decimal
 
         // Trying with simple DI to inject the ToppingImpl
         //public CreatePizzaViewModel(IToppings localToppings)
@@ -126,12 +137,24 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 new PizzaSize (PizzaSize.Sizes.Large, 45m)                
             };
 
+            // TEST NEW CODE HERE. CAN DELE
+            //LocalToppingsData localData = new LoadToppingsUseCase(LocalToppingsData.);
+            //localData.GetLocalToppingsData();
+
+            //this.Toppings = localData.GetLocalToppingsData();
+
+            // TESTING USE CASES. OLD CODE HERE DO NOT DELETE THIS
             ToppingImpl localToppings = new ToppingImpl();
             this.Toppings = localToppings.GetToppings();
+            // TEST ENDED
+
 
             // Set the Initial Pizza size to medium
-            CurrentCarouselItem = PizzaSizes[1];            
-            
+            CurrentCarouselItem = PizzaSizes[1];     
+            PizzaSizePrice = CurrentCarouselItem.Price;
+
+            // Total price - Maybe try and retrive this from the useCase in the Class Library
+            TotalPizzaPrice = CurrentCarouselItem.Price + TotalToppingsPrice;            
         }
 
         // Testing navigation with shell        

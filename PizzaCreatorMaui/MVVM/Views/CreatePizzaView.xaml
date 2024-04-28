@@ -10,12 +10,14 @@
 
     <!--  I think if I define the namespaces, then the ViewModel will automatecly understand which things i try to bind  -->
 
-    <Grid Margin="2" Padding="6">
+    <Grid Margin="2" Padding="2" RowSpacing="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="200" />
             <RowDefinition Height="15" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="420" />
+            <RowDefinition Height="300" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
@@ -37,29 +39,24 @@
             CurrentItemChangedCommand="{Binding PizzaSizeChanged}"
             HorizontalOptions="Center"
             IndicatorView="indicatorView"
-            ItemsSource="{Binding PizzaSizes}"            
+            ItemsSource="{Binding PizzaSizes}"
             VerticalOptions="Center">
-
-            <!--TEST
-            Position="{Binding PizzaSizes}"-->
-
-
 
             <!--  Define how an item in the CarouselView should look. It is applied to each item in the carousel  -->
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <Grid RowDefinitions="*,*">
-                        <Frame
+                        <Frame Margin="100"
                             Grid.Row="0"
                             BackgroundColor="Beige"
                             BorderColor="DarkOrange"
                             CornerRadius="50"
                             HasShadow="True"
-                            HeightRequest="110"
+                            HeightRequest="115"
                             HorizontalOptions="Center"
                             VerticalOptions="Center"
-                            WidthRequest="140">
-                            <Label
+                            WidthRequest="155">
+                            <Label Margin="10"
                                 FontAttributes="Bold"
                                 FontSize="Large"
                                 HorizontalOptions="Center"
@@ -69,7 +66,8 @@
                         <Label
                             x:Name="{Binding PizzaSizePrice}"
                             Grid.Row="1"
-                            Padding="0"
+                            Margin="10"
+                            Padding="10"
                             FontAttributes="Bold"
                             FontSize="Large"
                             HorizontalOptions="Center"
@@ -77,29 +75,6 @@
                             VerticalOptions="Center" />
                     </Grid>
                 </DataTemplate>
-
-                <!--  Old Template works, but not with price  -->
-                <!--<DataTemplate>
-                    <StackLayout>
-                        <Frame
-                            Margin="4"
-                            BackgroundColor="Beige"
-                            BorderColor="DarkOrange"
-                            CornerRadius="50"
-                            HasShadow="True"
-                            HeightRequest="110"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            WidthRequest="150">
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="Large"
-                                HorizontalOptions="Center"
-                                Text="{Binding Size}"
-                                VerticalOptions="Center" />
-                        </Frame>
-                    </StackLayout>
-                </DataTemplate>-->
             </CarouselView.ItemTemplate>
         </CarouselView>
 
@@ -107,11 +82,11 @@
             IndicatorView is used as argument inside carouselView -
             to be able to find out at which element the user is within the caroussel
         -->
-        <IndicatorView
+        <IndicatorView 
             x:Name="indicatorView"
             Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Margin="2"
+            Grid.ColumnSpan="2" 
+            Margin="4"
             HorizontalOptions="Center"
             IndicatorColor="Black"
             IndicatorSize="8"
@@ -121,10 +96,10 @@
 
 
         <!--  Binding to a Property in the ViewModel. After i set the Binding Context in the .cs file of this class  -->
-        <CollectionView
+        <CollectionView 
             Grid.Row="3"
             Grid.ColumnSpan="2"
-            Margin="8"
+            Margin="2"
             ItemsSource="{Binding Toppings}"
             SelectedItems="{Binding SelectedToppingsList}"
             SelectionChangedCommand="{Binding PizzaToppingsChangedCommand}"
@@ -145,10 +120,10 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid
-                        Margin="15,10,15,0"
+                        Margin="4,2,4,2"
                         ColumnDefinitions=".2*, .2*, .6*"
                         RowDefinitions="*, *">
-                        <Frame
+                        <Frame 
                             Grid.RowSpan="2"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
@@ -206,14 +181,13 @@
                             Text="{Binding ToppingPrice, StringFormat='{0:kr #,##0.00}'}"
                             VerticalOptions="Center" />
                     </Grid>
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
         <!--  Vise samlet Pris test  -->
         <Label
-            Grid.Row="4"
+            Grid.Row="6"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
@@ -221,8 +195,29 @@
             Text="{Binding TotalPizzaPrice, StringFormat='{0:Total kr #,##0.00}'}"
             VerticalOptions="Center" />
 
-        <Button
+        <!--  TEST med priser  -->
+        <Label
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            Text="{Binding TotalToppingsPrice, StringFormat='{0:Toppings price kr #,##0.00}'}"
+            VerticalOptions="Center" />
+
+        <Label
             Grid.Row="5"
+            Grid.ColumnSpan="2"
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="Center"
+            Text="{Binding PizzaSizePrice, StringFormat='{0:Size Price kr #,##0.00}'}"
+            VerticalOptions="Center" />
+
+        <!--  END TEST  -->
+
+        <Button
+            Grid.Row="7"
             Grid.Column="0"
             Margin="2"
             Padding="4"
@@ -230,7 +225,7 @@
 
         <!--  Navigation using Shell from ViewModel  -->
         <Button
-            Grid.Row="5"
+            Grid.Row="7"
             Grid.Column="1"
             Margin="2"
             Padding="4"

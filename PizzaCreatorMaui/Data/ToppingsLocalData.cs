@@ -1,14 +1,19 @@
 ﻿using PizzaCreatorMaui.MVVM.Models;
+using PizzaCreatorMaui.Utilities;
 using System.Collections.ObjectModel;
 
 namespace PizzaCreatorMaui.Data
 {
-    internal class ToppingsLocalData
+    public class ToppingsLocalData
     {
-        
+        public RandomColorMaker TestColor { get; set; } = new RandomColorMaker();
+
         private ObservableCollection<Topping> _localToppings = new ObservableCollection<Topping>()
-        {
-            new Topping
+        {            
+ 
+
+        // DO NOT DELETE
+        new Topping
             {
                 ToppingName = "Pineapple",
                 ToppingPrice = 8m
