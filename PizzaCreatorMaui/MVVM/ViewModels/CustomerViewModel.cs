@@ -1,4 +1,6 @@
 ﻿
+using PizzaCoreBuisnessLogic.Models;
+using PizzaCoreBuisnessLogic.UseCases;
 using PizzaCreatorMaui.MVVM.Models;
 using PropertyChanged;
 using System.Windows.Input;
@@ -11,29 +13,38 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class CustomerViewModel
     {
+        #region Text and Mail Validation
+        // Using Nuget package MauiCommunityToolkit for text, and email validation.
+        public bool IsNameProvided { get; set; }
+        public bool IsAddressProvided { get; set; }
+
+        // missing phone
+        public bool IsEmailProvided { get; set; }
+        public bool IsEmailFormatValid { get; set; }
+        #endregion
+
         #region Properties
-        public Customer CurrentCustomer { get; set; }// = new Customer();
+
+        // Defining a CurrentCustomer of type Customer from the CoreBuisness Project.
+        public PizzaCoreBuisnessLogic.Models.Customer CurrentCustomer { get; set; }
+        
         public decimal TotalPizzaPrice { get; set; }
         #endregion
 
-        // Clear user Inputs - Try to make use of a UseCase instead
+        // Clear user Inputs 
         public ICommand ClearUserInfo =>
             new Command(() => 
             {
-                ClearUserInputs();
-                //if(CurrentCustomer.CustomerName != string.Empty)
-                //{
-                //    CurrentCustomer.CustomerName = string.Empty;
-                //}
-                //else
-                //{
-                //    return;
-                //}
-                // var testVar = CurrentCustomer.CustomerName;
-                // CurrentCustomer.CustomerName = string.Empty
+                App.Current.MainPage.DisplayAlert("Reset fields", "Hello your trying to reset all fields", "OK");
+                
+                // Using the usecase from the CoreBuisness Project
+                ClearUserInputsUseCase clearUserInputs = new ClearUserInputsUseCase(CurrentCustomer);
+                clearUserInputs.ClearUserInputs();                                         
             });
 
-        #region Naviagation        
+        
+
+        #region Navigation        
         public ICommand NavigateBack =>
             new Command(async () => await Shell.Current.GoToAsync(".."));
 
@@ -42,83 +53,75 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         public CustomerViewModel()
         {
-            CurrentCustomer = new Customer();
 
+            CurrentCustomer = new PizzaCoreBuisnessLogic.Models.Customer();
         }
 
-        private void ClearUserInputs()
+        /* TODO
+         * I need a way to hold a Customer Object with all the information.
+         * When the user press Order. An E-Mail should be sent to the adress specified in -
+         * CurrentCustomer.Email 
+         * The Mail should have info about name, adress, selected toppings, pizza size, and total price.
+         * 
+         * */
+
+        public ICommand PlaceOrderCommand =>
+            new Command(async () =>
+            {
+                ValidateCustomer();
+
+                //if (IsNameProvided)
+                //{
+                //    App.Current.MainPage.DisplayAlert("Thanks for your order", $"Your order Total: Kr. {TotalPizzaPrice}. Email sent", "OK");
+                //}
+                //else { App.Current.MainPage.DisplayAlert("Please Enter name", "No Valid Name", "OK"); }
+                // App.Current.MainPage.DisplayAlert("Thanks for your order", $"Your order Total: Kr. {TotalPizzaPrice}. Email sent", "OK");
+                                
+                
+                // TODO 
+                // About validation https://www.youtube.com/watch?v=sNter79tWb4&ab_channel=FrankLiu
+                // Validation - Use .NET Mau i toolkit -
+                // In the XAML do validation, there is even a regex expression i can use there -
+                // to try and get that involved in my project.
+                // The validation reference. should be in the Command in the ViewModel I think
+                // Check if all Properties of CurrentUser is not empty strings, and then if not -
+                // send a mail to CurrentUser with all information about the pizza
+                // start with the total price
+                // Later implement detaisl about toppings, and size
+            });
+
+        // Validator method
+        private async Task<bool> ValidateCustomer()
         {
-            CurrentCustomer.CustomerName = "Set string to empty";
-            // CurrentCustomer.CustomerName = string.Empty;
+            if (!this.IsNameProvided)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Name is required", "OK");
+                return false;
+            }
+
+            if (!this.IsAddressProvided)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Address is required", "OK");
+                return false;
+            }
+
+            if (!this.IsEmailProvided)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Email is required", "OK");
+                return false;
+            }
+
+            if (!this.IsEmailFormatValid)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Email format not valid", "OK");
+                return false;
+            }
+
+            await Application.Current.MainPage.DisplayAlert("Order Completed", "Check your E-Mail for bill", "OK");
+            return true;
         }
     }
 }
 
 
-// DETTE VAR FØR MVVM TOOLKIT OG DET VIRKET`UNDTAGEN RESET COMMAND
-// Teste passing parameters with shell - Skal lige forstå det her bedre ??
-//[QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
 
-//[AddINotifyPropertyChangedInterface]
-//public class CustomerViewModel
-//{
-//    #region Properties
-//    public Customer CurrentCustomer { get; set; } = new Customer();
-//    public decimal TotalPizzaPrice { get; set; }
-//    #endregion
-
-//    // Clear user Inputs - Try to make use of a UseCase instead
-//    public ICommand ClearUserInfo =>
-//        new Command(() =>
-//        {
-//            CurrentCustomer.CustomerName = string.Empty;
-//        });
-
-//    #region Naviagation        
-//    public ICommand NavigateBack =>
-//        new Command(async () => await Shell.Current.GoToAsync(".."));
-
-//    // new Command(async () => await Shell.Current.GoToAsync($".." ? TotalPizzaPrice ={TotalPizzaPrice}));
-//    #endregion
-
-//    public CustomerViewModel()
-//    {
-
-//    }
-
-//}
-
-
-// NYT TEST MED MVVM TOOLKIT: SOM JEG IKKE RBUGER HJUS AT FJERNE MVVM TOOLKIT
-//[QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
-//public partial class CustomerViewModel : ObservableObject
-//{
-//    #region Properties
-//    [ObservableProperty]
-//    private Customer currentCustomer; // { get; set; } = new Customer();
-
-//    // This may not work since I used another library for the observable object
-
-//    public decimal TotalPizzaPrice { get; set; }
-//    #endregion
-
-//    // Clear user Inputs - Try to make use of a UseCase instead
-//    public ICommand ClearUserInfo =>
-//        new Command(() =>
-//        {
-//            CurrentCustomer.CustomerName = string.Empty;
-//        });
-
-//    #region Naviagation        
-//    public ICommand NavigateBack =>
-//        new Command(async () => await Shell.Current.GoToAsync(".."));
-
-//    // new Command(async () => await Shell.Current.GoToAsync($".." ? TotalPizzaPrice ={TotalPizzaPrice}));
-//    #endregion
-
-//    public CustomerViewModel()
-//    {
-
-//    }
-
-//}

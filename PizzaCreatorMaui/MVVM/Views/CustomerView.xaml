@@ -3,6 +3,7 @@
     x:Class="PizzaCreatorMaui.MVVM.Views.CustomerView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:PizzaCreatorMaui.MVVM.ViewModels"
     x:DataType="vm:CustomerViewModel"
     NavigationPage.HasNavigationBar="False">
@@ -35,33 +36,49 @@
             Text="Fill out billing information please"
             VerticalOptions="Center" />
 
-        <!--  // Må ikke bruges da den laver ny instance af viewmodel  -->
-        <!--<Button
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Clicked="Button_Clicked"
-            Text="Go Back to Create Pizza" />-->
-
         <!--<Label Text="Name"/>-->
-        <Entry 
+        <Entry
             Grid.Row="1"
             Grid.ColumnSpan="2"
+            ClearButtonVisibility="WhileEditing"
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalTextAlignment="Center"
             Placeholder="Name"
             Text="{Binding CurrentCustomer.CustomerName}"
-            VerticalTextAlignment="Center" />
+            VerticalTextAlignment="Center">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior
+                    Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                    IsValid="{Binding IsNameProvided}"
+                    MinimumLength="1"
+                    RegexOptions="IgnoreCase" />
+            </Entry.Behaviors>
+        </Entry>
+
+        <!--
+            Dont think i need this in Behaviors.
+            x:Name="nameValidator"
+        -->
 
         <!--<Label Text="Address" />-->
         <Entry
             Grid.Row="2"
             Grid.ColumnSpan="2"
+            ClearButtonVisibility="WhileEditing"
             FontAttributes="Bold"
             FontSize="Large"
             HorizontalTextAlignment="Center"
             Placeholder="Address"
-            Text="{Binding CurrentCustomer.CustomerAddress}" />
+            Text="{Binding CurrentCustomer.CustomerAddress}">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior
+                    Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                    IsValid="{Binding IsAddressProvided}"
+                    MinimumLength="1"
+                    RegexOptions="None" />
+            </Entry.Behaviors>
+        </Entry>
 
         <!--<Label Text="Phone" />-->
         <Entry
@@ -72,6 +89,7 @@
             HorizontalTextAlignment="Center"
             Keyboard="Telephone"
             Placeholder="Phone"
+            ReturnType="Next"
             Text="{Binding CurrentCustomer.CustomerPhone}" />
 
         <!--<Label Text="Email" />-->
@@ -83,7 +101,21 @@
             HorizontalTextAlignment="Center"
             Keyboard="Email"
             Placeholder="Email"
-            Text="{Binding CurrentCustomer.Email}" />
+            Text="{Binding CurrentCustomer.Email}">
+            <Entry.Behaviors>
+                <toolkit:MultiValidationBehavior Flags="ValidateOnAttaching,ValidateOnValueChanged">
+                    <toolkit:TextValidationBehavior
+                        toolkit:MultiValidationBehavior.Error="Email xxxx is required"
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                        IsValid="{Binding IsEmailProvided}"
+                        MinimumLength="1" />
+                    <toolkit:EmailValidationBehavior
+                        toolkit:MultiValidationBehavior.Error="Email format xxx is invalid."
+                        Flags="ValidateOnAttaching,ValidateOnValueChanged"
+                        IsValid="{Binding IsEmailFormatValid}" />
+                </toolkit:MultiValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
 
 
         <!--  Parameter from CreatePizzaView  -->
@@ -105,7 +137,7 @@
             Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
 
         <!--  Reset all user inputs  -->
-        <Button 
+        <Button
             Grid.Row="7"
             Grid.Column="0"
             Margin="2"
@@ -131,6 +163,7 @@
             Grid.Row="8"
             Grid.Column="1"
             Margin="2"
+            Command="{Binding PlaceOrderCommand}"
             Text="Place Order" />
     </Grid>
 

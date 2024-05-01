@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using PizzaCreatorMaui.MVVM.ViewModels;
 using PizzaCreatorMaui.MVVM.Views;
+
 
 namespace PizzaCreatorMaui
 {
@@ -11,11 +13,15 @@ namespace PizzaCreatorMaui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            // using for validation in CustomerView Entry's
+            builder.UseMauiApp<App>().UseMauiCommunityToolkit();
+
 
             // I Think this works as long as i only navigate within the shell scope
             // Injecting ViewModels - When ever a class ask for a ViewModel

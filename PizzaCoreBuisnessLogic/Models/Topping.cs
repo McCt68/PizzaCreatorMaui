@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// NOT USED YET - BE AWARE WHERE THE MODEL I USE COME FROM !
+
 namespace PizzaCoreBuisnessLogic.Models
 { 
     public class Topping
