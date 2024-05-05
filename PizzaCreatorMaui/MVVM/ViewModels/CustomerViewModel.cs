@@ -68,7 +68,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         public ICommand PlaceOrderCommand =>
             new Command(async () =>
             {
-                ValidateCustomer();
+                // This works
+                 //ValidateCustomer();
+                await ValidateCustomer();
+
+                // Make method call here that specifies the customer name, and the -
+                // toppings and size choosed, as well as the total price
 
                 //if (IsNameProvided)
                 //{
@@ -119,6 +124,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
             await Application.Current.MainPage.DisplayAlert("Order Completed", "Check your E-Mail for bill", "OK");
             return true;
+        }
+
+        // Calculate order price and details
+        private async Task<decimal> CalculateOrderDetails()
+        {
+            return 5;
         }
     }
 }

@@ -14,6 +14,8 @@ namespace PizzaCoreBuisnessLogic.UseCases
     {
         private readonly LocalToppingsData _data;
 
+
+        // TRy to use defualt ctor
         public LoadToppingsUseCase(LocalToppingsData data)
         {
             this._data = data;
@@ -22,7 +24,7 @@ namespace PizzaCoreBuisnessLogic.UseCases
         }
         public async Task<ObservableCollection<Topping>> LoadToppingsAsync()
         {
-            await Task.Delay(1000);
+            await Task.Delay(1000);            
             return _data.GetLocalToppingsData();
         }
         

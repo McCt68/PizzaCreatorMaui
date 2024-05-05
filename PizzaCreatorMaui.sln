@@ -5,9 +5,7 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaCreatorMaui", "PizzaCreatorMaui\PizzaCreatorMaui.csproj", "{7E23F440-C6FC-4451-9771-F1C51FB6A24B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaWebApi", "PizzaWebApi\PizzaWebApi.csproj", "{D24E77BD-B423-47A2-8592-ADAF5EE861CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaCoreBuisnessLogic", "PizzaCoreBuisnessLogic\PizzaCoreBuisnessLogic.csproj", "{BD66453F-29E5-4BC8-9B60-26C06AD1070C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaCoreBuisnessLogic", "PizzaCoreBuisnessLogic\PizzaCoreBuisnessLogic.csproj", "{BD66453F-29E5-4BC8-9B60-26C06AD1070C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{7E23F440-C6FC-4451-9771-F1C51FB6A24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E23F440-C6FC-4451-9771-F1C51FB6A24B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E23F440-C6FC-4451-9771-F1C51FB6A24B}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{D24E77BD-B423-47A2-8592-ADAF5EE861CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D24E77BD-B423-47A2-8592-ADAF5EE861CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D24E77BD-B423-47A2-8592-ADAF5EE861CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D24E77BD-B423-47A2-8592-ADAF5EE861CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD66453F-29E5-4BC8-9B60-26C06AD1070C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD66453F-29E5-4BC8-9B60-26C06AD1070C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD66453F-29E5-4BC8-9B60-26C06AD1070C}.Release|Any CPU.ActiveCfg = Release|Any CPU

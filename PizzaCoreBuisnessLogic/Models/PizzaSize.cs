@@ -22,7 +22,7 @@ namespace PizzaCoreBuisnessLogic.Models
         public decimal Price { get; set; }
 
 
-        // Defualt constrcutor this works
+        // Default constrcutor this works
         public PizzaSize()
         {
 

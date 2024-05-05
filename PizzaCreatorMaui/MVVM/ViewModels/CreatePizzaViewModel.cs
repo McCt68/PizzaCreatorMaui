@@ -1,6 +1,7 @@
 ﻿using PizzaCoreBuisnessLogic.Data;
+using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.UseCases;
-using PizzaCreatorMaui.MVVM.Models;
+// using PizzaCreatorMaui.MVVM.Models;
 using PizzaCreatorMaui.MVVM.Views;
 using PizzaCreatorMaui.Services;
 using PizzaCreatorMaui.Utilities;
@@ -12,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
+using Topping = PizzaCoreBuisnessLogic.Models.Topping;
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
 {   
@@ -27,17 +30,8 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
     public class CreatePizzaViewModel
-    {
-        // TODO !
-        /*
-         * I should load the model data (Always empty when the app initializes) -
-         * instead of defining the list in the constrcutor.
-         * */
-
-        #region CarouselViewBinding
-
-        // private decimal _pizzaSizePrice;
-
+    {       
+        #region PizzaSize       
         public decimal PizzaSizePrice { get; set; } = decimal.Zero;
         public PizzaSize CurrentCarouselItem { get; set; } // = new PizzaSize(PizzaSize.Sizes.Medium, 40m);
         public ObservableCollection<PizzaSize> PizzaSizes { get; set; } // = new ObservableCollection<PizzaSize>(); 
@@ -49,12 +43,21 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             });
         #endregion
 
-        #region ToppingsPrice
-        public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();       
-                       
-        
+        #region Toppings
+
+        // This works with the Topping from this project
+        //public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
+
+        // Using the Model from CoreBuisness Project instead
+        public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
+
+
         // MÅSKE SKAL DENNE IKKE VÆRE NEW; MEN SÆTTES I CONSTRUCTOR TIL AT LOADE FRA USECASE
-        public ObservableCollection<Topping> Toppings { get; set; } = new ObservableCollection<Topping>();
+        // DENNE VIRKER MED MODEL FRA DET HER PROJECT
+        // public ObservableCollection<Topping> Toppings { get; set; } // = new ObservableCollection<Topping>();
+
+        // PRØVER AT BRUGE MODEL FRA COREBUISNESS PROJECT
+        public ObservableCollection<Topping> Toppings { get; set; }
 
 
         // Property used for handling the SelectedToppings from the CollectionView in the XAML file
@@ -82,7 +85,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
          * Immediate Initialization:
          *      The => syntax is a method expression that initializes the property immediately -
          *      with the value returned by the expression on the right-hand side.
-         *      *      
+         *            
          *  Command Creation:
          *      new Command<object>((obj) => ...) creates a new Command object, specifying that it expects -
          *      an argument of type object when executed. The (obj) => ... part is a lambda expression -
@@ -105,14 +108,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                         UserSelectedToppings.Add((Topping)topping);
                     }
 
-                    TotalToppingsPrice = UserSelectedToppings.Sum(x => x.ToppingPrice); //  + CurrentCarouselItem.Price;
+                    TotalToppingsPrice = UserSelectedToppings.Sum(x => x.ToppingPrice); 
                     TotalPizzaPrice = TotalToppingsPrice + PizzaSizePrice;
                 }
                 else
                 {
-                    TotalToppingsPrice = 0m;
-                    //CurrentCarouselItem.Price;
-                    // TotalPizzaPrice = 0m;
+                    TotalToppingsPrice = 0m;                    
                     UserSelectedToppings.Clear();
 
                     TotalPizzaPrice = PizzaSizePrice + TotalToppingsPrice;
@@ -121,33 +122,40 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         #endregion
 
 
-
         // This should be set to the total of size + toppings price
-        public decimal TotalPizzaPrice { get; set; } = new(); // New way of doing the same, it implicity knows its a decimal
+        public decimal TotalPizzaPrice { get; set; } = new(); // Implicity knows its a decimal. set to defualt value zero
 
         // Trying with simple DI to inject the ToppingImpl
         //public CreatePizzaViewModel(IToppings localToppings)
         public CreatePizzaViewModel()
         {            
+            // THIS WORKS FROM MAUI PROJECT
+            //this.PizzaSizes = new ObservableCollection<PizzaSize>()
+            //{
+            //    new PizzaSize (PizzaSize.Sizes.Small, 35m),
+            //    new PizzaSize (PizzaSize.Sizes.Medium, 40m),
+            //    new PizzaSize (PizzaSize.Sizes.Large, 45m)                
+            //};
 
+            // SIZE FROM COREBUISNEES
+            // this.PizzaSizes = new ObservableCollection<PizzaCoreBuisnessLogic.Models.PizzaSize>()
             this.PizzaSizes = new ObservableCollection<PizzaSize>()
             {
                 new PizzaSize (PizzaSize.Sizes.Small, 35m),
                 new PizzaSize (PizzaSize.Sizes.Medium, 40m),
-                new PizzaSize (PizzaSize.Sizes.Large, 45m)                
+                new PizzaSize (PizzaSize.Sizes.Large, 45m)
             };
 
-            // TEST NEW CODE HERE. CAN DELE
-            //LocalToppingsData localData = new LoadToppingsUseCase(LocalToppingsData.);
-            //localData.GetLocalToppingsData();
+            // Initial list of Toppings FROM MAUI PROJECT
+            //ToppingImpl localToppings = new ToppingImpl();
+            //this.Toppings = localToppings.GetToppings();       
 
-            //this.Toppings = localData.GetLocalToppingsData();
-
-            // TESTING USE CASES. OLD CODE HERE DO NOT DELETE THIS
-            ToppingImpl localToppings = new ToppingImpl();
-            this.Toppings = localToppings.GetToppings();
-            // TEST ENDED
-
+            // TRYING TO USE TOPPINGS FROM COREBUISNESS
+            LocalToppingsData localToppingsData = new LocalToppingsData();
+            LoadToppingsUseCase localtoppings = new LoadToppingsUseCase(localToppingsData);
+            // LoadToppingsUseCase localtoppings = new LoadToppingsUseCase();
+            this.Toppings = localToppingsData.GetLocalToppingsData();
+            //this.Toppings = localtoppings.LoadToppingsAsync();
 
             // Set the Initial Pizza size to medium
             CurrentCarouselItem = PizzaSizes[1];     
@@ -157,10 +165,8 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             TotalPizzaPrice = CurrentCarouselItem.Price + TotalToppingsPrice;            
         }
 
-        // Testing navigation with shell        
-        public ICommand NavigateToCustomer =>            
-            // new Command(async() => await Shell.Current.GoToAsync(nameof(CustomerView)));
-
+        // Navigation with shell        
+        public ICommand NavigateToCustomer =>                     
             new Command(async() => await Shell.Current.GoToAsync($"{nameof(CustomerView)}?TotalPizzaPrice={TotalPizzaPrice}"));
     }
 }

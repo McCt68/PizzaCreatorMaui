@@ -12,12 +12,7 @@ namespace PizzaCoreBuisnessLogic.Models
     {
         public int Id { get; set; }
         public string ToppingName { get; set; }
-        public decimal ToppingPrice { get; set; }
-        //public string ToppingImage { get; set; }
-
-        // Testing another type
-        public Color ToppingImage { get; set; } // Det her virker !
-
-        // public ImageSource ToppingImage1 { get; set; } // Måske den her type ?
+        public decimal ToppingPrice { get; set; }        
+        public Color ToppingImage { get; set; } 
     }
 }

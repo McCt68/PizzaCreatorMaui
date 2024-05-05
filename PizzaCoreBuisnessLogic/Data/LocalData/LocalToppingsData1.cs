@@ -1,5 +1,5 @@
-﻿using PizzaCoreBuisnessLogic.Models;
-using PizzaCoreBuisnessLogic.Utilities;
+﻿using PizzaCoreBuisnessLogic.Utilities;
+using PizzaCoreBuisnessLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaCoreBuisnessLogic.Data
+namespace PizzaCoreBuisnessLogic.Data.LocalData
 {
-    public class LocalToppingsData
+    public class LocalToppingsData1
     {
-
         // MAYBE the construtor of this class should return the Observablecollection of topings
         public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
 

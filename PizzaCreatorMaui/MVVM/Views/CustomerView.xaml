@@ -43,6 +43,7 @@
             ClearButtonVisibility="WhileEditing"
             FontAttributes="Bold"
             FontSize="Large"
+            ReturnType="Next" 
             HorizontalTextAlignment="Center"
             Placeholder="Name"
             Text="{Binding CurrentCustomer.CustomerName}"
@@ -68,6 +69,7 @@
             ClearButtonVisibility="WhileEditing"
             FontAttributes="Bold"
             FontSize="Large"
+            ReturnType="Next"
             HorizontalTextAlignment="Center"
             Placeholder="Address"
             Text="{Binding CurrentCustomer.CustomerAddress}">
