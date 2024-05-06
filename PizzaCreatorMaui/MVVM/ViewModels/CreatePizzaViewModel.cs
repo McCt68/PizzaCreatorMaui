@@ -1,7 +1,7 @@
 ﻿using PizzaCoreBuisnessLogic.Data;
+using PizzaCoreBuisnessLogic.Data.DataFactory;
 using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.UseCases;
-// using PizzaCreatorMaui.MVVM.Models;
 using PizzaCreatorMaui.MVVM.Views;
 using PizzaCreatorMaui.Services;
 using PizzaCreatorMaui.Utilities;
@@ -13,8 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
-using Topping = PizzaCoreBuisnessLogic.Models.Topping;
+// using Topping = PizzaCoreBuisnessLogic.Models.Topping;
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
 {   
@@ -128,41 +127,26 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         // Trying with simple DI to inject the ToppingImpl
         //public CreatePizzaViewModel(IToppings localToppings)
         public CreatePizzaViewModel()
-        {            
-            // THIS WORKS FROM MAUI PROJECT
-            //this.PizzaSizes = new ObservableCollection<PizzaSize>()
-            //{
-            //    new PizzaSize (PizzaSize.Sizes.Small, 35m),
-            //    new PizzaSize (PizzaSize.Sizes.Medium, 40m),
-            //    new PizzaSize (PizzaSize.Sizes.Large, 45m)                
-            //};
-
-            // SIZE FROM COREBUISNEES
-            // this.PizzaSizes = new ObservableCollection<PizzaCoreBuisnessLogic.Models.PizzaSize>()
+        {                       
+            // This should not be declared here, but loaded from the corebuisness model instead
             this.PizzaSizes = new ObservableCollection<PizzaSize>()
             {
                 new PizzaSize (PizzaSize.Sizes.Small, 35m),
                 new PizzaSize (PizzaSize.Sizes.Medium, 40m),
                 new PizzaSize (PizzaSize.Sizes.Large, 45m)
-            };
-
-            // Initial list of Toppings FROM MAUI PROJECT
-            //ToppingImpl localToppings = new ToppingImpl();
-            //this.Toppings = localToppings.GetToppings();       
-
-            // TRYING TO USE TOPPINGS FROM COREBUISNESS
-            LocalToppingsData localToppingsData = new LocalToppingsData();
-            LoadToppingsUseCase localtoppings = new LoadToppingsUseCase(localToppingsData);
-            // LoadToppingsUseCase localtoppings = new LoadToppingsUseCase();
-            this.Toppings = localToppingsData.GetLocalToppingsData();
-            //this.Toppings = localtoppings.LoadToppingsAsync();
+            };                           
+            
+            // TRYING TO GET TOPPINGS FROM COREBUISNESS FACTORY WAY            
+            ObservableCollection<Topping> toppingsTask1 = ToppingsDataFactory<LocalToppingsData1>.GetToppingsData(new LocalToppingsData1());
+            Toppings = toppingsTask1;
+            // END FACTORY TRY
 
             // Set the Initial Pizza size to medium
             CurrentCarouselItem = PizzaSizes[1];     
             PizzaSizePrice = CurrentCarouselItem.Price;
 
             // Total price - Maybe try and retrive this from the useCase in the Class Library
-            TotalPizzaPrice = CurrentCarouselItem.Price + TotalToppingsPrice;            
+            TotalPizzaPrice = CurrentCarouselItem.Price + TotalToppingsPrice;             
         }
 
         // Navigation with shell        
@@ -170,3 +154,25 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             new Command(async() => await Shell.Current.GoToAsync($"{nameof(CustomerView)}?TotalPizzaPrice={TotalPizzaPrice}"));
     }
 }
+
+/* Stuff from Consctructor that was tested or old ways of doing things
+ * 
+ * // THIS WORKS FROM MAUI PROJECT
+            //this.PizzaSizes = new ObservableCollection<PizzaSize>()
+            //{
+            //    new PizzaSize (PizzaSize.Sizes.Small, 35m),
+            //    new PizzaSize (PizzaSize.Sizes.Medium, 40m),
+            //    new PizzaSize (PizzaSize.Sizes.Large, 45m)                
+            //};
+
+ * // CAN BE DELETED IF NOT USING MODEL AND BUISNESS FROM MAUI PROJECT
+            // Initial list of Toppings FROM MAUI PROJECT
+            //ToppingImpl localToppings = new ToppingImpl();
+            //this.Toppings = localToppings.GetToppings();
+
+// USING TOPPINGS FROM COREBUISNESS
+            //LocalToppingsData localToppingsData = new LocalToppingsData(); 
+            //LoadToppingsUseCase localtoppings = new LoadToppingsUseCase(localToppingsData);             
+            //this.Toppings = localToppingsData.GetLocalToppingsData();
+            // END TRY THAT WORKED
+ * */

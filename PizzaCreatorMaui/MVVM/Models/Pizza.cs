@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace PizzaCreatorMaui.MVVM.Models
 {
-    public class Pizza
-    {
+    // I COMMENT OUT THIS CODE - TO BE USRE THE MODEL COMES FROM CORE BUISNESS
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public PizzaSize Size { get; set; }
-        public List<Topping> Toppings{ get; set; }
-    }
+    // I DONT THINK THIS IS USED ANYWHERE ANYWAY
+   
+    //public class Pizza
+    //{
+
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //    public decimal Price { get; set; }
+    //    public PizzaSize Size { get; set; }
+    //    public List<Topping> Toppings{ get; set; }
+    //}
 }

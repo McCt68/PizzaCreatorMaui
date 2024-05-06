@@ -1,5 +1,5 @@
-﻿using PizzaCoreBuisnessLogic.Utilities;
-using PizzaCoreBuisnessLogic.Models;
+﻿using PizzaCoreBuisnessLogic.Models;
+using PizzaCoreBuisnessLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,17 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaCoreBuisnessLogic.Data.LocalData
+namespace PizzaCoreBuisnessLogic.Data.DataFactory
 {
-    public class LocalToppingsData1
+    public class LocalToppingsData1 : BaseToppingsData
     {
-        // MAYBE the construtor of this class should return the Observablecollection of topings
-        public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
+        public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();        
 
-        public ObservableCollection<Topping> GetLocalToppingsData()
-        {
+        public override ObservableCollection<Topping>GetToppingsData()
+        {            
             return new ObservableCollection<Topping>
                 {
+                new Topping
+                    {
+                       ToppingName = "From Non Async Factory",
+                       ToppingPrice = 120m,
+                       ToppingImage = TestColor.GetRandomColor()
+                    },
                  new Topping
                     {
                        ToppingName = "Test From Core",
@@ -84,7 +89,7 @@ namespace PizzaCoreBuisnessLogic.Data.LocalData
                        ToppingPrice = 12m,
                        ToppingImage = TestColor.GetRandomColor()
                     }
-            };
+            };            
         }
     }
 }

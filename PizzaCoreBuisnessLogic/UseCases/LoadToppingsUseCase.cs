@@ -1,32 +1,45 @@
-﻿using PizzaCoreBuisnessLogic.Data;
-using PizzaCoreBuisnessLogic.Models;
-using PizzaCoreBuisnessLogic.UseCases.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using PizzaCoreBuisnessLogic.Data;
+//using PizzaCoreBuisnessLogic.Models;
+//using PizzaCoreBuisnessLogic.UseCases.Interfaces;
+//using System;
+//using System.Collections.Generic;
+//using System.Collections.ObjectModel;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace PizzaCoreBuisnessLogic.UseCases
-{
-    public class LoadToppingsUseCase : ILoadToppingsUseCase
-    {
-        private readonly LocalToppingsData _data;
+//namespace PizzaCoreBuisnessLogic.UseCases
+//{
+//    public class LoadToppingsUseCase : ILoadToppingsUseCase
+//    {
+//        private readonly LocalToppingsData _data;
 
+//        // try another constrcutor without parameters
+//        public LoadToppingsUseCase()
+//        {            
+//            LoadToppingsAsync();
+//        }
 
-        // TRy to use defualt ctor
-        public LoadToppingsUseCase(LocalToppingsData data)
-        {
-            this._data = data;
-            _data = new LocalToppingsData();
-            _data.GetLocalToppingsData();
-        }
-        public async Task<ObservableCollection<Topping>> LoadToppingsAsync()
-        {
-            await Task.Delay(1000);            
-            return _data.GetLocalToppingsData();
-        }
+//        public LoadToppingsUseCase(LocalToppingsData data)
+//        {
+//            this._data = data;
+//            _data = new LocalToppingsData();
+//            _data.GetLocalToppingsData();
+//        }
+//        public async Task<ObservableCollection<Topping>> LoadToppingsAsync()
+//        { 
+//            // THIS WORKS
+//            await Task.Delay(1000);
+            
+//            return _data.GetLocalToppingsData();
+
+//            // maybe i can use the data from factory in here ? - try to do it from a duplicate method instead
+//            // from another implementation of ILoadToppingsUSeCase
+//        }
+
+       
+
         
-    }
-}
+        
+//    }
+//}

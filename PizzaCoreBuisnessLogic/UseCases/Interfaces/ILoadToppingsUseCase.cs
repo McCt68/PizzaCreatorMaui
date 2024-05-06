@@ -10,9 +10,8 @@ namespace PizzaCoreBuisnessLogic.UseCases.Interfaces
 {
     public interface ILoadToppingsUseCase
     {
-
         // Virker
-        Task<ObservableCollection<Topping>> LoadToppingsAsync();        
-        // Task<ObservableCollection<Topping>> LoadToppingsAsync();        
+        Task<ObservableCollection<Topping>> LoadToppingsAsync();       
+                
     }
 }
