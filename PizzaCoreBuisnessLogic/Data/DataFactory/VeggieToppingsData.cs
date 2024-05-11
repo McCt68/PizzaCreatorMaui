@@ -1,32 +1,21 @@
 ﻿using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaCoreBuisnessLogic.Data.DataFactory
 {
-    public class LocalToppingsData1 : BaseToppingsData
+    public class VeggieToppingsData : BaseToppingsData
     {
-        public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();        
+        public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
 
-        public override ObservableCollection<Topping>GetToppingsData()
-        {            
+        public override ObservableCollection<Topping> GetToppingsData()        
+        {
             return new ObservableCollection<Topping>
                 {
-                new Topping
-                    {
-                       ToppingName = "From Non Async Factory",
-                       ToppingPrice = 120m,
-                       ToppingImage = TestColor.GetRandomColor()
-                    },
                  new Topping
                     {
-                       ToppingName = "Test From Core",
-                       ToppingPrice = 120m,
+                       ToppingName = "VeggieToppings",
+                       ToppingPrice = 1m,
                        ToppingImage = TestColor.GetRandomColor()
                     },
                 new Topping
@@ -37,7 +26,7 @@ namespace PizzaCoreBuisnessLogic.Data.DataFactory
                     },
                 new Topping
                     {
-                        ToppingName = "Ham",
+                        ToppingName = "Chili",
                         ToppingPrice = 15m,
                         ToppingImage = TestColor.GetRandomColor()
                     },
@@ -49,7 +38,7 @@ namespace PizzaCoreBuisnessLogic.Data.DataFactory
                     },
                 new Topping
                     {
-                    ToppingName = "Shrimps",
+                    ToppingName = "Aurbergine",
                     ToppingPrice = 15m,
                     ToppingImage = TestColor.GetRandomColor()
                     },
@@ -61,7 +50,7 @@ namespace PizzaCoreBuisnessLogic.Data.DataFactory
                     },
                 new Topping
                     {
-                    ToppingName = "Tuna",
+                    ToppingName = "Mushrooms",
                     ToppingPrice = 15m,
                     ToppingImage = TestColor.GetRandomColor()
                     },
@@ -70,26 +59,8 @@ namespace PizzaCoreBuisnessLogic.Data.DataFactory
                     ToppingName = "Tomatos",
                     ToppingPrice = 8m,
                     ToppingImage = TestColor.GetRandomColor()
-                    },
-                 new Topping
-                    {
-                     ToppingName = "Egg",
-                     ToppingPrice = 8m,
-                     ToppingImage = TestColor.GetRandomColor()
-                    },
-                  new Topping
-                    {
-                      ToppingName = "Extra Cheese",
-                      ToppingPrice = 8m,
-                      ToppingImage = TestColor.GetRandomColor()
-                    },
-                   new Topping
-                    {
-                       ToppingName = "Bacon",
-                       ToppingPrice = 12m,
-                       ToppingImage = TestColor.GetRandomColor()
-                    }
-            };            
+                    }                 
+            };
         }
     }
 }

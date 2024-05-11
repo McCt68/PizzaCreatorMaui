@@ -23,22 +23,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            
-        </Grid.RowDefinitions>
 
-        <!--  OLD STYLE HERE THAT WORKS ON PC; NOT ON PHONE  -->
-        <!--<Grid Margin="2" Padding="2" RowSpacing="4">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="200" />
-            <RowDefinition Height="15" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="300" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-        </Grid.RowDefinitions>-->
+        </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -112,6 +98,23 @@
             SelectedIndicatorColor="DarkOrange"
             VerticalOptions="Center" />
 
+        <!--  TESTING Switch  -->
+        <Switch
+            Grid.Row="2"
+            Grid.Column="0"
+            HorizontalOptions="Center"
+            IsToggled="{Binding IsVeggieSwitchOn}"
+            OnColor="darkOrange"
+            ThumbColor="Red" />
+
+        <!--  Testing Activity Indicator  -->
+        <ActivityIndicator
+            Grid.Row="2"
+            HorizontalOptions="End"
+            IsRunning="{Binding IsToppingsDataLoading}"
+            VerticalOptions="Center"
+            Color="BlueViolet" />
+
 
         <!--  Binding to a Property in the ViewModel. After i set the Binding Context in the .cs file of this class  -->
         <CollectionView
@@ -121,7 +124,7 @@
             ItemsSource="{Binding Toppings}"
             SelectedItems="{Binding SelectedToppingsList}"
             SelectionChangedCommand="{Binding PizzaToppingsChangedCommand}"
-            SelectionMode="Multiple">            
+            SelectionMode="Multiple">
 
             <!--  How each item in CollectionView should look  -->
             <CollectionView.ItemTemplate>
@@ -192,7 +195,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!--  Vise samlet Pris test  -->
+        <!--  Vise priser  -->
         <Label
             Grid.Row="6"
             Grid.ColumnSpan="2"
@@ -202,7 +205,6 @@
             Text="{Binding TotalPizzaPrice, StringFormat='{0:Total kr #,##0.00}'}"
             VerticalOptions="Center" />
 
-        <!--  TEST med priser  -->
         <Label
             Grid.Row="4"
             Grid.ColumnSpan="2"
@@ -221,23 +223,18 @@
             Text="{Binding PizzaSizePrice, StringFormat='{0:Size Price kr #,##0.00}'}"
             VerticalOptions="Center" />
 
-        <!--  END TEST  -->
 
-        <Button
-            Grid.Row="7"
-            Grid.Column="0"
-            Margin="2"
-            Padding="4"
-            Text="Reset all" />
+
+
 
         <!--  Navigation using Shell from ViewModel  -->
         <Button
             Grid.Row="7"
-            Grid.Column="1"
+            Grid.ColumnSpan="2"
             Margin="2"
             Padding="4"
             Command="{Binding NavigateToCustomer}"
-            Text="ShellNav To Customer" />
+            Text="Proceed" />
 
 
 

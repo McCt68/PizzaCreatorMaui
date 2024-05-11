@@ -1,22 +1,13 @@
-﻿using PizzaCoreBuisnessLogic.Data;
-using PizzaCoreBuisnessLogic.Data.DataFactory;
+﻿using PizzaCoreBuisnessLogic.Data.DataFactory;
 using PizzaCoreBuisnessLogic.Models;
-using PizzaCoreBuisnessLogic.UseCases;
 using PizzaCreatorMaui.MVVM.Views;
-using PizzaCreatorMaui.Services;
-using PizzaCreatorMaui.Utilities;
 using PropertyChanged;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-// using Topping = PizzaCoreBuisnessLogic.Models.Topping;
+
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
-{   
+{
     // Using Nuget Package PropertyChanged.Fody - Implement INotifyPropertyChanged behind the schenes -
     // Avoiding to much boiler plate code.
     // In each Property within this class the execution of OnPropertyChanged is -
@@ -29,7 +20,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
     public class CreatePizzaViewModel
-    {       
+    {        
         #region PizzaSize       
         public decimal PizzaSizePrice { get; set; } = decimal.Zero;
         public PizzaSize CurrentCarouselItem { get; set; } // = new PizzaSize(PizzaSize.Sizes.Medium, 40m);
@@ -43,11 +34,36 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         #endregion
 
         #region Toppings
+                     
+        private bool _isVeggieSwitchOn;
 
-        // This works with the Topping from this project
-        //public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
+        private bool _isToppingsDataLoading;
 
-        // Using the Model from CoreBuisness Project instead
+        public bool IsToppingsDataLoading
+        {
+            get => _isToppingsDataLoading;
+            set
+            {
+                _isToppingsDataLoading = value;
+                // LoadData();
+            }
+        }
+        public bool IsVeggieSwitchOn
+        {
+            get
+            { return _isVeggieSwitchOn; }
+            set
+            {
+                _isVeggieSwitchOn = value;
+                LoadData();
+                ToppingsSelector();
+            }
+        }    
+        
+
+
+        // Using the Model from CoreBuisness Project 
+        public ObservableCollection<Topping> Toppings { get; set; }
         public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
 
 
@@ -56,7 +72,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         // public ObservableCollection<Topping> Toppings { get; set; } // = new ObservableCollection<Topping>();
 
         // PRØVER AT BRUGE MODEL FRA COREBUISNESS PROJECT
-        public ObservableCollection<Topping> Toppings { get; set; }
+        
 
 
         // Property used for handling the SelectedToppings from the CollectionView in the XAML file
@@ -134,12 +150,18 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 new PizzaSize (PizzaSize.Sizes.Small, 35m),
                 new PizzaSize (PizzaSize.Sizes.Medium, 40m),
                 new PizzaSize (PizzaSize.Sizes.Large, 45m)
-            };                           
-            
-            // TRYING TO GET TOPPINGS FROM COREBUISNESS FACTORY WAY            
-            ObservableCollection<Topping> toppingsTask1 = ToppingsDataFactory<LocalToppingsData1>.GetToppingsData(new LocalToppingsData1());
-            Toppings = toppingsTask1;
-            // END FACTORY TRY
+            };
+
+            // TODO MAKE SWITCH SO USER CAN SELECT BETWEEN VEGIE AND MIXED
+
+            // VeggieToppings
+            //ObservableCollection<Topping> veggieToppings = ToppingsDataFactory<VeggieToppingsData>.GetToppingsData(new VeggieToppingsData());
+            //Toppings = veggieToppings;
+
+            // MixedToppings
+            ObservableCollection<Topping> MixedToppings = ToppingsDataFactory<MixedToppingsData>.GetToppingsData(new MixedToppingsData());
+            Toppings = MixedToppings;
+
 
             // Set the Initial Pizza size to medium
             CurrentCarouselItem = PizzaSizes[1];     
@@ -147,6 +169,37 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
             // Total price - Maybe try and retrive this from the useCase in the Class Library
             TotalPizzaPrice = CurrentCarouselItem.Price + TotalToppingsPrice;             
+        }
+
+        // Method for selecting toppings with the switch
+        private void ToppingsSelector()
+        {            
+            ObservableCollection<Topping> VeggieToppings = ToppingsDataFactory<VeggieToppingsData>.GetToppingsData(new VeggieToppingsData());
+            ObservableCollection<Topping> MixedToppings = ToppingsDataFactory<MixedToppingsData>.GetToppingsData(new MixedToppingsData());
+
+            if (IsVeggieSwitchOn)
+            {
+                
+                this.Toppings.Clear();
+                this.Toppings = VeggieToppings;
+                this.TotalPizzaPrice = 0;
+            }
+            else
+            {
+                this.Toppings.Clear();
+                this.Toppings = MixedToppings;
+                this.TotalPizzaPrice = 0;
+            }
+        }
+        // Method for showing the user that data is loading while he switch toppings type
+
+        public async Task LoadData()
+        {
+            IsToppingsDataLoading = true;
+            // Your data loading logic here (e.g., API call, database access)
+            await Task.Delay(5000); // Simulate data loading time
+                                    // Update your data source
+            IsToppingsDataLoading = false;
         }
 
         // Navigation with shell        
