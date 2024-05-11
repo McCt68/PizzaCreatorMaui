@@ -152,20 +152,7 @@
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
                             HeightRequest="100"
-                            Source="{Binding Source={x:Reference RandomColoredCircle}}" />
-                        <!--  Source="{Binding ToppingImage}" />  -->
-
-                        <!--<Image
-    Grid.RowSpan="2"
-    Grid.Column="0"
-    Grid.ColumnSpan="2"
-    HeightRequest="100"
-    Source="{Binding Source={x:Reference RandomColoredCircle}}" />-->
-
-                        <!--
-                            this works as Image Source
-                            Source="{Binding ToppingImage}" />
-                        -->
+                            Source="{Binding Source={x:Reference RandomColoredCircle}}" />                        
 
                         <Ellipse
                             x:Name="RandomColoredCircle"

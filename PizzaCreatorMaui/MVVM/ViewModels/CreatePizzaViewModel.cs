@@ -158,9 +158,18 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             //ObservableCollection<Topping> veggieToppings = ToppingsDataFactory<VeggieToppingsData>.GetToppingsData(new VeggieToppingsData());
             //Toppings = veggieToppings;
 
-            // MixedToppings
+            // MixedToppings - THIS WORKS ------
             ObservableCollection<Topping> MixedToppings = ToppingsDataFactory<MixedToppingsData>.GetToppingsData(new MixedToppingsData());
             Toppings = MixedToppings;
+
+            //-------------------- TEST START
+
+            // TRYING TO  USE THE CASE WHERE THE MODEL IMGAE IS A TYPE STRING
+            // MixedToppings
+            //ObservableCollection<Topping> ToppingsDataColorAsString = ToppingsDataFactory<ToppingsDataColorAsString>.GetToppingsData(new ToppingsDataColorAsString());
+            //Toppings = ToppingsDataColorAsString;
+
+            //---- TEST END
 
 
             // Set the Initial Pizza size to medium

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PizzaCoreBuisnessLogic.Utilities
-{
+{    
     public class RandomColorGenerator
     {
         public Color GetRandomColor()
