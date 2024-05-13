@@ -122,13 +122,14 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 return false;
             }
 
-            await Application.Current.MainPage.DisplayAlert("Order Completed", "Check your E-Mail for bill", "OK");
+            await Application.Current.MainPage.DisplayAlert("Order Completed", $"Your Total is: {TotalPizzaPrice} Kr.", "OK");
             return true;
         }
 
         // Calculate order price and details
         private async Task<decimal> CalculateOrderDetails()
         {
+            
             return 5;
         }
     }

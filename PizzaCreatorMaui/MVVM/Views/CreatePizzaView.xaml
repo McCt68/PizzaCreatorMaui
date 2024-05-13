@@ -101,19 +101,28 @@
         <!--  TESTING Switch  -->
         <Switch
             Grid.Row="2"
-            Grid.Column="0"
+            Grid.Column="1"
             HorizontalOptions="Center"
             IsToggled="{Binding IsVeggieSwitchOn}"
             OnColor="darkOrange"
             ThumbColor="Red" />
 
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            HorizontalOptions="End"
+            Text="Switch toppings type."
+            VerticalOptions="Center" />
+
         <!--  Testing Activity Indicator  -->
-        <ActivityIndicator
+        <!--<ActivityIndicator
             Grid.Row="2"
             HorizontalOptions="End"
             IsRunning="{Binding IsToppingsDataLoading}"
             VerticalOptions="Center"
-            Color="BlueViolet" />
+            Color="BlueViolet" />-->
 
 
         <!--  Binding to a Property in the ViewModel. After i set the Binding Context in the .cs file of this class  -->
@@ -152,7 +161,7 @@
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
                             HeightRequest="100"
-                            Source="{Binding Source={x:Reference RandomColoredCircle}}" />                        
+                            Source="{Binding Source={x:Reference RandomColoredCircle}}" />
 
                         <Ellipse
                             x:Name="RandomColoredCircle"
@@ -210,10 +219,6 @@
             Text="{Binding PizzaSizePrice, StringFormat='{0:Size Price kr #,##0.00}'}"
             VerticalOptions="Center" />
 
-
-
-
-
         <!--  Navigation using Shell from ViewModel  -->
         <Button
             Grid.Row="7"
@@ -222,14 +227,5 @@
             Padding="4"
             Command="{Binding NavigateToCustomer}"
             Text="Proceed" />
-
-
-
-        <!--  Navigation using .cs code behind file  -->
-        <!--<Button
-            Grid.Row="5"
-            Grid.Column="1"
-            Clicked="NavigateToCustomerForm"
-            Text="Order Pizza" />-->
     </Grid>
 </ContentPage>

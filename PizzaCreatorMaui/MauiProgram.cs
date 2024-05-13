@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 // using PizzaCoreBuisnessLogic.Data;
 using PizzaCoreBuisnessLogic.Data.DataFactory;
+using PizzaCoreBuisnessLogic.Models;
 using PizzaCreatorMaui.MVVM.ViewModels;
 using PizzaCreatorMaui.MVVM.Views;
 
@@ -40,7 +41,7 @@ namespace PizzaCreatorMaui
             // DI for pages
             builder.Services.AddSingleton<CreatePizzaView>();
             // Not used yet
-            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?
+            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?            
 
             // Maybe I should try to DI the Toppings List into the CreatePizzaViewModel
             // builder.Services.AddSingleton<LocalToppingsData>();
