@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 namespace PizzaCoreBuisnessLogic.Data.DataFactory
 {
     public abstract class BaseToppingsData
-    {              
-        public abstract ObservableCollection<Topping> GetToppingsData();
+    {
+        public abstract Task <ObservableCollection<Topping>> GetToppingsData();
+
+        // DETTE VIRKER
+        // public abstract ObservableCollection<Topping> GetToppingsData();
     }
 }

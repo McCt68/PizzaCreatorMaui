@@ -11,29 +11,35 @@ namespace PizzaCreatorMaui.MVVM.Views;
 
 public partial class CreatePizzaView : ContentPage
 {
-    // private readonly CreatePizzaViewModel _createPizzaViewModel;
-
-    // 
-    //public CreatePizzaView()
-    //{
-    //    InitializeComponent();
-    //    //this.createPizzaViewModel = createPizzaViewModel;
-    //    //this.BindingContext = _createPizzaViewModel;
-    //    this.BindingContext = new CreatePizzaViewModel();
-    //    // BindingContext = _createPizzaViewModel;
-    //}
+    private readonly CreatePizzaViewModel toppingsViewModel;
 
     // TEST MED DI
-    public CreatePizzaView(CreatePizzaViewModel vm)
+    public CreatePizzaView(CreatePizzaViewModel toppingsViewModel)
     {
         InitializeComponent();
 
-        // this._createPizzaViewModel = vm;        
-        //this.BindingContext = createPizzaViewModel;
-
-        //this._createPizzaViewModel = _createPizzaViewModel;
-        BindingContext = vm; // _createPizzaViewModel;
+        this.toppingsViewModel = toppingsViewModel;
+        this.BindingContext = toppingsViewModel;     
     }
+
+    // Dont even think i need this anymore ?
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await this.toppingsViewModel.LoadToppingsAsync(); // Load Toppings with method from Viewmodel
+    }
+
+
+    // ---****** THIS WORKS BEFORE I TEST DI WITH THE OLD VIEW MODEL CODE ****-----
+    //public CreatePizzaView(CreatePizzaViewModel vm)
+    //{
+    //    InitializeComponent();
+
+    //    BindingContext = vm; // _createPizzaViewModel;        
+
+    //}
+    // ---****** THIS WORKS BEFORE I TEST DI WITH TH EOLD VIEW MODEL CODE END TEST END TEST ! ****-----
 
     // TEST OnAppering.
     //protected override void OnAppearing()

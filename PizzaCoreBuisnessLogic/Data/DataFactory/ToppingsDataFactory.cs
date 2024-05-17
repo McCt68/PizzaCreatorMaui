@@ -15,8 +15,10 @@ namespace PizzaCoreBuisnessLogic.Data.DataFactory
     // Input: It takes a single argument of type T, which represents a concrete data type -
     // that is inheriting from BaseToppingsData.
     public static class ToppingsDataFactory<T> where T : BaseToppingsData
-    {                      
-        public static ObservableCollection<Topping> GetToppingsData(T toppingsData)
+    {            
+        // VIRKER MED GAMLET
+        // public static ObservableCollection<Topping> GetToppingsData(T toppingsData)
+        public static Task <ObservableCollection<Topping>> GetToppingsData(T toppingsData)
         {
             return toppingsData.GetToppingsData();
         }

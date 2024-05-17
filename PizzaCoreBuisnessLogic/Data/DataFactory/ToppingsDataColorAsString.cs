@@ -12,7 +12,9 @@ namespace PizzaCoreBuisnessLogic.Data.DataFactory
     public class ToppingsDataColorAsString : BaseToppingsData
     {
         public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
-        public override ObservableCollection<Topping> GetToppingsData()
+
+        // public override ObservableCollection<Topping> GetToppingsData()
+            public override async Task <ObservableCollection<Topping>> GetToppingsData()
         {
             return new ObservableCollection<Topping>
         {

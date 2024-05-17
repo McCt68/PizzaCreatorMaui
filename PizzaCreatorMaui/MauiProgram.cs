@@ -3,6 +3,9 @@ using Microsoft.Extensions.Logging;
 // using PizzaCoreBuisnessLogic.Data;
 using PizzaCoreBuisnessLogic.Data.DataFactory;
 using PizzaCoreBuisnessLogic.Models;
+using PizzaCoreBuisnessLogic.Repositorys;
+using PizzaCoreBuisnessLogic.UseCases;
+using PizzaCoreBuisnessLogic.UseCases.Interfaces;
 using PizzaCreatorMaui.MVVM.ViewModels;
 using PizzaCreatorMaui.MVVM.Views;
 
@@ -25,29 +28,39 @@ namespace PizzaCreatorMaui
             // using for validation in CustomerView Entry's
             builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
+            /*
+             * Configuring Dependency injection.              
+             * Dependency injection in the contructor. When ever a object depends on another object -
+             * The framework will create it.
+             */
 
-            // I Think this works as long as i only navigate within the shell scope
-            // Injecting ViewModels - When ever a class ask for a ViewModel
+            // When any object needs a type of IToppingRepository -
+            // the Program will inject the concrete implementation specified here ( ToppingInMemoryRepository )
+            // It could also be any other implementation.
 
-            // Dependency injection in the contructor. When ever a object depends on another object -
-            // The framework will create it.
+            // builder.Services.AddSingleton<IToppingRepository, ToppingFromWebApiRepository>(); - Just an example !
+            builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();
+
             // Singleton - One Instance througout the lifetime of the app.
             builder.Services.AddSingleton<CreatePizzaViewModel>();
 
-            // Maybe this should be transient to create a new one everytime
+            // Maybe this should be transient to create a new one everytime            
+            builder.Services.AddSingleton<CustomerViewModel>();            
+
+            // DI for pages - maybe transient works when nvaigating back and forst the stack - this works but not naviagate
+            // builder.Services.AddSingleton<CreatePizzaView>();
+
+            // Maybe it must be transient ?
+            builder.Services.AddTransient<CreatePizzaView>();
+
             
-            builder.Services.AddSingleton<CustomerViewModel>();
+            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?
 
-            // DI for pages
-            builder.Services.AddSingleton<CreatePizzaView>();
-            // Not used yet
-            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?            
-
-            // Maybe I should try to DI the Toppings List into the CreatePizzaViewModel
-            // builder.Services.AddSingleton<LocalToppingsData>();
-            // builder.Services.AddSingleton<ToppingsDataFactory>(LocalToppingsData.);
-
-
+            // Configure Usecases
+            // Maybe this should be transient to create a new one everytime   
+            // builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();         
+            builder.Services.AddSingleton<ILoadToppingsUseCase, LoadToppingsUseCase>();      
+            
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
