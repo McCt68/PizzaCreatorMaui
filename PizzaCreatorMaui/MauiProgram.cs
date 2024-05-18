@@ -25,6 +25,7 @@ namespace PizzaCreatorMaui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
             // using for validation in CustomerView Entry's
             builder.UseMauiApp<App>().UseMauiCommunityToolkit();
 
@@ -38,28 +39,34 @@ namespace PizzaCreatorMaui
             // the Program will inject the concrete implementation specified here ( ToppingInMemoryRepository )
             // It could also be any other implementation.
 
-            // builder.Services.AddSingleton<IToppingRepository, ToppingFromWebApiRepository>(); - Just an example !
+            // LOADING TWO REPOSITORIES.
+            // This works loading from Memory
             builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();
+            // Load from Api - This works 
+            builder.Services.AddSingleton<IToppingRepository, ToppingWebApiRepository>();
 
-            // Singleton - One Instance througout the lifetime of the app.
-            builder.Services.AddSingleton<CreatePizzaViewModel>();
 
-            // Maybe this should be transient to create a new one everytime            
-            builder.Services.AddSingleton<CustomerViewModel>();            
 
-            // DI for pages - maybe transient works when nvaigating back and forst the stack - this works but not naviagate
-            // builder.Services.AddSingleton<CreatePizzaView>();
 
-            // Maybe it must be transient ?
-            builder.Services.AddTransient<CreatePizzaView>();
-
-            
-            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?
 
             // Configure Usecases
             // Maybe this should be transient to create a new one everytime   
-            // builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();         
-            builder.Services.AddSingleton<ILoadToppingsUseCase, LoadToppingsUseCase>();      
+            builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();         
+            // builder.Services.AddSingleton<ILoadToppingsUseCase, LoadToppingsUseCase>();
+
+            // Singleton - One Instance througout the lifetime of the app.
+            builder.Services.AddSingleton<CreatePizzaViewModel>();                       
+            builder.Services.AddSingleton<CustomerViewModel>();  // Maybe this should be transient to create a new one everytime           
+
+            // DI for pages - maybe transient works when nvaigating back and forst the stack - this works but not naviagate
+            builder.Services.AddSingleton<CreatePizzaView>();
+
+            // Maybe it must be transient ?
+            // builder.Services.AddTransient<CreatePizzaView>();
+
+            
+            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?
+                 
             
 #if DEBUG
             builder.Logging.AddDebug();

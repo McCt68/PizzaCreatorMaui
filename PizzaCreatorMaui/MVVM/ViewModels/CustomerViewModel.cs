@@ -10,6 +10,9 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // Teste passing parameters with shell - Skal lige forstå det her bedre ??
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
 
+    // jeg tror jeg skal have switch kanppen med over osm et parameter - så jeg kan nulstille den -
+    // når jeg navigerer tilbage
+
     [AddINotifyPropertyChangedInterface]
     public class CustomerViewModel
     {
@@ -44,7 +47,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         
 
-        #region Navigation        
+
+        #region Navigation    
+        
+        // Denne kan forbedres så enten switch knappen i PizzaCreatorView bliver nulstillet, -
+        // eller at den fobliver hvor den er, men så skal den loadede liste blive -
+        // hvor den kom fra da jeg navigerede herhen
         public ICommand NavigateBack =>
             new Command(async () => await Shell.Current.GoToAsync(".."));
 

@@ -5,9 +5,8 @@ namespace PizzaCreatorMaui.MVVM.Views;
 /*
  * I will try to add DI
  * This object has a dependency of the ViewModel. So I need to DI into this class constrcutor
- * The ViewModel has a dependency of the Model, So i need to DI that into the ViewModel class
- * 
- * */
+ * The ViewModel has a dependency of the Model, So i need to DI that into the ViewModel class 
+ */
 
 public partial class CreatePizzaView : ContentPage
 {

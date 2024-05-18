@@ -15,7 +15,7 @@ namespace PizzaCoreBuisnessLogic.Repositorys
             {
                 new Topping
                     {
-                       ToppingName = "Toppings from repository",
+                       ToppingName = "Toppings from in memory repository",
                     ToppingPrice = 2m,
                        ToppingImage = TestColor.GetRandomColor()
                     },
@@ -40,9 +40,8 @@ namespace PizzaCoreBuisnessLogic.Repositorys
             };
         }
         public Task<ObservableCollection<Topping>> GetToppingsAsync()
-        {            
-            return Task.FromResult(_toppings);          
-                        
+        {          
+            return Task.FromResult(_toppings);           
         }
     }
 }

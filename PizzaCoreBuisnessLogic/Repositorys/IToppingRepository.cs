@@ -13,8 +13,6 @@ namespace PizzaCoreBuisnessLogic.Repositorys
         // Maybe this should be an observableColection instead of List
         Task<ObservableCollection<Topping>> GetToppingsAsync();
 
-
-
         //Task<List<Topping>> GetToppingsAsync();
     }
 }
