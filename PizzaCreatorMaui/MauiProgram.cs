@@ -37,17 +37,9 @@ namespace PizzaCreatorMaui
 
             // When any object needs a type of IToppingRepository -
             // the Program will inject the concrete implementation specified here ( ToppingInMemoryRepository )
-            // It could also be any other implementation.
-
-            // LOADING TWO REPOSITORIES.
-            // This works loading from Memory
-            builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();
-            // Load from Api - This works 
+            // It could also be any other implementation.            
+            builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();            
             builder.Services.AddSingleton<IToppingRepository, ToppingWebApiRepository>();
-
-
-
-
 
             // Configure Usecases
             // Maybe this should be transient to create a new one everytime   

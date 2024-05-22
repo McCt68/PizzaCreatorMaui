@@ -18,6 +18,7 @@ var app = builder.Build();
 
 // Maps the Url specified as the first parameter to the async method that is the second parameter -
 // the async method gets an instance of ApplicationDbContext through DI
+// When the url is requested the function will be called.
 app.MapGet("/api/toppings", async (ApplicationDbContext db) =>
 {
     var toppings = await db.Toppings.ToListAsync();
@@ -31,6 +32,19 @@ app.MapPost("/api/toppings", async (Topping topping, ApplicationDbContext db) =>
     await db.SaveChangesAsync();
 });
 
-app.Run(); // Runs conteniously in a loop waiting for a request to come in
+// DELETE
+app.MapDelete("/api/toppings/{id}", async (int id, ApplicationDbContext db) =>
+{
+    var toppingToDelete = await db.Toppings.FindAsync(id);
+    if (toppingToDelete != null)
+    {
+        db.Toppings.Remove(toppingToDelete);
+        await db.SaveChangesAsync();
+        return Results.Ok(toppingToDelete);
+    }
+    return Results.NotFound(); // 404
+});
+
+app.Run(); // Kører hele tiden i et loop og venter på incomming request.
 
 

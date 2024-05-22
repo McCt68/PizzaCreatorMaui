@@ -16,13 +16,13 @@ namespace PizzaCoreBuisnessLogic.Repositorys
                 new Topping
                     {
                        ToppingName = "Toppings from in memory repository",
-                    ToppingPrice = 2m,
+                       ToppingPrice = 2m,
                        ToppingImage = TestColor.GetRandomColor()
                     },
                 new Topping
                     {
                        ToppingName = "MixedToppings",
-                    ToppingPrice = 2m,
+                       ToppingPrice = 2m,
                        ToppingImage = TestColor.GetRandomColor()
                     },
                 new Topping

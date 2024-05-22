@@ -61,7 +61,6 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         public CustomerViewModel()
         {
-
             CurrentCustomer = new PizzaCoreBuisnessLogic.Models.Customer();
         }
 

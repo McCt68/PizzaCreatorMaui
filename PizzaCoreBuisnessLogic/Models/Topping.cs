@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
-// NOT USED YET - BE AWARE WHERE THE MODEL I USE COME FROM !
+// NOT USED YET - BE AWARE WHERE THE MODEL I USE COME FROM ! THIS IS NOT TRUE ANYMORE ???
 
 namespace PizzaCoreBuisnessLogic.Models
 {
@@ -14,11 +13,12 @@ namespace PizzaCoreBuisnessLogic.Models
     {
         public int Id { get; set; }
         public string ToppingName { get; set; }
-        public decimal ToppingPrice { get; set; }
-        public string ToppingImageString { get; set; }
+        public decimal ToppingPrice { get; set; }        
 
         // This works - before i try to make it a string instead
         public Color? ToppingImage { get; set; }
+
+        // public string ToppingImageString { get; set; }
 
 
         //// TRYING NEW THINGS TO MAKE TOPPINGIMAGE A String instead

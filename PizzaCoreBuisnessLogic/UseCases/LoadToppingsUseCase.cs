@@ -12,15 +12,16 @@ namespace PizzaCoreBuisnessLogic.UseCases
 
         // Når Denne klasse instantieres, så sørger Maui selv for at give konstruktøren -
         // de objecter den har brug for.
-        // Disse objecter er specificeret i MAUiProgram builder sektionen.
+        // Disse objecter er specificeret i MauiProgram builder sektionen.
         // Her er det en IEnumrable.               
         public LoadToppingsUseCase(IEnumerable<IToppingRepository> repositories)
         {
+            // Find det første repository af denne type og sæt det til variablen
             this.localToppingRepository = repositories.OfType<ToppingInMemoryRepository>().First();   
             this.webApiToppingRepository = repositories.OfType<ToppingWebApiRepository>().First();   
         }
 
-        // Specificer de metoder som interfacet indeholder.        
+        // Kod de metoder som interfacet indeholder.        
         public async Task<ObservableCollection<Topping>> LoadInMemoryToppingsAsync()
         {
             // denne skal return local toppings mixed 

@@ -24,7 +24,7 @@ public partial class CreatePizzaView : ContentPage
     // Dont even think i need this anymore ?
     protected override async void OnAppearing()
     {
-        base.OnAppearing();
+        base.OnAppearing(); // Kald metode fra Base class
 
         await this.toppingsViewModel.LoadToppingsAsync(); // Load Toppings with method from Viewmodel
     }

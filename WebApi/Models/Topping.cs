@@ -3,14 +3,17 @@ using System.Drawing;
 
 namespace WebApi.Models
 {
+    // Dette er en Entity class. Den representerer et object der kan gemmes i databasen
     public class Topping
-    {       
-        public int Id { get; set; }
+    {
+        // Maybe better to call it ToppingId, since Ent Framework attepts to make a key based on the class name and Id
+        public int Id { get; set; } // ToppingID
         public string? ToppingName { get; set; }
         public decimal ToppingPrice { get; set; }        
-        public Color? ToppingImage { get; set; } // was color in other model
-        public string ToppingImageString { get; set; }
+        public Color? ToppingImage { get; set; } // was color in other model - this works but only loads as black
+        public string ToppingImageString { get; set; }    
         
+        // public int ToppingImage { get; set; }
 
     }    
 

@@ -12,7 +12,6 @@ namespace PizzaCoreBuisnessLogic.Repositorys
 {
     public class ToppingWebApiRepository : IToppingRepository
     {
-
         // Not sure if i need this
         public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
 
