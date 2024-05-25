@@ -10,7 +10,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // Teste passing parameters with shell - Skal lige forstå det her bedre ??
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
 
-    // jeg tror jeg skal have switch kanppen med over osm et parameter - så jeg kan nulstille den -
+    // jeg tror jeg skal have switch knappen med over som et parameter - så jeg kan nulstille den -
     // når jeg navigerer tilbage
 
     [AddINotifyPropertyChangedInterface]
@@ -93,8 +93,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 // TODO 
                 // About validation https://www.youtube.com/watch?v=sNter79tWb4&ab_channel=FrankLiu
                 // Validation - Use .NET Mau i toolkit -
-                // In the XAML do validation, there is even a regex expression i can use there -
-                // to try and get that involved in my project.
+                // In the XAML do validation
                 // The validation reference. should be in the Command in the ViewModel I think
                 // Check if all Properties of CurrentUser is not empty strings, and then if not -
                 // send a mail to CurrentUser with all information about the pizza

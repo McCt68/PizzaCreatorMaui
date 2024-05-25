@@ -4,9 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BindingContext="{Binding Source={StaticResource CreatePizzaViewModel}}"
-    NavigationPage.HasNavigationBar="False">
-    <!--  Title="CreatePizzaView">  -->
-    <!--  Title="Create Your Pizza">  -->
+    NavigationPage.HasNavigationBar="False">    
 
     <!--  I think if I define the namespaces, then the ViewModel will automatecly understand which things i try to bind  -->
 
@@ -25,7 +23,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -37,9 +34,8 @@
         <CarouselView
             x:Name="CarouselTest"
             Grid.Row="0"
-            
             Grid.ColumnSpan="2"
-            Margin="4" 
+            Margin="4"
             CurrentItem="{Binding CurrentCarouselItem}"
             CurrentItemChangedCommand="{Binding PizzaSizeChanged}"
             HorizontalOptions="Center"
@@ -53,6 +49,7 @@
                     <Grid RowDefinitions="*,*">
                         <Frame
                             Grid.Row="0"
+                            Margin="4"
                             BackgroundColor="Beige"
                             BorderColor="DarkOrange"
                             CornerRadius="50"
@@ -62,14 +59,16 @@
                             VerticalOptions="Start"
                             WidthRequest="155">
                             <Label
-                                Margin="10" 
+                                Margin="10"
                                 FontAttributes="Bold"
                                 FontSize="Large"
                                 HorizontalOptions="Center"
                                 Text="{Binding Size}"
                                 VerticalOptions="Center" />
-                        </Frame>
-                        <Label  
+                        </Frame>                        
+
+                        <!--  Måske skal jeg lade være med at have size rice her også  -->
+                        <!--<Label
                             x:Name="{Binding PizzaSizePrice}"
                             Grid.Row="1"
                             Margin="2"
@@ -78,7 +77,7 @@
                             FontSize="Medium"
                             HorizontalOptions="Center"
                             Text="{Binding Price, StringFormat='{0:kr #,##0.00}'}"
-                            VerticalOptions="EndAndExpand" />
+                            VerticalOptions="End" />-->
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
@@ -100,7 +99,7 @@
             SelectedIndicatorColor="DarkOrange"
             VerticalOptions="Center" />
 
-        <!--  TESTING Switch  -->
+        <!--  Switch Til At Loade Toppings Fra Api, eller Memory  -->
         <Switch
             Grid.Row="2"
             Grid.Column="1"

@@ -26,7 +26,12 @@ public partial class CreatePizzaView : ContentPage
     {
         base.OnAppearing(); // Kald metode fra Base class
 
+        // Test af reset switch property
+        toppingsViewModel.ResetSwitch();
+
         await this.toppingsViewModel.LoadToppingsAsync(); // Load Toppings with method from Viewmodel
+
+        
     }
 
 

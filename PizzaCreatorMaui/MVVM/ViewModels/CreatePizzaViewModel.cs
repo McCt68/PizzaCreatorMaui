@@ -141,64 +141,37 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         // Method for selecting toppings with the switch      
         private async void ToppingsSelector()        
-        {
-            //this.Toppings.Clear();
-            //this.UserSelectedToppings.Clear();
-            this.TotalToppingsPrice = 0;
-            this.TotalPizzaPrice = 0;
+        {            
+            this.TotalToppingsPrice = 0;          
+            this.SelectedToppingsList.Clear();            
+            this.TotalPizzaPrice = this.PizzaSizePrice;
 
-            this.SelectedToppingsList.Clear();
-
-            // Try to get the toppings with usecases instead
+            // Hent Toppings fra CoreBuisnessLogic Library ved hjælp af UseCases
             if (IsVeggieSwitchOn)
-            {
-                // TODO
-                // clear userslected toppings and other properties
-                //this.UserSelectedToppings.Clear();
-                this.Toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();
-                
-                // testing the usecase from repo - this works
-                // await LoadWebApiToppingsAsync();
-
-
-                // await LoadToppingsAsync(); // load from repo
-                // These will show when the switch in on
-                // this.Toppings = VeggieToppings;  
-
-                // virker med gammle måde abstract factory
-                //Toppings = await ToppingsDataFactory<VeggieToppingsData>.GetToppingsData(new VeggieToppingsData());
-                //Toppings = await ToppingsDataFactory<ToppingsDataFromWebApi>.GetToppingsData(new ToppingsDataFromWebApi());
+            {                
+                this.Toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();                               
             }
             else
-            {
-                // TODO
-                // clear userslected toppings and other properties
-                //this.UserSelectedToppings.Clear();
+            {                
                 this.Toppings = await loadToppingsUseCase.LoadInMemoryToppingsAsync();
 
-                // virker
-                // await LoadToppingsAsync(); // load from repo
-
-                // denne virker på gammel måde
-                // Toppings = await ToppingsDataFactory<MixedToppingsData>.GetToppingsData(new MixedToppingsData());
+                // Bruge metoden her i ViewModel til at gøre det samme
+                // await LoadToppingsAsync();                
             }
 
+            // Hvorfor behøver jeg dette her ?
             this.UserSelectedToppings.Clear();
-            this.TotalToppingsPrice = 0;
+            // this.TotalToppingsPrice = 0;
         }
 
 
         // -------------************ MAYBE I CAN OMIT THIS *********----------
         // Load Data from the Usecase
         public async Task LoadToppingsAsync()
-        {
-            // Why does it load the Toppings 
-            // try to omit this just to see if navigating back and forth is working ??
-            // this.Toppings.Clear ();
-            // 
+        {            
             var toppings = await loadToppingsUseCase.LoadInMemoryToppingsAsync();
 
-            // Set the ObservableCollection of Toppings the user see to the toppings from the useCase
+            // Set the ObservableCollection af Toppings brugeren ser til den collection der kommer fra USeCase.
             Toppings = toppings;
         }
 
@@ -211,6 +184,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         }
 
         // END OMIT THIS THIS OMIT END END
+
+        // Bruger denne til at resette switch knappen
+        public void ResetSwitch()
+        {
+            IsVeggieSwitchOn = false; 
+        }
 
         // Navigation with shell        
         public ICommand NavigateToCustomer =>
