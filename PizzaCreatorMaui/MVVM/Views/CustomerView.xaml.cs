@@ -1,8 +1,13 @@
 using PizzaCreatorMaui.MVVM.ViewModels;
+using PizzaCreatorMaui.MVVM.ViewModels.Navigation;
+using System.Reflection.Metadata;
 
 namespace PizzaCreatorMaui.MVVM.Views;
 
+// Denne virker - før forsøg med IQueryAttributable Interface
 public partial class CustomerView : ContentPage
+
+//public partial class CustomerView : ContentPage, IQueryAttributable
 {
     public CustomerView(CustomerViewModel customerViewModel)
     {
@@ -10,6 +15,20 @@ public partial class CustomerView : ContentPage
         BindingContext = customerViewModel;
     }
 
+    // Bruger denne til at pass parameters fra CreatePizzaViewModel
+    //public void ApplyQueryAttributes(IDictionary<string, object> query)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    // trying to pass anaviagation class object
+    //public void OnNavigatedTo(ShellNavigationState state, object parameter)
+    //{
+    //    if (parameter is PizzaNavigationData data)
+    //    {
+    //        BindingContext = data;
+    //    }
+    //}
 
     // This works without DI
     //public CustomerView()

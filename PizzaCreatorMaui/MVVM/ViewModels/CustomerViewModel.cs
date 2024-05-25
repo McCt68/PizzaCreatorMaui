@@ -1,8 +1,7 @@
-﻿
-using PizzaCoreBuisnessLogic.Models;
+﻿using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.UseCases;
-using PizzaCreatorMaui.MVVM.Models;
 using PropertyChanged;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
@@ -10,8 +9,13 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // Teste passing parameters with shell - Skal lige forstå det her bedre ??
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
 
-    // jeg tror jeg skal have switch knappen med over som et parameter - så jeg kan nulstille den -
-    // når jeg navigerer tilbage
+    // test med at pass Toppings også så jeg kan give besked om hvilke toppings der blev valgt
+    [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]
+
+    // test med at pass Pizza size
+    [QueryProperty(nameof(PizzaSizePrice), nameof(PizzaSizePrice))]
+
+
 
     [AddINotifyPropertyChangedInterface]
     public class CustomerViewModel
@@ -31,7 +35,13 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         // Defining a CurrentCustomer of type Customer from the CoreBuisness Project.
         public PizzaCoreBuisnessLogic.Models.Customer CurrentCustomer { get; set; }
         
+        // for naviagtion purposes
         public decimal TotalPizzaPrice { get; set; }
+
+        public decimal PizzaSizePrice { get; set; }
+
+        public ObservableCollection<Topping> UserSelectedToppings { get; set; }
+
         #endregion
 
         // Clear user Inputs 
@@ -128,8 +138,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 return false;
             }
 
-            await Application.Current.MainPage.DisplayAlert("Order Completed", $"Your Total is: {TotalPizzaPrice} Kr.", "OK");
+            await Application.Current.MainPage.DisplayAlert("Order Completed", $"Your Total is: {TotalPizzaPrice} Kr. Your size price is:{PizzaSizePrice}", "OK");
             return true;
+
+            // Display should be:
+            // Your Pizza Size is: PizzaSize, Yout Toppings is: USerSelectedToppings, Your TotalPrice is: TotalPizzaPrice
         }
 
         // Calculate order price and details

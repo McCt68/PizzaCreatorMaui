@@ -53,6 +53,9 @@ namespace PizzaCreatorMaui
             // DI for pages - maybe transient works when nvaigating back and forst the stack - this works but not naviagate
             builder.Services.AddSingleton<CreatePizzaView>();
 
+            // Register Routes
+            Routing.RegisterRoute("customer", typeof(CustomerView));
+
             // Maybe it must be transient ?
             // builder.Services.AddTransient<CreatePizzaView>();
 

@@ -135,8 +135,9 @@
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
-            HorizontalOptions="Center"
+            HorizontalOptions="Center"            
             Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
+            
 
         <!--  Reset all user inputs  -->
         <Button

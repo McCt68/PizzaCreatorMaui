@@ -9,13 +9,12 @@ namespace PizzaCreatorMaui
         {
             InitializeComponent();
 
-            // I am not totally sure how this works. I think I do but why is it Mainpage ?
+            // Gå til den første route der er defineret i AppShell.xaml
             MainPage = new AppShell();
 
             
 
-            // virker
-            // MainPage = new NavigationPage(new CreatePizzaView());
+           
         }
     }
 }

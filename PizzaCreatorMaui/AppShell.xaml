@@ -8,8 +8,6 @@
     NavigationPage.HasNavigationBar="False"
     Shell.FlyoutBehavior="Disabled">
 
-    <!--  Title="PizzaCreatorMaui"  -->
-
     <!--  Goto the route here by default  -->
     <ShellContent ContentTemplate="{DataTemplate views:CreatePizzaView}" Route="CreatePizzaView" />
 

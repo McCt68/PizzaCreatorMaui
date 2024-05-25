@@ -1,6 +1,6 @@
-﻿using PizzaCoreBuisnessLogic.Data.DataFactory;
-using PizzaCoreBuisnessLogic.Models;
+﻿using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.UseCases.Interfaces;
+using PizzaCreatorMaui.MVVM.ViewModels.Navigation;
 using PizzaCreatorMaui.MVVM.Views;
 using PropertyChanged;
 using System.Collections.ObjectModel;
@@ -8,18 +8,23 @@ using System.Windows.Input;
 
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
-{               
+{
     // Using Nuget Package PropertyChanged.Fody - Implement INotifyPropertyChanged behind the schenes -
     // Avoiding to much boiler plate code.
     // In each Property within this class the execution of OnPropertyChanged is -
     // automatically invoked when the setter is called.
     // So when using the setter of a Property it will update the value of the Coresponding Object in the XAML file.
-
-    // I can bind to any source property which is part of a XAML control that has a bindable property.
-
+    // With this I can bind to any source property which is part of a XAML control that has a bindable property.
     [AddINotifyPropertyChangedInterface]
-    // Teste passing parameters with shell - Skal lige forstå det her bedre ??    
+
+    // Passing parameters with shell - Skal lige forstå det her bedre ??    
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
+
+    // test med at pass Toppings også så jeg kan give besked om hvilke toppings der blev valgt
+    [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]
+
+    // test med at pass Pizza size
+    [QueryProperty(nameof(PizzaSizePrice), nameof(PizzaSizePrice))]
     public class CreatePizzaViewModel
     {
         #region PizzaSize       
@@ -191,9 +196,31 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             IsVeggieSwitchOn = false; 
         }
 
-        // Navigation with shell        
+        // Navigation med shell
+        // Jeg kan navigere til de sider der er specificeret som Routes i classen AppShell.xaml.cs        
+
+        // Dette virket lad være med at slette før den multiply parameters navigation virker
+        //public ICommand NavigateToCustomer =>
+        //    new Command(async () => await Shell.Current.GoToAsync($"customer?TotalPizzaPrice={TotalPizzaPrice}"));
+
+
+        // test med multilply parameters
         public ICommand NavigateToCustomer =>
-            new Command(async () => await Shell.Current.GoToAsync($"{nameof(CustomerView)}?TotalPizzaPrice={TotalPizzaPrice}"));
+            new Command(async () => await Shell.Current.GoToAsync($"customer",
+                new Dictionary<string, object>()
+                {
+                    {"TotalPizzaPrice", TotalPizzaPrice },
+                    {"PizzaSizePrice", PizzaSizePrice },
+                    {"UserSelectedToppings", UserSelectedToppings }
+                }));
+
+
+
+        //Denne virker med et parameter kun
+        // new Command(async () => await Shell.Current.GoToAsync($"{nameof(CustomerView)}?TotalPizzaPrice={TotalPizzaPrice}"));
+        
+        // Denne virker også med bedre syntax
+        // new Command(async () => await Shell.Current.GoToAsync($"customer?TotalPizzaPrice={TotalPizzaPrice}"));        
     }
 }
 
