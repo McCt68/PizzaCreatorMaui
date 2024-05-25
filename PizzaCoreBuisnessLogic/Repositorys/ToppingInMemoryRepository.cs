@@ -28,13 +28,37 @@ namespace PizzaCoreBuisnessLogic.Repositorys
                 new Topping
                    {
                         ToppingName = "Pineapple",
-                    ToppingPrice = 8m,
+                        ToppingPrice = 8m,
                         ToppingImage = TestColor.GetRandomColor()
                     },
                 new Topping
                     {
                         ToppingName = "Ham",
-                    ToppingPrice = 15m,
+                        ToppingPrice = 15m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                   {
+                        ToppingName = "Tomatos",
+                        ToppingPrice = 8m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Muchrooms",
+                        ToppingPrice = 8m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                   {
+                        ToppingName = "Tuna",
+                        ToppingPrice = 15m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Potatos",
+                        ToppingPrice = 10m,
                         ToppingImage = TestColor.GetRandomColor()
                     },
             };

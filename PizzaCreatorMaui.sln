@@ -7,7 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaCreatorMaui", "PizzaCr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaCoreBuisnessLogic", "PizzaCoreBuisnessLogic\PizzaCoreBuisnessLogic.csproj", "{BD66453F-29E5-4BC8-9B60-26C06AD1070C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{2893BE11-CBB4-4459-8A77-CA3A2B8E5E73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{2893BE11-CBB4-4459-8A77-CA3A2B8E5E73}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E23F440-C6FC-4451-9771-F1C51FB6A24B} = {7E23F440-C6FC-4451-9771-F1C51FB6A24B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

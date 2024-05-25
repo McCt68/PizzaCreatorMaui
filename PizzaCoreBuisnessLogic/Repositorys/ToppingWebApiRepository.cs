@@ -1,6 +1,7 @@
 ﻿using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.Utilities;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text.Json;
 
 // This file contains the HTTP client that I kinda use to talk to the WebApi
@@ -53,7 +54,19 @@ namespace PizzaCoreBuisnessLogic.Repositorys
             {
                 string content = await response.Content.ReadAsStringAsync();
                 toppings = JsonSerializer.Deserialize<ObservableCollection<Topping>>(content, _jsonSerializerOptions);
-            }            
+            }
+
+            // Maybe I should use the IValueConverter to convert the color type here
+
+            //SystemColorToMauiColorConverter myColorConverter = new SystemColorToMauiColorConverter();
+            //foreach (var topping in toppings) 
+            //{
+            //    topping.ToppingImage
+            //    System.Drawing.Color color = topping.ToppingImage;
+            //    Microsoft.Maui.Graphics.Color = myColorConverter.Convert(topping.ToppingImage);
+            //}
+
+
             return toppings;
         }
     }    

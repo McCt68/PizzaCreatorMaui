@@ -1,46 +1,46 @@
-﻿//using Microsoft.Maui.Graphics.Converters;
-//using System;
-//using System.Collections.Generic;
-//using System.Globalization;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Microsoft.Maui.Graphics.Converters;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace PizzaCoreBuisnessLogic.Utilities
-//{
-//    public class StringToColorConverter : IValueConverter
+namespace PizzaCoreBuisnessLogic.Utilities
+{
+    public class StringToColorConverter : IValueConverter
+    {
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (value is Microsoft.Maui.Graphics.Color color)
+            {
+                return color.ToString(); // Convert Color to string (e.g., "FF0000")
+            }
+            return null; // Handle invalid input gracefully
+        }
+
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (value is string colorString)
+            {
+                return Color.FromRgba(colorString); // Convert string back to Color
+            }
+            return null; // Handle invalid input gracefully
+        }
+    }
+}
+
+//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 //    {
-//        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-//        {
-//            string colorString = value as string;
-//            if (string.IsNullOrEmpty(colorString))
-//            {
-//                return Colors.Transparent; // Or a default color
-//            }
+//        ColorTypeConverter converter = new ColorTypeConverter();
+//        Color color = (Color)(converter.ConvertFromInvariantString((string)value));
+//        return color;
+//    }
 
-//            try
-//            {
-//                // Try converting hex string
-//                if (colorString.StartsWith("#"))
-//                {
-//                    return Color.Parse(colorString.Substring(1)); // Use Color.Parse for hex strings
-//                }
-//                else
-//                {
-//                    // Handle named colors (optional)
-//                    return Color.FromName(colorString, true); // Case-insensitive
-//                }
-//            }
-//            catch (Exception)
-//            {
-//                // Handle conversion errors (e.g., invalid hex string, unknown named color)
-//                return Colors.Gray; // Or a fallback color
-//            }
-//        }
+//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        string colorString = "White"; //TODO
 
-//        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-//        {
-//            throw new NotImplementedException(); // Not required for one-way binding
-//        }
+//        return colorString;
 //    }
 //}
