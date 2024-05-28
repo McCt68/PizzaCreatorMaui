@@ -1,7 +1,5 @@
 ﻿using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.UseCases.Interfaces;
-using PizzaCreatorMaui.MVVM.ViewModels.Navigation;
-using PizzaCreatorMaui.MVVM.Views;
 using PropertyChanged;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -18,13 +16,9 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     [AddINotifyPropertyChangedInterface]
 
     // Passing parameters with shell - Skal lige forstå det her bedre ??    
-    [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
-
-    // test med at pass Toppings også så jeg kan give besked om hvilke toppings der blev valgt
-    [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]
-
-    // test med at pass Pizza size
-    [QueryProperty(nameof(PizzaSizePrice), nameof(PizzaSizePrice))]
+    [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]    
+    [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]     
+    [QueryProperty(nameof(CurrentCarouselItem), nameof(CurrentCarouselItem))]
     public class CreatePizzaViewModel
     {
         #region PizzaSize       
@@ -117,24 +111,30 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             });
         #endregion
 
-        public decimal TotalPizzaPrice { get; set; } = new(); // Implicity knows its a decimal. set to defualt value zero
+        public decimal TotalPizzaPrice { get; set; } = new(); // Implicity knows its a decimal. set to default value zero
 
         private readonly ILoadToppingsUseCase loadToppingsUseCase;
 
-        // testing DI in the constructor
-        public CreatePizzaViewModel(ILoadToppingsUseCase loadToppingsUseCase)
+        // Bruger DI til at give ILoadToppingsUseCase.
+        // public CreatePizzaViewModel(ILoadToppingsUseCase loadToppingsUseCase)
+        public CreatePizzaViewModel(ILoadToppingsUseCase loadToppingsUseCase, ObservableCollection<PizzaSize> pizzaSizes)
         {
             this.loadToppingsUseCase = loadToppingsUseCase;
 
             this.Toppings = new ObservableCollection<Topping>();
 
+            this.PizzaSizes = pizzaSizes;
+
             // This should not be declared here, but loaded from the corebuisness model instead
-            this.PizzaSizes = new ObservableCollection<PizzaSize>()
-            {
-                new PizzaSize (PizzaSize.Sizes.Small, 35m),
-                new PizzaSize (PizzaSize.Sizes.Medium, 40m),
-                new PizzaSize (PizzaSize.Sizes.Large, 45m)
-            };
+            // Or better provided by DI
+            // TEST REMOVE THIS AND GET IT FROM CONSTRUCTOR WITH DI
+            //this.PizzaSizes = new ObservableCollection<PizzaSize>()
+            //{
+            //    new PizzaSize (PizzaSize.Sizes.Small, 35m),
+            //    new PizzaSize (PizzaSize.Sizes.Medium, 40m),
+            //    new PizzaSize (PizzaSize.Sizes.Large, 45m)
+            //};
+            // END TEST SIZE SIZE TEST END !!!!
 
             // Set the Initial Pizza size to medium
             CurrentCarouselItem = PizzaSizes[1];
@@ -197,24 +197,17 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         }
 
         // Navigation med shell
-        // Jeg kan navigere til de sider der er specificeret som Routes i classen AppShell.xaml.cs        
-
-        // Dette virket lad være med at slette før den multiply parameters navigation virker
-        //public ICommand NavigateToCustomer =>
-        //    new Command(async () => await Shell.Current.GoToAsync($"customer?TotalPizzaPrice={TotalPizzaPrice}"));
-
-
-        // test med multilply parameters
+        // Jeg kan navigere til de sider der er specificeret som Routes i classen AppShell.xaml.cs             
+        // Parametre bliver sendt med som et Dictionary af k:String V:object
         public ICommand NavigateToCustomer =>
             new Command(async () => await Shell.Current.GoToAsync($"customer",
                 new Dictionary<string, object>()
                 {
                     {"TotalPizzaPrice", TotalPizzaPrice },
-                    {"PizzaSizePrice", PizzaSizePrice },
-                    {"UserSelectedToppings", UserSelectedToppings }
+                    // {"PizzaSizePrice", PizzaSizePrice },
+                    {"UserSelectedToppings", UserSelectedToppings },
+                    {"CurrentCarouselItem", CurrentCarouselItem }
                 }));
-
-
 
         //Denne virker med et parameter kun
         // new Command(async () => await Shell.Current.GoToAsync($"{nameof(CustomerView)}?TotalPizzaPrice={TotalPizzaPrice}"));

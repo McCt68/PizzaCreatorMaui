@@ -22,12 +22,35 @@ namespace WebApi.Models
     }
 
 
-    // Use for converting the Color type - works with system color type
+
+    // Use for converting the Color type - works with system color type. denne giver dog kun sort tilbage
+    // Prøver med en anden converter
     class ColorToInt32Converter : ValueConverter<System.Drawing.Color, int>
     {
-        public ColorToInt32Converter(): base
-            (c => c.ToArgb(), v => System.Drawing.Color.FromArgb(v)) { }
+        public ColorToInt32Converter() : base
+            (c => c.ToArgb(), v => System.Drawing.Color.FromArgb(v))
+        { }
     }
+
+
+    // TEST SLU MÅ OKKE SLTTES SLETTES MÅ IKKE !
+
+
+    // TEST NY CONVERTER TEST TEST - Prøv den her i stedet !
+    //class ColorToInt32Converter : ValueConverter<System.Drawing.Color, int>
+    //{
+    //    public ColorToInt32Converter() : base(
+    //        c => System.Drawing.Color.FromArgb(c.R, c.G, c.B, c.A),
+    //        v =>
+    //        {
+    //            if (v == 0) return System.Drawing.Color.Empty; // Handle null or empty values
+    //            var colorDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(v.ToString());
+    //            return System.Drawing.Color.FromArgb(colorDict["r"], colorDict["g"], colorDict["b"], colorDict["a"]);
+    //        })
+    //    { }
+    //}
+
+
 
     // TEST WITH MAUI COLOR DO NOT DELETE
     // This is new and untested i may have to delete it

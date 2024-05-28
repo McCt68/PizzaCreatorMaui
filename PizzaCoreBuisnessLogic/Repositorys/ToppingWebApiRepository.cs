@@ -47,8 +47,10 @@ namespace PizzaCoreBuisnessLogic.Repositorys
             // http addressen virker i .net maui android - 10.0.2.2 er for android - Læs docs her
             // https://learn.microsoft.com/en-us/dotnet/maui/data-cloud/local-web-services?view=net-maui-8.0#local-web-services-running-over-http
             Uri uri = new Uri("http://10.0.2.2:5133/api/toppings");
-            
-            var response = await _httpClient.GetAsync(uri);
+
+            // Kald MapGet ved API fordi den er associeret med den angivne Url -
+            // og jeg bruger mit Client object sammen med .GetAsync
+            var response = await _httpClient.GetAsync(uri);            
 
             if (response.IsSuccessStatusCode)
             {

@@ -23,6 +23,9 @@ namespace PizzaCreatorMaui
             Routing.RegisterRoute("customer", typeof(CustomerView));
 
             Routing.RegisterRoute(nameof(PaymentView), typeof(PaymentView));
+
+            // test size parameter its an enum
+            //Routing.RegisterRoute("pizzaSize", typeof(CustomerView));
         }
     }
 }

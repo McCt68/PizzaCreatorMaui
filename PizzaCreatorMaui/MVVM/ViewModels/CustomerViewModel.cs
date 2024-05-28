@@ -6,16 +6,20 @@ using System.Windows.Input;
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
 {
-    // Teste passing parameters with shell - Skal lige forstå det her bedre ??
+    // Teste passing parameters with shell Navigation - Skal lige forstå det her bedre ??
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
 
     // test med at pass Toppings også så jeg kan give besked om hvilke toppings der blev valgt
     [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]
 
     // test med at pass Pizza size
-    [QueryProperty(nameof(PizzaSizePrice), nameof(PizzaSizePrice))]
+    // [QueryProperty(nameof(PizzaSizePrice), nameof(PizzaSizePrice))]
 
+    // test med at pass Pizza size 
+    // [QueryProperty(nameof(PizzaSizes), nameof(PizzaSizes))]
 
+    // test currentCarouselItem for size
+    [QueryProperty(nameof(CurrentCarouselItem), nameof(CurrentCarouselItem))]
 
     [AddINotifyPropertyChangedInterface]
     public class CustomerViewModel
@@ -38,7 +42,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         // for naviagtion purposes
         public decimal TotalPizzaPrice { get; set; }
 
-        public decimal PizzaSizePrice { get; set; }
+        // public decimal PizzaSizePrice { get; set; }
+
+        public PizzaSize CurrentCarouselItem { get; set; }
+
+        // public ObservableCollection<PizzaSize> PizzaSizes { get; set; }
 
         public ObservableCollection<Topping> UserSelectedToppings { get; set; }
 
@@ -138,19 +146,25 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 return false;
             }
 
-            await Application.Current.MainPage.DisplayAlert("Order Completed", $"Your Total is: {TotalPizzaPrice} Kr. Your size price is:{PizzaSizePrice}", "OK");
-            return true;
+            // Hvis alle validations er ok så -
+            // Giv besked til bruger om hvad ordren indeholder. Når denne placerer Ordren.
+            // Dette kunne så åbne betalings løsning eller lignende istedet for en Display Alert.
+            await Application.Current.MainPage.DisplayAlert(
+                "Order Completed",
 
-            // Display should be:
-            // Your Pizza Size is: PizzaSize, Yout Toppings is: USerSelectedToppings, Your TotalPrice is: TotalPizzaPrice
-        }
+                $"\nYour Total is: {TotalPizzaPrice} Kr.\n" +
 
-        // Calculate order price and details
-        private async Task<decimal> CalculateOrderDetails()
-        {
-            
-            return 5;
-        }
+                $"Your Pizza Size is: {CurrentCarouselItem.Size}.\n" +
+
+                $"Your Pizza Topings are: {UserSelectedToppings.Count}.\n- " +                
+
+                // Using LINQ
+                string.Join("\n- ", UserSelectedToppings.Select(topping => topping.ToppingName)), 
+
+                "OK");
+
+            return true;            
+        }        
     }
 }
 

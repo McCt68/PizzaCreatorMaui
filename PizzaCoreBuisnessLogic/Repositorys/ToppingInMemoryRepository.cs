@@ -8,7 +8,10 @@ namespace PizzaCoreBuisnessLogic.Repositorys
     {
         public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
 
-        public static ObservableCollection<Topping> _toppings;
+        // Hvorfor er denne public static, kunne den ikke være private ?
+        // public static ObservableCollection<Topping> _toppings;
+
+        private ObservableCollection<Topping> _toppings; // kan ikke se hvorfor denne ikke skal være private ??
         public ToppingInMemoryRepository()
         {
             _toppings = new ObservableCollection<Topping>()
@@ -59,6 +62,30 @@ namespace PizzaCoreBuisnessLogic.Repositorys
                     {
                         ToppingName = "Potatos",
                         ToppingPrice = 10m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                   {
+                        ToppingName = "Shrimps",
+                        ToppingPrice = 15m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Beef",
+                        ToppingPrice = 20m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                   {
+                        ToppingName = "Green Peber",
+                        ToppingPrice = 8m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Jalapenios",
+                        ToppingPrice = 6m,
                         ToppingImage = TestColor.GetRandomColor()
                     },
             };

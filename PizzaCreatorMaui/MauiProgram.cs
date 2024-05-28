@@ -8,6 +8,7 @@ using PizzaCoreBuisnessLogic.UseCases;
 using PizzaCoreBuisnessLogic.UseCases.Interfaces;
 using PizzaCreatorMaui.MVVM.ViewModels;
 using PizzaCreatorMaui.MVVM.Views;
+using System.Collections.ObjectModel;
 
 
 namespace PizzaCreatorMaui
@@ -43,8 +44,21 @@ namespace PizzaCreatorMaui
 
             // Configure Usecases
             // Maybe this should be transient to create a new one everytime   
-            builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();         
+            builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();
             // builder.Services.AddSingleton<ILoadToppingsUseCase, LoadToppingsUseCase>();
+
+            // TEST DI WITH PIZZASIZE
+            // Register the ObservableCollection<PizzaSize> as a singleton
+            builder.Services.AddSingleton<ObservableCollection<PizzaSize>>(provider =>
+            {
+                return new ObservableCollection<PizzaSize>
+                {
+                    new PizzaSize(PizzaSize.Sizes.Small, 35m),
+                    new PizzaSize(PizzaSize.Sizes.Medium, 40m),
+                    new PizzaSize(PizzaSize.Sizes.Large, 45m)
+                };
+            });
+            //TEST PIZZASIZE END
 
             // Singleton - One Instance througout the lifetime of the app.
             builder.Services.AddSingleton<CreatePizzaViewModel>();                       
@@ -53,7 +67,7 @@ namespace PizzaCreatorMaui
             // DI for pages - maybe transient works when nvaigating back and forst the stack - this works but not naviagate
             builder.Services.AddSingleton<CreatePizzaView>();
 
-            // Register Routes
+            // Register Routes - DO i need this ?
             Routing.RegisterRoute("customer", typeof(CustomerView));
 
             // Maybe it must be transient ?

@@ -16,9 +16,10 @@ var app = builder.Build();
 
 // app.UseHttpsRedirection();
 
+// Routes
 // Maps the Url specified as the first parameter to the async method that is the second parameter -
 // the async method gets an instance of ApplicationDbContext through DI
-// When the url is requested the function will be called.
+// When this url is requested with a httpClient get method this method will be called.
 app.MapGet("/api/toppings", async (ApplicationDbContext db) =>
 {
     var toppings = await db.Toppings.ToListAsync();
@@ -32,7 +33,6 @@ app.MapPost("/api/toppings", async (Topping topping, ApplicationDbContext db) =>
     await db.SaveChangesAsync();
 });
 
-// DELETE
 app.MapDelete("/api/toppings/{id}", async (int id, ApplicationDbContext db) =>
 {
     var toppingToDelete = await db.Toppings.FindAsync(id);
@@ -43,6 +43,21 @@ app.MapDelete("/api/toppings/{id}", async (int id, ApplicationDbContext db) =>
         return Results.Ok(toppingToDelete);
     }
     return Results.NotFound(); // 404
+});
+
+// Update
+app.MapPut("/api/toppings/{id}", async (int id, Topping topping, ApplicationDbContext db) =>
+{
+    var toppingToUpdate = await db.Toppings.FindAsync(id);
+    if (toppingToUpdate is null) return Results.NotFound();
+    
+    toppingToUpdate.ToppingName = topping.ToppingName;
+    toppingToUpdate.ToppingPrice = topping.ToppingPrice;
+    toppingToUpdate.ToppingImage = topping.ToppingImage;
+    toppingToUpdate.ToppingImageString = topping.ToppingImageString;
+    
+    await db.SaveChangesAsync();
+    return Results.NoContent();
 });
 
 app.Run(); // Kører hele tiden i et loop og venter på incomming request.

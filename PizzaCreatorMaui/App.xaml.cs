@@ -10,11 +10,8 @@ namespace PizzaCreatorMaui
             InitializeComponent();
 
             // Gå til den første route der er defineret i AppShell.xaml
-            MainPage = new AppShell();
-
-            
-
-           
+            MainPage = new AppShell();           
+                       
         }
     }
 }
