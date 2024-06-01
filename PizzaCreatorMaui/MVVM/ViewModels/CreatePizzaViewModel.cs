@@ -15,7 +15,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // With this I can bind to any source property which is part of a XAML control that has a bindable property.
     [AddINotifyPropertyChangedInterface]
 
-    // Passing parameters with shell - Skal lige forstå det her bedre ??    
+    // Passing parameters with shell.   
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]    
     [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]     
     [QueryProperty(nameof(CurrentCarouselItem), nameof(CurrentCarouselItem))]
@@ -34,6 +34,9 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         #endregion
 
         #region Toppings
+
+        // Prøv at lave property til at angive Toppingstype / Mixed / Vegie
+        public string ToppingsType { get; set; }
 
         private bool _isVeggieSwitchOn;
 
@@ -115,7 +118,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         private readonly ILoadToppingsUseCase loadToppingsUseCase;
 
-        // Bruger DI til at give ILoadToppingsUseCase.
+        // Bruger DI til at give ILoadToppingsUseCase og PizzaSize
         // public CreatePizzaViewModel(ILoadToppingsUseCase loadToppingsUseCase)
         public CreatePizzaViewModel(ILoadToppingsUseCase loadToppingsUseCase, ObservableCollection<PizzaSize> pizzaSizes)
         {
@@ -144,7 +147,19 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             TotalPizzaPrice = CurrentCarouselItem.Price + TotalToppingsPrice;
         }
 
-        // Method for selecting toppings with the switch      
+        // Bruger valg af Toppings type
+        //  Måske er det ikke godt med async void, fordi jeg ikkekna vide hvornår der er færdig
+        // Bedre at bruge Task ?
+        // The main difference is that async void kinda just returns the moment code -
+        // inside it hits await and you have no way to know when the execution of that method actually ends.
+        // And because you just return and don't await the completion - you end up in a situation where -
+        // the code continues before something else completes
+        //Because that something else has no way of telling you whether it completed or not
+
+        // The returned Task object represents the state of the operation.
+        // You can ask it if the operation is still running, completed, faulted etc.
+        // Much more powerful that just running something in the background -
+        // and having no way of communicating with it anymore like you do with void.
         private async void ToppingsSelector()        
         {            
             this.TotalToppingsPrice = 0;          
@@ -154,21 +169,18 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             // Hent Toppings fra CoreBuisnessLogic Library ved hjælp af UseCases
             if (IsVeggieSwitchOn)
             {                
-                this.Toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();                               
+                this.Toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();
+                this.ToppingsType = "Vegie Toppings."; 
             }
             else
             {                
                 this.Toppings = await loadToppingsUseCase.LoadInMemoryToppingsAsync();
+                this.ToppingsType = "Mixed Toppings."; 
 
-                // Bruge metoden her i ViewModel til at gøre det samme
+                // Kunne også bruge metoden her i ViewModel til at gøre det samme
                 // await LoadToppingsAsync();                
-            }
-
-            // Hvorfor behøver jeg dette her ?
-            this.UserSelectedToppings.Clear();
-            // this.TotalToppingsPrice = 0;
+            }                        
         }
-
 
         // -------------************ MAYBE I CAN OMIT THIS *********----------
         // Load Data from the Usecase
@@ -207,13 +219,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                     // {"PizzaSizePrice", PizzaSizePrice },
                     {"UserSelectedToppings", UserSelectedToppings },
                     {"CurrentCarouselItem", CurrentCarouselItem }
-                }));
-
-        //Denne virker med et parameter kun
-        // new Command(async () => await Shell.Current.GoToAsync($"{nameof(CustomerView)}?TotalPizzaPrice={TotalPizzaPrice}"));
-        
-        // Denne virker også med bedre syntax
-        // new Command(async () => await Shell.Current.GoToAsync($"customer?TotalPizzaPrice={TotalPizzaPrice}"));        
+                }));               
     }
 }
 

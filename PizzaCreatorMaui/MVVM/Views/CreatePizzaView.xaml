@@ -110,10 +110,13 @@
             Grid.Row="2"
             Grid.Column="0"
             FontAttributes="Bold"
-            FontSize="Medium"
-            HorizontalOptions="End"
-            Text="Switch toppings type."
+            FontSize="Large"
+            HorizontalOptions="Center"
+            Text="{Binding ToppingsType}"
             VerticalOptions="Center" />
+        
+         <!--TEst med databinding text of toppingstype-->
+        <!--Text="Switch toppings type."-->
 
         <!--  Testing Activity Indicator  -->
         <!--<ActivityIndicator

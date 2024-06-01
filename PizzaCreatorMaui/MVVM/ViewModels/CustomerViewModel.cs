@@ -6,19 +6,9 @@ using System.Windows.Input;
 
 namespace PizzaCreatorMaui.MVVM.ViewModels
 {
-    // Teste passing parameters with shell Navigation - Skal lige forstå det her bedre ??
-    [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]
-
-    // test med at pass Toppings også så jeg kan give besked om hvilke toppings der blev valgt
-    [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]
-
-    // test med at pass Pizza size
-    // [QueryProperty(nameof(PizzaSizePrice), nameof(PizzaSizePrice))]
-
-    // test med at pass Pizza size 
-    // [QueryProperty(nameof(PizzaSizes), nameof(PizzaSizes))]
-
-    // test currentCarouselItem for size
+    // Passing parameters with shell Navigation. 
+    [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]    
+    [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]        
     [QueryProperty(nameof(CurrentCarouselItem), nameof(CurrentCarouselItem))]
 
     [AddINotifyPropertyChangedInterface]
@@ -27,26 +17,19 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         #region Text and Mail Validation
         // Using Nuget package MauiCommunityToolkit for text, and email validation.
         public bool IsNameProvided { get; set; }
-        public bool IsAddressProvided { get; set; }
-
-        // missing phone
+        public bool IsAddressProvided { get; set; }        
         public bool IsEmailProvided { get; set; }
         public bool IsEmailFormatValid { get; set; }
-        #endregion
-
-        #region Properties
+        #endregion        
 
         // Defining a CurrentCustomer of type Customer from the CoreBuisness Project.
         public PizzaCoreBuisnessLogic.Models.Customer CurrentCustomer { get; set; }
-        
-        // for naviagtion purposes
-        public decimal TotalPizzaPrice { get; set; }
 
-        // public decimal PizzaSizePrice { get; set; }
+        // For naviagtion purposes
+        #region Naviagtion Properties
+        public decimal TotalPizzaPrice { get; set; }        
 
-        public PizzaSize CurrentCarouselItem { get; set; }
-
-        // public ObservableCollection<PizzaSize> PizzaSizes { get; set; }
+        public PizzaSize CurrentCarouselItem { get; set; }        
 
         public ObservableCollection<Topping> UserSelectedToppings { get; set; }
 

@@ -1,10 +1,7 @@
 ﻿using Microsoft.Maui.Graphics.Converters;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+// I Properly Don't even need this one, as I will use the HEX ToColor Converter instead
 
 namespace PizzaCreatorMaui.MVVM.Converters
 {

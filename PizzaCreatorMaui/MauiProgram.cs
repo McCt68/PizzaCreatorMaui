@@ -42,12 +42,9 @@ namespace PizzaCreatorMaui
             builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();            
             builder.Services.AddSingleton<IToppingRepository, ToppingWebApiRepository>();
 
-            // Configure Usecases
-            // Maybe this should be transient to create a new one everytime   
+            // Configure Usecases              
             builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();
-            // builder.Services.AddSingleton<ILoadToppingsUseCase, LoadToppingsUseCase>();
-
-            // TEST DI WITH PIZZASIZE
+                        
             // Register the ObservableCollection<PizzaSize> as a singleton
             builder.Services.AddSingleton<ObservableCollection<PizzaSize>>(provider =>
             {
@@ -58,13 +55,11 @@ namespace PizzaCreatorMaui
                     new PizzaSize(PizzaSize.Sizes.Large, 45m)
                 };
             });
-            //TEST PIZZASIZE END
-
+            
             // Singleton - One Instance througout the lifetime of the app.
             builder.Services.AddSingleton<CreatePizzaViewModel>();                       
             builder.Services.AddSingleton<CustomerViewModel>();  // Maybe this should be transient to create a new one everytime           
-
-            // DI for pages - maybe transient works when nvaigating back and forst the stack - this works but not naviagate
+                       
             builder.Services.AddSingleton<CreatePizzaView>();
 
             // Register Routes - DO i need this ?

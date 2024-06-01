@@ -21,8 +21,6 @@ namespace WebApi.Models
 
     }
 
-
-
     // Use for converting the Color type - works with system color type. denne giver dog kun sort tilbage
     // Prøver med en anden converter
     class ColorToInt32Converter : ValueConverter<System.Drawing.Color, int>

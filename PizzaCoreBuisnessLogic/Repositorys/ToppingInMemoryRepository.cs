@@ -48,7 +48,7 @@ namespace PizzaCoreBuisnessLogic.Repositorys
                     },
                 new Topping
                     {
-                        ToppingName = "Muchrooms",
+                        ToppingName = "Mushrooms",
                         ToppingPrice = 8m,
                         ToppingImage = TestColor.GetRandomColor()
                     },
@@ -86,6 +86,30 @@ namespace PizzaCoreBuisnessLogic.Repositorys
                     {
                         ToppingName = "Jalapenios",
                         ToppingPrice = 6m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Chicken",
+                        ToppingPrice = 15m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Onions",
+                        ToppingPrice = 6m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Asparagus",
+                        ToppingPrice = 10m,
+                        ToppingImage = TestColor.GetRandomColor()
+                    },
+                new Topping
+                    {
+                        ToppingName = "Artichoke",
+                        ToppingPrice = 8m,
                         ToppingImage = TestColor.GetRandomColor()
                     },
             };

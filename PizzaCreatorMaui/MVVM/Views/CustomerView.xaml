@@ -14,6 +14,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -43,9 +44,9 @@
             ClearButtonVisibility="WhileEditing"
             FontAttributes="Bold"
             FontSize="Large"
-            ReturnType="Next" 
             HorizontalTextAlignment="Center"
             Placeholder="Name"
+            ReturnType="Next"
             Text="{Binding CurrentCustomer.CustomerName}"
             VerticalTextAlignment="Center">
             <Entry.Behaviors>
@@ -69,9 +70,9 @@
             ClearButtonVisibility="WhileEditing"
             FontAttributes="Bold"
             FontSize="Large"
-            ReturnType="Next"
             HorizontalTextAlignment="Center"
             Placeholder="Address"
+            ReturnType="Next"
             Text="{Binding CurrentCustomer.CustomerAddress}">
             <Entry.Behaviors>
                 <toolkit:TextValidationBehavior
@@ -119,9 +120,6 @@
             </Entry.Behaviors>
         </Entry>
 
-
-        <!--  Parameter from CreatePizzaView  -->
-        <!--<Entry Text="{Binding Name}" />-->
         <Label
             Grid.Row="5"
             Grid.ColumnSpan="2"
@@ -130,14 +128,15 @@
             FontSize="Large"
             HorizontalOptions="Center"
             Text="Pizza Total Pris" />
+
+        <!--  Parameter TotalPizzaPrice from CreatePizzaView. That was passed with Navigation  -->
         <Label
             Grid.Row="6"
             Grid.ColumnSpan="2"
             FontAttributes="Bold"
             FontSize="Large"
-            HorizontalOptions="Center"            
+            HorizontalOptions="Center"
             Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
-            
 
         <!--  Reset all user inputs  -->
         <Button
@@ -161,7 +160,7 @@
             Command="{Binding NavigateBack}"
             Text="Back to Create Pizza" />
 
-        <!--  Sender Email til kunde  -->
+        <!--  Sender Regning til kunde  -->
         <Button
             Grid.Row="8"
             Grid.Column="1"
