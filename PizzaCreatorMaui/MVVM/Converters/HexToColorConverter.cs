@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
 namespace PizzaCreatorMaui.MVVM.Converters
 {
@@ -26,6 +21,13 @@ namespace PizzaCreatorMaui.MVVM.Converters
                     return null; // Or return a default color
                 }
             }
+            // Begin Test - Testing to see if I can omit convert if its already a Maui Color
+            else if (value is Microsoft.Maui.Graphics.Color color)
+            {
+                // If the value is already a Color, return it directly
+                return color;
+            }
+            // End test
             else
             {
                 return null; // Or return a default color

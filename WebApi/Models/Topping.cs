@@ -11,13 +11,16 @@ namespace WebApi.Models
         public string? ToppingName { get; set; }
         public decimal ToppingPrice { get; set; }        
         public System.Drawing.Color? ToppingImage { get; set; } // was color in other model - this works but only loads as black
-        public string ToppingImageString { get; set; }    
+                
+        public string ToppingImageString { get; set; }
 
-        // Maui Color - first migrate and update db before using this
-        // Try to migrate and test now
-        // public Microsoft.Maui.Graphics.Color? ToppingImageMaui {  get; set; } // DO NOT DELETE YET
-        
-        // public int ToppingImage { get; set; }
+        // I need a property of type string that represents a Color with a HEX string like "#00FF00"
+        // And with that then i can use an IValueConverter in the View to convert it to a Maui Color
+
+        // Bruger et property af type string. Som jeg sætter til en HEX værdi der representer en Color
+        // Så kan jeg bruge denne property sammen med en IvalueConverter i mit View til at -
+        // Convertere fra HEX til Maui Color.
+        public string ToppingImageHexColor { get; set; }        
 
     }
 
@@ -28,39 +31,5 @@ namespace WebApi.Models
         public ColorToInt32Converter() : base
             (c => c.ToArgb(), v => System.Drawing.Color.FromArgb(v))
         { }
-    }
-
-
-    // TEST SLU MÅ OKKE SLTTES SLETTES MÅ IKKE !
-
-
-    // TEST NY CONVERTER TEST TEST - Prøv den her i stedet !
-    //class ColorToInt32Converter : ValueConverter<System.Drawing.Color, int>
-    //{
-    //    public ColorToInt32Converter() : base(
-    //        c => System.Drawing.Color.FromArgb(c.R, c.G, c.B, c.A),
-    //        v =>
-    //        {
-    //            if (v == 0) return System.Drawing.Color.Empty; // Handle null or empty values
-    //            var colorDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(v.ToString());
-    //            return System.Drawing.Color.FromArgb(colorDict["r"], colorDict["g"], colorDict["b"], colorDict["a"]);
-    //        })
-    //    { }
-    //}
-
-
-
-    // TEST WITH MAUI COLOR DO NOT DELETE
-    // This is new and untested i may have to delete it
-    // Maui Color Converter
-    //class MauiColorConverter : ValueConverter<Microsoft.Maui.Graphics.Color, string>
-    //{
-    //    public MauiColorConverter(): base
-    //        ( v=> v.ToHex(), // Convert Color to hex string when saving to the database
-    //        v => Microsoft.Maui.Graphics.Color.FromArgb(v) // Convert hex string to Color when reading from the database
-    //        )
-    //    {
-
-    //    }
-    //}
+    }             
 }

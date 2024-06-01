@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="PizzaCreatorMaui.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -23,9 +24,6 @@
                 Style="{StaticResource SubHeadline}"
                 Text="Welcome to &#10;.NET Multi-platform App UI" />
 
-            <!--  Testing Binding beetween two controls  -->
-            <Switch x:Name="EnabledSwitch" />
-
             <Button
                 x:Name="CounterBtn"
                 Clicked="OnCounterClicked"
@@ -37,3 +35,6 @@
     </ScrollView>
 
 </ContentPage>
+
+
+

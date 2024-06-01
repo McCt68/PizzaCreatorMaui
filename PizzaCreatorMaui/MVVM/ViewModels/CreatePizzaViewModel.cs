@@ -126,18 +126,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
             this.Toppings = new ObservableCollection<Topping>();
 
-            this.PizzaSizes = pizzaSizes;
-
-            // This should not be declared here, but loaded from the corebuisness model instead
-            // Or better provided by DI
-            // TEST REMOVE THIS AND GET IT FROM CONSTRUCTOR WITH DI
-            //this.PizzaSizes = new ObservableCollection<PizzaSize>()
-            //{
-            //    new PizzaSize (PizzaSize.Sizes.Small, 35m),
-            //    new PizzaSize (PizzaSize.Sizes.Medium, 40m),
-            //    new PizzaSize (PizzaSize.Sizes.Large, 45m)
-            //};
-            // END TEST SIZE SIZE TEST END !!!!
+            this.PizzaSizes = pizzaSizes;            
 
             // Set the Initial Pizza size to medium
             CurrentCarouselItem = PizzaSizes[1];
@@ -148,7 +137,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         }
 
         // Bruger valg af Toppings type
-        //  Måske er det ikke godt med async void, fordi jeg ikkekna vide hvornår der er færdig
+        //  Måske er det ikke godt med async void, fordi jeg ikke kan vide hvornår der er færdig
         // Bedre at bruge Task ?
         // The main difference is that async void kinda just returns the moment code -
         // inside it hits await and you have no way to know when the execution of that method actually ends.
@@ -168,16 +157,26 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
             // Hent Toppings fra CoreBuisnessLogic Library ved hjælp af UseCases
             if (IsVeggieSwitchOn)
-            {                
+            {
                 this.Toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();
-                this.ToppingsType = "Vegie Toppings."; 
+                this.ToppingsType = "Vegie Toppings.";                
+
+                // Loop til at Convertere HEX værdi til Maui.Graphics.Color              
+                for (int i = 0; i < this.Toppings.Count; i++)
+                {
+                    var topping = this.Toppings[i];
+
+                    // Assuming the HEX string is in format "#RRGGBB"                  
+                var mauiColor = Color.FromRgba(Toppings[i].ToppingImageHexColor);
+                topping.ToppingImage = mauiColor;  // Set the ToppingImage property
             }
+        }
             else
             {                
                 this.Toppings = await loadToppingsUseCase.LoadInMemoryToppingsAsync();
                 this.ToppingsType = "Mixed Toppings."; 
 
-                // Kunne også bruge metoden her i ViewModel til at gøre det samme
+                // Kunne også bruge metoden her fra ViewModel til at gøre det samme
                 // await LoadToppingsAsync();                
             }                        
         }
@@ -222,6 +221,18 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 }));               
     }
 }
+
+// was in constrcutor
+// This should not be declared here, but loaded from the corebuisness model instead
+// Or better provided by DI
+// TEST REMOVE THIS AND GET IT FROM CONSTRUCTOR WITH DI
+//this.PizzaSizes = new ObservableCollection<PizzaSize>()
+//{
+//    new PizzaSize (PizzaSize.Sizes.Small, 35m),
+//    new PizzaSize (PizzaSize.Sizes.Medium, 40m),
+//    new PizzaSize (PizzaSize.Sizes.Large, 45m)
+//};
+// END TEST SIZE SIZE TEST END !!!!
 
 
 

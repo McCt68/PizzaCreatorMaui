@@ -55,6 +55,7 @@ app.MapPut("/api/toppings/{id}", async (int id, Topping topping, ApplicationDbCo
     toppingToUpdate.ToppingPrice = topping.ToppingPrice;
     toppingToUpdate.ToppingImage = topping.ToppingImage;
     toppingToUpdate.ToppingImageString = topping.ToppingImageString;
+    toppingToUpdate.ToppingImageHexColor = topping.ToppingImageHexColor;
     
     await db.SaveChangesAsync();
     return Results.NoContent();

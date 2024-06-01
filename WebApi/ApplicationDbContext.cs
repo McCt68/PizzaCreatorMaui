@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Maui.Graphics.Converters;
 using WebApi.Models;
-
 
 namespace WebApi
 {
@@ -33,22 +31,7 @@ namespace WebApi
             // Instead use IValue Converter from MAUI
             modelBuilder.Entity<Topping>()
                 .Property(t => t.ToppingImage)
-                .HasConversion<ColorToInt32Converter>();
-
-            // TEST WITH MAUI COLOR DO NOT DELETE
-            // I may have to delete this if its not working
-            // Another test to try and Convert a Maui Color to something that can be stored in SQlite -
-            // And also convert it back when the C# needs to use it
-            //var mauiColorConverter = new MauiColorConverter();
-            //modelBuilder.Entity<Topping>()
-            //            .Property(t => t.ToppingImageMaui)
-            //            .HasConversion(mauiColorConverter);
-
-            //// Dont understand or think i need call to base ?? - Maybe it will give errors
-            //base.OnModelCreating(modelBuilder);
-
-        }
-
-        //.HasConversion<Microsoft.Maui.Graphics.Color>();
+                .HasConversion<ColorToInt32Converter>();          
+        }        
     }
 }

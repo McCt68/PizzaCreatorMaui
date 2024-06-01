@@ -9,12 +9,5 @@
     Shell.FlyoutBehavior="Disabled">
 
     <!--  Goto the route here by default  -->
-    <ShellContent ContentTemplate="{DataTemplate views:CreatePizzaView}" Route="CreatePizzaView" />
-
-    <!--  Original code before testing navigation  -->
-    <!--<ShellContent
-    Title="Home"
-    ContentTemplate="{DataTemplate local:MainPage}"
-    Route="MainPage" />-->
-
+    <ShellContent ContentTemplate="{DataTemplate views:CreatePizzaView}" Route="CreatePizzaView" />   
 </Shell>

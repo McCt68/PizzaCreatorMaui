@@ -3,10 +3,19 @@
     x:Class="PizzaCreatorMaui.MVVM.Views.CreatePizzaView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:hexColorConverter="clr-namespace:PizzaCreatorMaui.MVVM.Converters"
     BindingContext="{Binding Source={StaticResource CreatePizzaViewModel}}"
-    NavigationPage.HasNavigationBar="False">    
+    NavigationPage.HasNavigationBar="False">
 
     <!--  I think if I define the namespaces, then the ViewModel will automatecly understand which things i try to bind  -->
+
+    <!--  Resources. Som at instantiere er object af denne klasse  -->
+    <!--  Dette er handled af Maui Frameworket selv. Jeg behøver ikke gøre andet en dette  -->
+    <!--  Så kan jeg efterfølgende bruge databinding sammen med instansen til at Convertere Hex stringen til en Maui Color Type  -->
+    <ContentPage.Resources>
+        <hexColorConverter:HexToColorConverter x:Key="HexToColorConverter" />
+    </ContentPage.Resources>
+
 
     <Grid
         Margin="2"
@@ -65,7 +74,7 @@
                                 HorizontalOptions="Center"
                                 Text="{Binding Size}"
                                 VerticalOptions="Center" />
-                        </Frame>                        
+                        </Frame>
 
                         <!--  Måske skal jeg lade være med at have size rice her også  -->
                         <!--<Label
@@ -114,9 +123,9 @@
             HorizontalOptions="Center"
             Text="{Binding ToppingsType}"
             VerticalOptions="Center" />
-        
-         <!--TEst med databinding text of toppingstype-->
-        <!--Text="Switch toppings type."-->
+
+        <!--  TEst med databinding text of toppingstype  -->
+        <!--  Text="Switch toppings type."  -->
 
         <!--  Testing Activity Indicator  -->
         <!--<ActivityIndicator
@@ -170,11 +179,17 @@
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="0"
-                            Fill="{Binding ToppingImage}"
+                            Fill="{Binding ToppingImage, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere}}"
                             HeightRequest="70"
                             Stroke="Black"
                             StrokeThickness="3"
                             WidthRequest="70" />
+
+                        <!--  Test med at bruge converter. Dette virker inden test  -->
+                        <!--  Fill="{Binding ToppingImage}"  -->
+
+                        <!--  Dette er testen det virker ikke. den viser bare en blank hvis farve  -->
+                        <!--  Fill="{Binding ToppingImage, Converter={StaticResource HexToColor}, ConverterParameter=AnyStringHere}}"  -->
 
                         <Label
                             Grid.Column="2"
