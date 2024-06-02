@@ -31,7 +31,10 @@ namespace WebApi
             // Instead use IValue Converter from MAUI
             modelBuilder.Entity<Topping>()
                 .Property(t => t.ToppingImage)
-                .HasConversion<ColorToInt32Converter>();          
+                .HasConversion<ColorToInt32Converter>();     
+            
+            // Maybe I can try one more time to make a converter similar to waht I am doing in the viewModel
+            // When converting from HEX TO a COlor object
         }        
     }
 }

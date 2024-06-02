@@ -20,7 +20,10 @@ namespace WebApi.Models
         // Bruger et property af type string. Som jeg sætter til en HEX værdi der representer en Color
         // Så kan jeg bruge denne property sammen med en IvalueConverter i mit View til at -
         // Convertere fra HEX til Maui Color.
-        public string ToppingImageHexColor { get; set; }        
+        public string ToppingImageHexColor { get; set; }      
+        
+        // I think in the end Ill have to make ToppingImage a string, and give it HEX values -
+        // then it should work in the databinding with an Ivalue Converter
 
     }
 

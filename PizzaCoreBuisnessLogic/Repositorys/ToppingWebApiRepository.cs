@@ -14,7 +14,7 @@ namespace PizzaCoreBuisnessLogic.Repositorys
     public class ToppingWebApiRepository : IToppingRepository
     {
         // Not sure if i need this
-        public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
+        // public RandomColorGenerator TestColor { get; set; } = new RandomColorGenerator();
 
         // In order to talk to the WebApi I need a Http client object
         // Create a httpClient I can use to communicate with the WebApi -
@@ -38,7 +38,6 @@ namespace PizzaCoreBuisnessLogic.Repositorys
                 WriteIndented = true
             };
         }
-
 
         public async Task<ObservableCollection<Topping>> GetToppingsAsync()
         {

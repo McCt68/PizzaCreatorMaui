@@ -39,7 +39,7 @@ namespace PizzaCreatorMaui
             // When any object needs a type of IToppingRepository -
             // the Program will inject the concrete implementation specified here ( ToppingInMemoryRepository )
             // It could also be any other implementation.            
-            builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();            
+            builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();                       
             builder.Services.AddSingleton<IToppingRepository, ToppingWebApiRepository>();
 
             // Configure Usecases              
@@ -57,19 +57,21 @@ namespace PizzaCreatorMaui
             });
             
             // Singleton - One Instance througout the lifetime of the app.
-            builder.Services.AddSingleton<CreatePizzaViewModel>();                       
-            builder.Services.AddSingleton<CustomerViewModel>();  // Maybe this should be transient to create a new one everytime           
-                       
+            builder.Services.AddSingleton<CreatePizzaViewModel>();                                                
+            builder.Services.AddSingleton<CustomerViewModel>(); 
+            
+
             builder.Services.AddSingleton<CreatePizzaView>();
+            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?
+
 
             // Register Routes - DO i need this ?
             Routing.RegisterRoute("customer", typeof(CustomerView));
 
-            // Maybe it must be transient ?
-            // builder.Services.AddTransient<CreatePizzaView>();
+            
 
             
-            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?
+            
                  
             
 #if DEBUG

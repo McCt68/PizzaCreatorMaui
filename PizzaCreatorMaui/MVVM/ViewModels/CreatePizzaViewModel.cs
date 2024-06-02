@@ -158,19 +158,28 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             // Hent Toppings fra CoreBuisnessLogic Library ved hjælp af UseCases
             if (IsVeggieSwitchOn)
             {
+                // get værdien først inden den bliver overskrevet
+                // Color oldColorValue = this.Toppings[0].ToppingImage;
+
                 this.Toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();
-                this.ToppingsType = "Vegie Toppings.";                
+                this.ToppingsType = "Veggie Toppings.";                
 
+                // TROR IKKE JEG VIL BRUGE DETTE. DET ER BEDRE AT BRUGE EN IVALUE CONVERTER
                 // Loop til at Convertere HEX værdi til Maui.Graphics.Color              
-                for (int i = 0; i < this.Toppings.Count; i++)
-                {
-                    var topping = this.Toppings[i];
+                //for (int i = 0; i < this.Toppings.Count; i++)
+                //{
+                //    var topping = this.Toppings[i];
 
-                    // Assuming the HEX string is in format "#RRGGBB"                  
-                var mauiColor = Color.FromRgba(Toppings[i].ToppingImageHexColor);
-                topping.ToppingImage = mauiColor;  // Set the ToppingImage property
+                //// Opret en Color variabel og sæt værdi til -
+                //// HEX værdien af index [i] Property ToppingImageHexColor fra listen                
+                //Color colorFromDb = Color.FromRgba(Toppings[i].ToppingImageHexColor);
+
+                // Sæt ToppingImage til den Color der kom fra HEX værdien.
+                // topping.ToppingImage = colorFromDb;  // Set the ToppingImage property
+                //}
+
+                // END DET JEG IKKE VIL BRUGE !
             }
-        }
             else
             {                
                 this.Toppings = await loadToppingsUseCase.LoadInMemoryToppingsAsync();

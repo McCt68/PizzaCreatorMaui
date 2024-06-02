@@ -179,17 +179,23 @@
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="0"
-                            Fill="{Binding ToppingImage, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere}}"
+                            Fill="{Binding ToppingImageHexColor, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere}}"
                             HeightRequest="70"
                             Stroke="Black"
                             StrokeThickness="3"
                             WidthRequest="70" />
+                        
+                        <!--I dont need the IValueConverter beacuase i am converting in the ViewModel-->
+                        
+                        <!--Dont delete-->
+                        <!--, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere-->
 
                         <!--  Test med at bruge converter. Dette virker inden test  -->
                         <!--  Fill="{Binding ToppingImage}"  -->
+                        <!--  Fill="{Binding ToppingImageHexColor, }"  -->
 
                         <!--  Dette er testen det virker ikke. den viser bare en blank hvis farve  -->
-                        <!--  Fill="{Binding ToppingImage, Converter={StaticResource HexToColor}, ConverterParameter=AnyStringHere}}"  -->
+                        <!--  Fill="{Binding ToppingImage, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere}}"  -->
 
                         <Label
                             Grid.Column="2"
