@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-// using PizzaCoreBuisnessLogic.Data;
-using PizzaCoreBuisnessLogic.Data.DataFactory;
 using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.Repositorys;
 using PizzaCoreBuisnessLogic.UseCases;
@@ -66,13 +64,7 @@ namespace PizzaCreatorMaui
 
 
             // Register Routes - DO i need this ?
-            Routing.RegisterRoute("customer", typeof(CustomerView));
-
-            
-
-            
-            
-                 
+            Routing.RegisterRoute("customer", typeof(CustomerView));                                                
             
 #if DEBUG
             builder.Logging.AddDebug();

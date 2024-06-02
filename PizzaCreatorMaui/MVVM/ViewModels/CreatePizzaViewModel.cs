@@ -4,7 +4,6 @@ using PropertyChanged;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-
 namespace PizzaCreatorMaui.MVVM.ViewModels
 {
     // Using Nuget Package PropertyChanged.Fody - Implement INotifyPropertyChanged behind the schenes -
@@ -15,10 +14,12 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     // With this I can bind to any source property which is part of a XAML control that has a bindable property.
     [AddINotifyPropertyChangedInterface]
 
-    // Passing parameters with shell.   
+    #region Navigation Parameters
+    // Passing parameters med shell.   
     [QueryProperty(nameof(TotalPizzaPrice), nameof(TotalPizzaPrice))]    
     [QueryProperty(nameof(UserSelectedToppings), nameof(UserSelectedToppings))]     
     [QueryProperty(nameof(CurrentCarouselItem), nameof(CurrentCarouselItem))]
+    #endregion
     public class CreatePizzaViewModel
     {
         #region PizzaSize       
@@ -33,13 +34,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             });
         #endregion
 
-        #region Toppings
-
-        // Prøv at lave property til at angive Toppingstype / Mixed / Vegie
-        public string ToppingsType { get; set; }
+        #region Toppings    
+        public ObservableCollection<Topping> Toppings { get; set; }
+        public string ToppingsType { get; set; } // Mixed - Veggie
 
         private bool _isVeggieSwitchOn;
-
         public bool IsVeggieSwitchOn
         {
             get
@@ -47,12 +46,9 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             set
             {
                 _isVeggieSwitchOn = value;
-
                 ToppingsSelector();
             }
-        }
-
-        public ObservableCollection<Topping> Toppings { get; set; }
+        }        
         public ObservableCollection<Topping> UserSelectedToppings { get; set; } = new ObservableCollection<Topping>();
 
         // Property used for handling the SelectedToppings from the CollectionView in the XAML file
@@ -74,11 +70,11 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         /*
          * Property Declaration:
-         *      Declares a public property named PizzaToppingsChangedCommandYT of type ICommand.
+         *      Declares a public property named PizzaToppingsChangedCommand of type ICommand.
          *      
          * Immediate Initialization:
          *      The => syntax is a method expression that initializes the property immediately -
-         *      with the value returned by the expression on the right-hand side.
+         *      with the value returned by the expression on the right-hand side. (Expresion bodied syntax)
          *            
          *  Command Creation:
          *      new Command<object>((obj) => ...) creates a new Command object, specifying that it expects -
@@ -86,70 +82,82 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
          *      defining the command's execution logic.
          * */
 
+        // Bedre forkalring måske
+        // new Command laver en ny concrete implementation af ICommand interfacet -
+        // I Constructoren giver jeg en Lambda som parameter. Denne lambda har ikke noget input -
+        // og den returnerer heller ikke noget. den udfører bare det kode der er angivet immellem -
+        // Curly bracers
+
         public ICommand PizzaToppingsChangedCommand =>
-            new Command(() =>
-            {
-                UserSelectedToppings.Clear();
-
-                var toppingsList =
-                    SelectedToppingsList;
-
-                if (toppingsList.Count > 0)
+            new Command(() => 
                 {
-                    foreach (var topping in toppingsList)
-                    {
-                        UserSelectedToppings.Add((Topping)topping);
-                    }
-
-                    TotalToppingsPrice = UserSelectedToppings.Sum(x => x.ToppingPrice);
-                    TotalPizzaPrice = TotalToppingsPrice + PizzaSizePrice;
-                }
-                else
-                {
-                    TotalToppingsPrice = 0m;
                     UserSelectedToppings.Clear();
 
-                    TotalPizzaPrice = PizzaSizePrice + TotalToppingsPrice;
-                }
-            });
+                    var toppingsList =
+                        SelectedToppingsList;               
+
+                    if (toppingsList.Count > 0)
+                    {                   
+                        // Brug af LINQ til type cast
+                        // - Implicit using er enabled i .csproj (Derfor den ikke findes i top af denne))
+                    
+                        // OfType filtrer alle elementer i listen af type Topping
+                        foreach (var topping in toppingsList.OfType<Topping>())
+                        {                                                                     
+                            UserSelectedToppings.Add(topping);
+
+                            // Eller
+                            // Add topping object til UserSelectedToppings med Type Casting
+                            // UserSelectedToppings.Add((Topping)topping); // Type casting to a Topping
+                        }
+
+                        TotalToppingsPrice = UserSelectedToppings.Sum(x => x.ToppingPrice);
+                        TotalPizzaPrice = TotalToppingsPrice + PizzaSizePrice;
+                    }
+                    else
+                    {
+                        TotalToppingsPrice = 0m;
+                        UserSelectedToppings.Clear();
+
+                        TotalPizzaPrice = PizzaSizePrice + TotalToppingsPrice;
+                    }
+                });
         #endregion
 
-        public decimal TotalPizzaPrice { get; set; } = new(); // Implicity knows its a decimal. set to default value zero
+        public decimal TotalPizzaPrice { get; set; } = new(); // Implicity ved det er en decimal. sat til default value zero
 
-        private readonly ILoadToppingsUseCase loadToppingsUseCase;
+        private readonly ILoadToppingsUseCase _loadToppingsUseCase;
 
-        // Bruger DI til at give ILoadToppingsUseCase og PizzaSize
-        // public CreatePizzaViewModel(ILoadToppingsUseCase loadToppingsUseCase)
+        #region Constructors
+        // Bruger DI til at give ILoadToppingsUseCase og PizzaSize        
         public CreatePizzaViewModel(ILoadToppingsUseCase loadToppingsUseCase, ObservableCollection<PizzaSize> pizzaSizes)
         {
-            this.loadToppingsUseCase = loadToppingsUseCase;
+            this._loadToppingsUseCase = loadToppingsUseCase;
 
             this.Toppings = new ObservableCollection<Topping>();
 
             this.PizzaSizes = pizzaSizes;            
 
-            // Set the Initial Pizza size to medium
+            // Sæt initial PizzaSize og Price
             CurrentCarouselItem = PizzaSizes[1];
             PizzaSizePrice = CurrentCarouselItem.Price;
-
-            // Total price - Maybe try and retrive this from the useCase in the Class Library
+            
             TotalPizzaPrice = CurrentCarouselItem.Price + TotalToppingsPrice;
         }
+        #endregion
 
-        // Bruger valg af Toppings type
-        //  Måske er det ikke godt med async void, fordi jeg ikke kan vide hvornår der er færdig
-        // Bedre at bruge Task ?
+        // Bruger valg af Toppings type.     
         // The main difference is that async void kinda just returns the moment code -
-        // inside it hits await and you have no way to know when the execution of that method actually ends.
-        // And because you just return and don't await the completion - you end up in a situation where -
+        // inside it hits await and I have no way to know when the execution of that method actually ends.
+        // And because it just return and don't await the completion - It could end up in a situation where -
         // the code continues before something else completes
-        //Because that something else has no way of telling you whether it completed or not
+        // Because that something else has no way of telling you whether it completed or not
 
         // The returned Task object represents the state of the operation.
-        // You can ask it if the operation is still running, completed, faulted etc.
+        // I can ask it if the operation is still running, completed, faulted etc.
         // Much more powerful that just running something in the background -
-        // and having no way of communicating with it anymore like you do with void.
-        private async void ToppingsSelector()        
+        // and having no way of communicating with it anymore like when doing it with void.               
+        private async Task ToppingsSelector()        
         {            
             this.TotalToppingsPrice = 0;          
             this.SelectedToppingsList.Clear();            
@@ -157,32 +165,13 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
             // Hent Toppings fra CoreBuisnessLogic Library ved hjælp af UseCases
             if (IsVeggieSwitchOn)
-            {
-                // get værdien først inden den bliver overskrevet
-                // Color oldColorValue = this.Toppings[0].ToppingImage;
-
-                this.Toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();
-                this.ToppingsType = "Veggie Toppings.";                
-
-                // TROR IKKE JEG VIL BRUGE DETTE. DET ER BEDRE AT BRUGE EN IVALUE CONVERTER
-                // Loop til at Convertere HEX værdi til Maui.Graphics.Color              
-                //for (int i = 0; i < this.Toppings.Count; i++)
-                //{
-                //    var topping = this.Toppings[i];
-
-                //// Opret en Color variabel og sæt værdi til -
-                //// HEX værdien af index [i] Property ToppingImageHexColor fra listen                
-                //Color colorFromDb = Color.FromRgba(Toppings[i].ToppingImageHexColor);
-
-                // Sæt ToppingImage til den Color der kom fra HEX værdien.
-                // topping.ToppingImage = colorFromDb;  // Set the ToppingImage property
-                //}
-
-                // END DET JEG IKKE VIL BRUGE !
+            {               
+                this.Toppings = await _loadToppingsUseCase.LoadWebApiToppingsAsync();
+                this.ToppingsType = "Veggie Toppings.";                                             
             }
             else
             {                
-                this.Toppings = await loadToppingsUseCase.LoadInMemoryToppingsAsync();
+                this.Toppings = await _loadToppingsUseCase.LoadInMemoryToppingsAsync();
                 this.ToppingsType = "Mixed Toppings."; 
 
                 // Kunne også bruge metoden her fra ViewModel til at gøre det samme
@@ -190,58 +179,61 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             }                        
         }
 
-        // -------------************ MAYBE I CAN OMIT THIS *********----------
-        // Load Data from the Usecase
+        #region LoadData From Repository
+        // Load Data fra repository, og sæt Toppings ved brug af den Usecase der blev injectet i constructor
         public async Task LoadToppingsAsync()
         {            
-            var toppings = await loadToppingsUseCase.LoadInMemoryToppingsAsync();
+            var toppings = await _loadToppingsUseCase.LoadInMemoryToppingsAsync();
 
-            // Set the ObservableCollection af Toppings brugeren ser til den collection der kommer fra USeCase.
+            // Set den ObservableCollection af Toppings brugeren ser til den collection der kommer fra UseCase.
             Toppings = toppings;
         }
 
-        // Load Toppings From Web Api
+        // Load fra Web Api
         public async Task LoadWebApiToppingsAsync()
         {            
-            var toppings = await loadToppingsUseCase.LoadWebApiToppingsAsync();
-            
+            var toppings = await _loadToppingsUseCase.LoadWebApiToppingsAsync();            
             Toppings = toppings;
         }
-
-        // END OMIT THIS THIS OMIT END END
+        #endregion
 
         // Bruger denne til at resette switch knappen
         public void ResetSwitch()
         {
             IsVeggieSwitchOn = false; 
         }
-
+        #region Navigation
         // Navigation med shell
-        // Jeg kan navigere til de sider der er specificeret som Routes i classen AppShell.xaml.cs             
+        // Jeg kan navigere til de sider der er specificeret som Routes i Classen AppShell.xaml.cs             
         // Parametre bliver sendt med som et Dictionary af k:String V:object
         public ICommand NavigateToCustomer =>
             new Command(async () => await Shell.Current.GoToAsync($"customer",
                 new Dictionary<string, object>()
                 {
-                    {"TotalPizzaPrice", TotalPizzaPrice },
-                    // {"PizzaSizePrice", PizzaSizePrice },
+                    {"TotalPizzaPrice", TotalPizzaPrice },                    
                     {"UserSelectedToppings", UserSelectedToppings },
                     {"CurrentCarouselItem", CurrentCarouselItem }
-                }));               
+                }));
+        #endregion
     }
 }
 
-// was in constrcutor
-// This should not be declared here, but loaded from the corebuisness model instead
-// Or better provided by DI
-// TEST REMOVE THIS AND GET IT FROM CONSTRUCTOR WITH DI
-//this.PizzaSizes = new ObservableCollection<PizzaSize>()
+
+
+
+// TROR IKKE JEG VIL BRUGE DETTE. DET ER BEDRE AT BRUGE EN IVALUE CONVERTER
+// Loop til at Convertere HEX værdi til Maui.Graphics.Color              
+//for (int i = 0; i < this.Toppings.Count; i++)
 //{
-//    new PizzaSize (PizzaSize.Sizes.Small, 35m),
-//    new PizzaSize (PizzaSize.Sizes.Medium, 40m),
-//    new PizzaSize (PizzaSize.Sizes.Large, 45m)
-//};
-// END TEST SIZE SIZE TEST END !!!!
+//    var topping = this.Toppings[i];
+
+//// Opret en Color variabel og sæt værdi til -
+//// HEX værdien af index [i] Property ToppingImageHexColor fra listen                
+//Color colorFromDb = Color.FromRgba(Toppings[i].ToppingImageHexColor);
+
+// Sæt ToppingImage til den Color der kom fra HEX værdien.
+// topping.ToppingImage = colorFromDb;  // Set the ToppingImage property
+//} 
 
 
 

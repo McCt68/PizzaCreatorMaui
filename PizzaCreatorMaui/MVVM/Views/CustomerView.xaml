@@ -35,7 +35,7 @@
             FontSize="Large"
             HorizontalOptions="Center"
             Text="Fill out billing information please"
-            VerticalOptions="Center" />
+            VerticalOptions="Start" />
 
         <!--<Label Text="Name"/>-->
         <Entry
@@ -143,21 +143,14 @@
             Grid.Row="7"
             Grid.Column="0"
             Margin="2"
-            Command="{Binding ClearUserInfo}"
-            Text="Clear User Information" />
-
-        <!--  Test to show reset value  -->
-        <Label
-            Grid.Row="7"
-            Grid.Column="1"
-            Margin="2"
-            Text="{Binding CurrentCustomer.CustomerName}" />
+            Command="{Binding ClearUserInfoCommand}"
+            Text="Clear User Information" />       
 
         <!--  nav back with shell  -->
         <Button
             Grid.Row="8"
             Margin="2"
-            Command="{Binding NavigateBack}"
+            Command="{Binding NavigateBackCommand}"
             Text="Back to Create Pizza" />
 
         <!--  Sender Regning til kunde  -->

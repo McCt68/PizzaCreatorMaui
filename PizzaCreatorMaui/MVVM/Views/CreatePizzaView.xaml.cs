@@ -9,13 +9,13 @@ namespace PizzaCreatorMaui.MVVM.Views;
 
 public partial class CreatePizzaView : ContentPage
 {
-    private readonly CreatePizzaViewModel toppingsViewModel;
+    private readonly CreatePizzaViewModel _toppingsViewModel;
     
     public CreatePizzaView(CreatePizzaViewModel toppingsViewModel)
     {
         InitializeComponent();
 
-        this.toppingsViewModel = toppingsViewModel;
+        this._toppingsViewModel = toppingsViewModel;
         this.BindingContext = toppingsViewModel;     
     }
     
@@ -24,9 +24,9 @@ public partial class CreatePizzaView : ContentPage
         base.OnAppearing(); // Kald metode fra Base class
 
         // Test af reset switch property
-        toppingsViewModel.ResetSwitch();
-        toppingsViewModel.ToppingsType = "Mixed Toppings.";
+        _toppingsViewModel.ResetSwitch();
+        _toppingsViewModel.ToppingsType = "Mixed Toppings.";
 
-        await this.toppingsViewModel.LoadToppingsAsync(); // Load Toppings with method from Viewmodel        
+        await this._toppingsViewModel.LoadToppingsAsync(); // Load Toppings with method from Viewmodel        
     }    
 }

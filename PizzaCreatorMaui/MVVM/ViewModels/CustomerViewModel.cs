@@ -36,8 +36,8 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         #endregion
 
         // Clear user Inputs 
-        public ICommand ClearUserInfo =>
-            new Command(() => 
+        public ICommand ClearUserInfoCommand =>
+            new Command((obj) => 
             {
                 App.Current.MainPage.DisplayAlert("Reset fields", "Hello your trying to reset all fields", "OK");
                 
@@ -54,7 +54,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         // Denne kan forbedres så enten switch knappen i PizzaCreatorView bliver nulstillet, -
         // eller at den fobliver hvor den er, men så skal den loadede liste blive -
         // hvor den kom fra da jeg navigerede herhen
-        public ICommand NavigateBack =>
+        public ICommand NavigateBackCommand =>
             new Command(async () => await Shell.Current.GoToAsync(".."));
 
         // new Command(async () => await Shell.Current.GoToAsync($".." ? TotalPizzaPrice ={TotalPizzaPrice}));
@@ -77,18 +77,8 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             new Command(async () =>
             {
                 // This works
-                 //ValidateCustomer();
-                await ValidateCustomer();
-
-                // Make method call here that specifies the customer name, and the -
-                // toppings and size choosed, as well as the total price
-
-                //if (IsNameProvided)
-                //{
-                //    App.Current.MainPage.DisplayAlert("Thanks for your order", $"Your order Total: Kr. {TotalPizzaPrice}. Email sent", "OK");
-                //}
-                //else { App.Current.MainPage.DisplayAlert("Please Enter name", "No Valid Name", "OK"); }
-                // App.Current.MainPage.DisplayAlert("Thanks for your order", $"Your order Total: Kr. {TotalPizzaPrice}. Email sent", "OK");
+                //ValidateCustomer();
+                await ValidateCustomer();               
                                 
                 
                 // TODO 
@@ -101,8 +91,8 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 // start with the total price
                 // Later implement detaisl about toppings, and size
             });
-
-        // Validator method
+        
+        #region Text Validation
         private async Task<bool> ValidateCustomer()
         {
             if (!this.IsNameProvided)
@@ -147,7 +137,8 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 "OK");
 
             return true;            
-        }        
+        }
+        #endregion
     }
 }
 
