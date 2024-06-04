@@ -1,5 +1,8 @@
 ﻿using PizzaCoreBuisnessLogic.Models;
 using PizzaCoreBuisnessLogic.UseCases;
+
+// using PizzaCoreBuisnessLogic.UseCases;
+using PizzaCoreBuisnessLogic.UseCases.Interfaces;
 using PropertyChanged;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -14,6 +17,9 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class CustomerViewModel
     {
+        // private readonly IClearUserData _clearUserInputsUseCase;
+        // private readonly Customer _customer;
+
         #region Text and Mail Validation
         // Using Nuget package MauiCommunityToolkit for text, and email validation.
         public bool IsNameProvided { get; set; }
@@ -35,15 +41,17 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         #endregion
 
-        // Clear user Inputs 
+        // Clear user Inputs / Dont think i use the obj here ?
         public ICommand ClearUserInfoCommand =>
             new Command((obj) => 
             {
-                App.Current.MainPage.DisplayAlert("Reset fields", "Hello your trying to reset all fields", "OK");
-                
-                // Using the usecase from the CoreBuisness Project
+                App.Current.MainPage.DisplayAlert("Reset fields", "Reset all user info", "OK");
+
+                // Using the usecase from the CoreBuisness Project - Maybe inject this into the constrcutor ??
                 ClearUserInputsUseCase clearUserInputs = new ClearUserInputsUseCase(CurrentCustomer);
-                clearUserInputs.ClearUserInputs();                                         
+                clearUserInputs.ClearUserInputs();
+
+                // _clearUserInputsUseCase.ClearUserInputs(); // Denne virker ikke ligenu !!!
             });
 
         
@@ -60,18 +68,22 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         // new Command(async () => await Shell.Current.GoToAsync($".." ? TotalPizzaPrice ={TotalPizzaPrice}));
         #endregion
 
+        #region Constructors
+        // public CustomerViewModel(IClearUserData clearUserInputsUseCase)
         public CustomerViewModel()
-        {
+        // public CustomerViewModel(IClearUserData clearUserInputsUseCase, Customer customer)
+        {            
+            // prøv denne med DI også
             CurrentCustomer = new PizzaCoreBuisnessLogic.Models.Customer();
-        }
+            // this._clearUserInputsUseCase = clearUserInputsUseCase;
 
-        /* TODO
-         * I need a way to hold a Customer Object with all the information.
-         * When the user press Order. An E-Mail should be sent to the adress specified in -
-         * CurrentCustomer.Email 
-         * The Mail should have info about name, adress, selected toppings, pizza size, and total price.
-         * 
-         * */
+            
+
+            // this._customer = customer;
+
+            // this.CurrentCustomer = _customer; // TEST TEST
+        }
+        #endregion
 
         public ICommand PlaceOrderCommand =>
             new Command(async () =>
@@ -122,17 +134,34 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
             // Hvis alle validations er ok så -
             // Giv besked til bruger om hvad ordren indeholder. Når denne placerer Ordren.
             // Dette kunne så åbne betalings løsning eller lignende istedet for en Display Alert.
+            // Dette virker inden test
+            //await Application.Current.MainPage.DisplayAlert(
+            //    "Order Completed",
+
+            //    $"\nYour Total is: {TotalPizzaPrice} Kr.\n" +
+
+            //    $"Your Pizza Size is: {CurrentCarouselItem.Size}.\n" +
+
+            //    $"Your Pizza Topings are: {UserSelectedToppings.Count}.\n- " +                
+
+            //    // Using LINQ
+            //    string.Join("\n- ", UserSelectedToppings.Select(topping => topping.ToppingName)), 
+
+            //    "OK");
+
+            // Test med at sende til customer.navn
             await Application.Current.MainPage.DisplayAlert(
                 "Order Completed",
+                $"\nHello {CurrentCustomer.CustomerName}.\n" +
 
                 $"\nYour Total is: {TotalPizzaPrice} Kr.\n" +
 
                 $"Your Pizza Size is: {CurrentCarouselItem.Size}.\n" +
 
-                $"Your Pizza Topings are: {UserSelectedToppings.Count}.\n- " +                
+                $"Your Pizza Topings are: {UserSelectedToppings.Count}.\n- " +
 
                 // Using LINQ
-                string.Join("\n- ", UserSelectedToppings.Select(topping => topping.ToppingName)), 
+                string.Join("\n- ", UserSelectedToppings.Select(topping => topping.ToppingName)),
 
                 "OK");
 

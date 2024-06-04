@@ -1,14 +1,9 @@
 ﻿using PizzaCoreBuisnessLogic.Models;
-using PizzaCoreBuisnessLogic.Utilities;
 using System.Collections.ObjectModel;
-using System.Globalization;
+using System.Diagnostics;
 using System.Text.Json;
 
-// This file contains the HTTP client that I kinda use to talk to the WebApi
-
-// TODO - Maybe I can use LINQ here if i put some data in the Collection that I dont want to show -
-// i can use link to filter it out
-
+// Denne klasse indeholder en HTTP client som der bruges til at snakke med WebApi
 namespace PizzaCoreBuisnessLogic.Repositorys
 {
     public class ToppingWebApiRepository : IToppingRepository
@@ -45,29 +40,33 @@ namespace PizzaCoreBuisnessLogic.Repositorys
 
             // http addressen virker i .net maui android - 10.0.2.2 er for android - Læs docs her
             // https://learn.microsoft.com/en-us/dotnet/maui/data-cloud/local-web-services?view=net-maui-8.0#local-web-services-running-over-http
-            Uri uri = new Uri("http://10.0.2.2:5133/api/toppings");
+            Uri uri = new Uri("http://10.0.2.2:5133/api/toppings"); /// denne er den rigtige der virker
 
-            // Kald MapGet ved API fordi den er associeret med den angivne Url -
-            // og jeg bruger mit Client object sammen med .GetAsync
-            var response = await _httpClient.GetAsync(uri);            
+            // Fejler hvis den angivne adresse ikke findes ( Formattet skal være korrekt)
+            // Uri uri = new Uri("http://dotcom.gg"); // Test Forkert Adresse
 
-            if (response.IsSuccessStatusCode)
+            // Wrap inden i try catch. Hvis der ikke kommer svar eller lignende. 
+            try
             {
-                string content = await response.Content.ReadAsStringAsync();
-                toppings = JsonSerializer.Deserialize<ObservableCollection<Topping>>(content, _jsonSerializerOptions);
+                var response = await _httpClient.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    toppings = JsonSerializer.Deserialize<ObservableCollection<Topping>>(content, _jsonSerializerOptions);
+                }                
+                Debug.WriteLine("--- BESKED FRA TRY BLOCK ---");
             }
-
-            // Maybe I should use the IValueConverter to convert the color type here
-
-            //SystemColorToMauiColorConverter myColorConverter = new SystemColorToMauiColorConverter();
-            //foreach (var topping in toppings) 
-            //{
-            //    topping.ToppingImage
-            //    System.Drawing.Color color = topping.ToppingImage;
-            //    Microsoft.Maui.Graphics.Color = myColorConverter.Convert(topping.ToppingImage);
-            //}
-
-
+            catch (HttpRequestException ex)
+            {                
+                Debug.WriteLine($"--- HEJ FRA CATCH BLOCK {ex.Message} ---");
+                // Kunne også bruge en logger til yderligere fejlfinding
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine(ex.GetType().ToString());
+                Debug.WriteLine($"An error occurred while getting toppings: {ex.Message}");                
+            }          
             return toppings;
         }
     }    

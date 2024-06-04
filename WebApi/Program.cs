@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using WebApi;
 using WebApi.Models;
 
@@ -21,10 +22,10 @@ var app = builder.Build();
 // the async method gets an instance of ApplicationDbContext through DI
 // When this url is requested with a httpClient get method this method will be called.
 app.MapGet("/api/toppings", async (ApplicationDbContext db) =>
-{
+{    
     var toppings = await db.Toppings.ToListAsync();
-
     return Results.Ok(toppings); // Returns status code 200
+    // virker slut
 });
 
 app.MapPost("/api/toppings", async (Topping topping, ApplicationDbContext db) =>

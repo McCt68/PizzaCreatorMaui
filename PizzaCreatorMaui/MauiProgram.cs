@@ -40,8 +40,11 @@ namespace PizzaCreatorMaui
             builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();                       
             builder.Services.AddSingleton<IToppingRepository, ToppingWebApiRepository>();
 
-            // Configure Usecases              
+            // Configure Usecases - Test these with singleton instead ??              
             builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();
+
+
+            // builder.Services.AddTransient<IClearUserData, ClearUserInputsUseCase>(); // not sure if this works ?
                         
             // Register the ObservableCollection<PizzaSize> as a singleton
             builder.Services.AddSingleton<ObservableCollection<PizzaSize>>(provider =>
@@ -56,7 +59,11 @@ namespace PizzaCreatorMaui
             
             // Singleton - One Instance througout the lifetime of the app.
             builder.Services.AddSingleton<CreatePizzaViewModel>();                                                
-            builder.Services.AddSingleton<CustomerViewModel>(); 
+            builder.Services.AddSingleton<CustomerViewModel>();
+
+            // customer test virker der nu med DI ? - Bruges i ClearUserInputUseCase - test med singleton
+            builder.Services.AddTransient<Customer>(); // fejler - nu virker det ??
+            // builder.Services.AddSingleton<Customer>(); // virker
             
 
             builder.Services.AddSingleton<CreatePizzaView>();
@@ -64,7 +71,7 @@ namespace PizzaCreatorMaui
 
 
             // Register Routes - DO i need this ?
-            Routing.RegisterRoute("customer", typeof(CustomerView));                                                
+            // Routing.RegisterRoute("customer", typeof(CustomerView));                                                
             
 #if DEBUG
             builder.Logging.AddDebug();
