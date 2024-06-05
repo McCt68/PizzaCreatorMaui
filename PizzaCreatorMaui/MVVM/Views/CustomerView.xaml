@@ -58,11 +58,6 @@
             </Entry.Behaviors>
         </Entry>
 
-        <!--
-            Dont think i need this in Behaviors.
-            x:Name="nameValidator"
-        -->
-
         <!--<Label Text="Address" />-->
         <Entry
             Grid.Row="2"
@@ -129,7 +124,7 @@
             HorizontalOptions="Center"
             Text="Pizza Total Pris" />
 
-        <!--  Parameter TotalPizzaPrice from CreatePizzaView. That was passed with Navigation  -->
+        <!--  Parameter TotalPizzaPrice fra CreatePizzaView. Passed med navigation  -->
         <Label
             Grid.Row="6"
             Grid.ColumnSpan="2"
@@ -138,15 +133,15 @@
             HorizontalOptions="Center"
             Text="{Binding TotalPizzaPrice, StringFormat='{0:kr #,##0.00}'}" />
 
-        <!--  Reset all user inputs  -->
+        <!--  Reset alle user inputs  -->
         <Button
             Grid.Row="7"
             Grid.Column="0"
             Margin="2"
             Command="{Binding ClearUserInfoCommand}"
-            Text="Clear User Information" />       
+            Text="Clear User Information" />
 
-        <!--  nav back with shell  -->
+        <!--  Naviger tilbage ved brug af shell  -->
         <Button
             Grid.Row="8"
             Margin="2"

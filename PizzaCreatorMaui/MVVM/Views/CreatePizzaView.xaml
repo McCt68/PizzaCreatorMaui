@@ -152,7 +152,8 @@
                                 </LinearGradientBrush>
                             </Frame.Background>
                         </Frame>
-                        <!--  I think I should bind the ellipse to the source here  -->
+                        
+                        <!--  Var oprindeligt et Image  -->
                         <Image
                             Grid.RowSpan="2"
                             Grid.Column="0"

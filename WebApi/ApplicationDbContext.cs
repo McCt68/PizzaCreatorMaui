@@ -20,6 +20,7 @@ namespace WebApi
         // Der egetlig er en table af Topping. Hver række i tabbelen er således en Topping
         public DbSet<Topping> Toppings { get; set; }
 
+
         // Fluent API - Konfigurere mine Tabeller. Her er det kun Toppings tabbelen -
         // siden det er den eneste tabel jeg har.
         // Her kan jeg f.eks konfigure primary / secondary key's, sætte relationer, omdøbe tabel navne -

@@ -32,9 +32,9 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
         public ObservableCollection<Topping> UserSelectedToppings { get; set; }
         #endregion
 
-        // Clear user Inputs / Dont think i use the obj here ?
+        // Clear user Inputs.
         public ICommand ClearUserInfoCommand =>
-            new Command((obj) => 
+            new Command(() => 
             {
                 App.Current.MainPage.DisplayAlert("Reset fields", "Reset all user info", "OK");
                 
@@ -42,18 +42,15 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
                 clearUserInputs.ClearUserInputs();                
             });       
 
-        #region Navigation            
-        // Denne kan forbedres så enten switch knappen i PizzaCreatorView bliver nulstillet, -
-        // eller at den fobliver hvor den er, men så skal den loadede liste blive -
-        // hvor den kom fra da jeg navigerede herhen
+        // Note. async er ikke et input parameter. men det signalerer at denne er en async metode
+        // Fordi at C# Compileren ved det når den ser en lambda med async som denne syntax
+        #region Navigation                   
         public ICommand NavigateBackCommand =>
             new Command(async () => await Shell.Current.GoToAsync(".."));        
         #endregion
 
-        #region Constructors
-        // public CustomerViewModel(IClearUserData clearUserInputsUseCase)
-        public CustomerViewModel()
-        // public CustomerViewModel(IClearUserData clearUserInputsUseCase, Customer customer)
+        #region Constructors        
+        public CustomerViewModel()        
         {                        
             CurrentCustomer = new PizzaCoreBuisnessLogic.Models.Customer();                                  
         }
@@ -61,9 +58,7 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
         public ICommand PlaceOrderCommand =>
             new Command(async () =>
-            {
-                // This works
-                //ValidateCustomer();
+            {                
                 await ValidateCustomer();                                                                        
             });
         
