@@ -2,7 +2,6 @@
 using PizzaCoreBuisnessLogic.UseCases.Interfaces;
 using PropertyChanged;
 
-
 namespace PizzaCoreBuisnessLogic.UseCases
 {
     [AddINotifyPropertyChangedInterface]
@@ -17,7 +16,7 @@ namespace PizzaCoreBuisnessLogic.UseCases
             _currentCustomer.Email = string.Empty;
         }        
         
-        // Får en instans af Customer når den har brug for den
+        // DI. Får en instans af Customer når den har brug for den
         public ClearUserInputsUseCase(Customer currentCustomer)
         {            
             _currentCustomer = currentCustomer;

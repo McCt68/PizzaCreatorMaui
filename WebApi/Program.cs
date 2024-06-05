@@ -24,8 +24,7 @@ var app = builder.Build();
 app.MapGet("/api/toppings", async (ApplicationDbContext db) =>
 {    
     var toppings = await db.Toppings.ToListAsync();
-    return Results.Ok(toppings); // Returns status code 200
-    // virker slut
+    return Results.Ok(toppings); // Returns status code 200    
 });
 
 app.MapPost("/api/toppings", async (Topping topping, ApplicationDbContext db) =>

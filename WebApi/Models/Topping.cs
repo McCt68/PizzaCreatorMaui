@@ -5,26 +5,18 @@ namespace WebApi.Models
 {
     // Dette er en Entity class. Den representerer et object der kan gemmes i databasen
     public class Topping
-    {
-        // Maybe better to call it ToppingId, since Ent Framework attepts to make a key based on the class name and Id
-        public int Id { get; set; } // ToppingID
+    {        
+        public int Id { get; set; } 
         public string? ToppingName { get; set; }
         public decimal ToppingPrice { get; set; }        
-        public System.Drawing.Color? ToppingImage { get; set; } // was color in other model - this works but only loads as black
+        public System.Drawing.Color? ToppingImage { get; set; } 
                 
-        public string ToppingImageString { get; set; }
-
-        // I need a property of type string that represents a Color with a HEX string like "#00FF00"
-        // And with that then i can use an IValueConverter in the View to convert it to a Maui Color
+        public string ToppingImageString { get; set; }        
 
         // Bruger et property af type string. Som jeg sætter til en HEX værdi der representer en Color
         // Så kan jeg bruge denne property sammen med en IvalueConverter i mit View til at -
         // Convertere fra HEX til Maui Color.
-        public string ToppingImageHexColor { get; set; }      
-        
-        // I think in the end Ill have to make ToppingImage a string, and give it HEX values -
-        // then it should work in the databinding with an Ivalue Converter
-
+        public string ToppingImageHexColor { get; set; }                     
     }
 
     // Use for converting the Color type - works with system color type. denne giver dog kun sort tilbage

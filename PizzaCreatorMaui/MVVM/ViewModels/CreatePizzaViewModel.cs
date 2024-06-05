@@ -221,21 +221,4 @@ namespace PizzaCreatorMaui.MVVM.ViewModels
 
 
 
-// TROR IKKE JEG VIL BRUGE DETTE. DET ER BEDRE AT BRUGE EN IVALUE CONVERTER
-// Loop til at Convertere HEX værdi til Maui.Graphics.Color              
-//for (int i = 0; i < this.Toppings.Count; i++)
-//{
-//    var topping = this.Toppings[i];
-
-//// Opret en Color variabel og sæt værdi til -
-//// HEX værdien af index [i] Property ToppingImageHexColor fra listen                
-//Color colorFromDb = Color.FromRgba(Toppings[i].ToppingImageHexColor);
-
-// Sæt ToppingImage til den Color der kom fra HEX værdien.
-// topping.ToppingImage = colorFromDb;  // Set the ToppingImage property
-//} 
-
-
-
-
 

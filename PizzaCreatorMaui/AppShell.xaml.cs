@@ -20,7 +20,7 @@ namespace PizzaCreatorMaui
             // Gå til customer page
             Routing.RegisterRoute("customer", typeof(CustomerView));
 
-            // Routing.RegisterRoute(nameof(PaymentView), typeof(PaymentView));            
+            Routing.RegisterRoute(nameof(PaymentView), typeof(PaymentView));            
         }
     }
 }

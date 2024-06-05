@@ -7,15 +7,12 @@
     BindingContext="{Binding Source={StaticResource CreatePizzaViewModel}}"
     NavigationPage.HasNavigationBar="False">
 
-    <!--  I think if I define the namespaces, then the ViewModel will automatecly understand which things i try to bind  -->
-
     <!--  Resources. Som at instantiere er object af denne klasse  -->
     <!--  Dette er handled af Maui Frameworket selv. Jeg behøver ikke gøre andet en dette  -->
     <!--  Så kan jeg efterfølgende bruge databinding sammen med instansen til at Convertere Hex stringen til en Maui Color Type  -->
     <ContentPage.Resources>
         <hexColorConverter:HexToColorConverter x:Key="HexToColorConverter" />
     </ContentPage.Resources>
-
 
     <Grid
         Margin="2"
@@ -52,7 +49,7 @@
             ItemsSource="{Binding PizzaSizes}"
             VerticalOptions="Center">
 
-            <!--  Define how an item in the CarouselView should look. It is applied to each item in the carousel  -->
+            <!--  Definer hvordan et item i CarouselViewet skal se ud. Det er gældende for hvert item i carouselen  -->
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <Grid RowDefinitions="*,*">
@@ -76,17 +73,6 @@
                                 VerticalOptions="Center" />
                         </Frame>
 
-                        <!--  Måske skal jeg lade være med at have size rice her også  -->
-                        <!--<Label
-                            x:Name="{Binding PizzaSizePrice}"
-                            Grid.Row="1"
-                            Margin="2"
-                            Padding="2"
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            HorizontalOptions="Center"
-                            Text="{Binding Price, StringFormat='{0:kr #,##0.00}'}"
-                            VerticalOptions="End" />-->
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
@@ -179,23 +165,11 @@
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="0"
-                            Fill="{Binding ToppingImageHexColor, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere}}"
+                            Fill="{Binding ToppingImageHexColor, Converter={StaticResource HexToColorConverter}}"
                             HeightRequest="70"
                             Stroke="Black"
                             StrokeThickness="3"
                             WidthRequest="70" />
-                        
-                        <!--I dont need the IValueConverter beacuase i am converting in the ViewModel-->
-                        
-                        <!--Dont delete-->
-                        <!--, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere-->
-
-                        <!--  Test med at bruge converter. Dette virker inden test  -->
-                        <!--  Fill="{Binding ToppingImage}"  -->
-                        <!--  Fill="{Binding ToppingImageHexColor, }"  -->
-
-                        <!--  Dette er testen det virker ikke. den viser bare en blank hvis farve  -->
-                        <!--  Fill="{Binding ToppingImage, Converter={StaticResource HexToColorConverter}, ConverterParameter=AnyStringHere}}"  -->
 
                         <Label
                             Grid.Column="2"
@@ -242,7 +216,7 @@
             Text="{Binding TotalPizzaPrice, StringFormat='{0:Total kr #,##0.00}'}"
             VerticalOptions="Center" />
 
-        <!--  Navigation using Shell from ViewModel  -->
+        <!--  Navigation med Shell  -->
         <Button
             Grid.Row="7"
             Grid.ColumnSpan="2"

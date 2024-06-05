@@ -35,16 +35,13 @@ namespace PizzaCreatorMaui
              */
 
             // When any object needs a type of IToppingRepository -
-            // the Program will inject the concrete implementation specified here ( ToppingInMemoryRepository )
+            // the Program will inject the concrete implementation specified here.
             // It could also be any other implementation.            
             builder.Services.AddSingleton<IToppingRepository, ToppingInMemoryRepository>();                       
             builder.Services.AddSingleton<IToppingRepository, ToppingWebApiRepository>();
 
             // Configure Usecases - Test these with singleton instead ??              
-            builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();
-
-
-            // builder.Services.AddTransient<IClearUserData, ClearUserInputsUseCase>(); // not sure if this works ?
+            builder.Services.AddTransient<ILoadToppingsUseCase, LoadToppingsUseCase>();            
                         
             // Register the ObservableCollection<PizzaSize> as a singleton
             builder.Services.AddSingleton<ObservableCollection<PizzaSize>>(provider =>
@@ -67,11 +64,7 @@ namespace PizzaCreatorMaui
             
 
             builder.Services.AddSingleton<CreatePizzaView>();
-            builder.Services.AddTransient<CustomerView>(); // maybe singleton is better ?
-
-
-            // Register Routes - DO i need this ?
-            // Routing.RegisterRoute("customer", typeof(CustomerView));                                                
+            builder.Services.AddTransient<CustomerView>();                                                            
             
 #if DEBUG
             builder.Logging.AddDebug();

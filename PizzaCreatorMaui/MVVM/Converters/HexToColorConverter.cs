@@ -12,25 +12,25 @@ namespace PizzaCreatorMaui.MVVM.Converters
                 {
                     // Remove the "#" symbol from the HEX string
                     string colorPart = hexString.Substring(1);
-                    return Color.FromArgb(colorPart);
-                    // return Color.FromHex(colorPart);
+                    return Color.FromArgb(colorPart);                    
                 }
                 catch (FormatException)
                 {
-                    // Handle invalid HEX format
-                    return null; // Or return a default color
+                    // Håndter invalid HEX Format
+                    return null; // eller f.eks en defualt Color
+                    
                 }
             }
-            // Begin Test - Testing to see if I can omit convert if its already a Maui Color
+            // Hvis det object der skal Converteres allerede er af typen Maui.Grpahics.Color
+            // Så skal det ikke Converteres.
             else if (value is Microsoft.Maui.Graphics.Color color)
             {
-                // If the value is already a Color, return it directly
+                // Hvis objectet der prøves at convertere allerede en en Color, så bare returner det.
                 return color;
-            }
-            // End test
+            }            
             else
             {
-                return null; // Or return a default color
+                return null; 
             }
         }
 

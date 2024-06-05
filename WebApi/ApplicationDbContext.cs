@@ -2,9 +2,10 @@
 using WebApi.Models;
 
 namespace WebApi
-{
-    // This class represents a session with the database.
-    // All access to the database is done through an instance of this class 
+{    
+
+    // Denne klasse representerer en session med databasen.
+    // Al tilgang til databasen går gennem en instance af denne klasse.
     public class ApplicationDbContext: DbContext
     {
 
@@ -13,10 +14,10 @@ namespace WebApi
         // men jeg bruger samtidig det parameter der hedder options fra base klassens constructor.
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {            
-        }
+        }        
 
-        // A DbSet type basically represents a table. So here I am creating a table named Toppings which -
-        // is basically a database table of Topping, So each row in Toppings is a different Topping.
+        // DbSet typen representer basiccaly en db tabel. So her opretter jeg en Db Tabel med Navnet Toppings
+        // Der egetlig er en table af Topping. Hver række i tabbelen er således en Topping
         public DbSet<Topping> Toppings { get; set; }
 
         // Fluent API - Konfigurere mine Tabeller. Her er det kun Toppings tabbelen -
@@ -26,15 +27,10 @@ namespace WebApi
         // Jeg kan gøre noget af det samme med Data annotation's eller bruge begge dele samtidig -
         // Husk blot at Fluent Api, der vil have højere prioritet.        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // I don't think I should use this type of converter
-            // Instead use IValue Converter from MAUI
+        {            
             modelBuilder.Entity<Topping>()
                 .Property(t => t.ToppingImage)
-                .HasConversion<ColorToInt32Converter>();     
-            
-            // Maybe I can try one more time to make a converter similar to waht I am doing in the viewModel
-            // When converting from HEX TO a COlor object
+                .HasConversion<ColorToInt32Converter>();                           
         }        
     }
 }
